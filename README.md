@@ -276,6 +276,54 @@ fundamental ideas of compiler construction: once a language has been parsed and
 represented internally, supporting additional target architectures mainly
 requires implementing new code generators.
 
+### How `not-abc.abc` Was Created
+
+The compiler contained in `examples/not-abc.abc` was **not** written from
+scratch by students. That would simply have been too much for a single
+semester.
+
+Instead, it was assembled from the components developed throughout the course.
+Students implemented the lexer, parser, symbol table, expression trees, and
+much of the code generator as individual assignments in **ABC**. These
+components were then combined into a single compiler.
+
+The resulting program was subsequently transformed into valid `not-abc` code by
+removing language features that `not-abc` itself does not provide. Enumeration
+constants became integer constants, and structure member accesses were
+rewritten as explicit pointer arithmetic. For example,
+
+```c
+foo->bar
+```
+
+became
+
+```c
+*(foo + 8)
+```
+
+if `bar` resides at offset 8, while
+
+```c
+foo.bar
+```
+
+became
+
+```c
+*(&foo + 8)
+```
+
+Although this transformation makes the code considerably harder to read,
+students can still recognize many of the components they implemented
+themselves. The compiler therefore serves as a bridge between the higher-level
+abstractions used during the course and the minimal language required for
+self-hosting.
+
+Perhaps more importantly, it also demonstrates why seemingly "low-level" topics
+such as memory layout, structure offsets, and pointer arithmetic were covered
+in more detail than might initially have appeared necessary.
+
 ### A Mathematical Perspective
 
 This course is taught as part of the mathematics curriculum rather than as a

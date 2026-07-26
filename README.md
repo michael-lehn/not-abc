@@ -324,7 +324,7 @@ Perhaps more importantly, it also demonstrates why seemingly "low-level" topics
 such as memory layout, structure offsets, and pointer arithmetic were covered
 in more detail than might initially have appeared necessary.
 
-### A Mathematical Perspective
+## A Mathematical Perspective
 
 This course is taught as part of the mathematics curriculum rather than as a
 software engineering course.

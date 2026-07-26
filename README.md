@@ -213,22 +213,35 @@ https://github.com/michael-lehn/ulm-generator
 
 ### Top-down: Building a Compiler
 
-In parallel, students program in a small C-like language called **ABC**.
+In parallel, students program in **ABC**, a small C-like programming language
+developed specifically for the course.
 
 https://github.com/michael-lehn/abc-llvm
 
-The language starts with only a handful of features—functions, variables,
-control structures and pointers—but is powerful enough to implement
-increasingly sophisticated software.
+Although considerably smaller than C, ABC supports most language features
+needed for systems programming, including functions, local and global
+variables, pointers, recursive data structures, dynamic memory allocation,
+recursion, and dynamic dispatch. The language intentionally omits much of C's
+historical complexity while preserving the fundamental ideas. Its purpose is
+not to replace C, but to make the essential concepts easier to understand.
 
-The programming assignments are designed as parts of a larger project rather
-than isolated exercises. Components developed throughout the semester are
-continuously reused and extended. For example, students implement linked lists
-for symbol tables, trees for expression trees, recursive-descent parsers, and
-many of the building blocks that eventually become part of a compiler.
+Over the past few years, we have consistently observed that students who first
+learned these concepts in ABC transitioned remarkably smoothly to C and, in
+subsequent semesters, to modern C++. Once the underlying ideas are understood,
+learning C and C++ becomes largely a matter of learning additional language
+features rather than fundamentally new concepts.
 
-The objective is to let students experience how larger software systems emerge
-from many small, understandable steps.
+Rather than solving isolated exercises, each programming assignment contributes
+a reusable component of a larger software system. Students develop linked lists
+for symbol tables, trees for expression trees, recursive-descent parsers, code
+generators, and many of the building blocks that eventually become part of a
+complete compiler.
+
+The objective is to let students experience how large software systems evolve
+from many small, understandable steps. By the time they begin writing the
+`not-abc` compiler, most of the required infrastructure has already been
+implemented by the students themselves throughout the semester.
+
 
 ### The Result
 

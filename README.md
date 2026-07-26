@@ -1,8 +1,12 @@
 # not-abc
 
-`not-abc` is a tiny, self-hosting programming language and compiler. The language is deliberately minimal: it has only 64-bit values, no static type checking, and only a handful of built-in functions. The entire compiler is written in `not-abc` itself.
+`not-abc` is a tiny, self-hosting programming language and compiler. The
+language is deliberately minimal: it has only 64-bit values, no static type
+checking, and only a handful of built-in functions. The entire compiler is
+written in `not-abc` itself.
 
-The project is intended for educational purposes. It demonstrates that a surprisingly small language is sufficient to implement a complete compiler.
+The project is intended for educational purposes. It demonstrates that a
+surprisingly small language is sufficient to implement a complete compiler.
 
 ## Language Overview
 
@@ -65,7 +69,8 @@ A value may be interpreted either as
 - a signed 64-bit integer, or
 - a pointer.
 
-The language performs **no static type checking**. The programmer is responsible for using values consistently.
+The language performs **no static type checking**. The programmer is
+responsible for using values consistently.
 
 The unary operators are:
 
@@ -79,22 +84,29 @@ The unary operators are:
 
 Every function returns a 64-bit value.
 
-There is **no `return` statement**. Instead, the value of the **last evaluated expression** becomes the function's return value.
+There is **no `return` statement**. Instead, the value of the **last evaluated
+expression** becomes the function's return value.
 
 Functions may be called before they are defined.
 
-The compiler does **not** check whether a function is called with the correct number of arguments. Calling a function with too few or too many arguments results in undefined behavior.
+The compiler does **not** check whether a function is called with the correct
+number of arguments. Calling a function with too few or too many arguments
+results in undefined behavior.
 
 Execution always starts in `main()`.
 
 ## Built-in Functions
 
-The language provides four built-in functions that interface directly with the operating system:
+The language provides four built-in functions that interface directly with the
+operating system:
 
 - `putchar(ch)` writes the least significant byte of `ch` to standard output.
-- `ch = getchar()` reads one byte from standard input, sign-extends it to 64 bits, and returns `-1` on end-of-file.
-- `p = malloc(size)` allocates `size` bytes on the heap and returns a pointer, or `0` if the allocation fails.
-- `free(p)` does nothing if `p` is `0`. Otherwise `p` must be a pointer previously returned by `malloc()`.
+- `ch = getchar()` reads one byte from standard input, sign-extends it to 64
+  bits, and returns `-1` on end-of-file.
+- `p = malloc(size)` allocates `size` bytes on the heap and returns a pointer,
+  or `0` if the allocation fails.
+- `free(p)` does nothing if `p` is `0`. Otherwise `p` must be a pointer
+  previously returned by `malloc()`.
 
 ## Hello World
 
@@ -144,17 +156,134 @@ A more substantial example is available in `examples/factorial.abc`.
 
 `not-abc` has neither arrays nor structs.
 
-However, string literals are stored in the writable data segment with 8-byte alignment. This makes it possible to reuse them as blocks of memory.
+However, string literals are stored in the writable data segment with 8-byte
+alignment. This makes it possible to reuse them as blocks of memory.
 
-Likewise, `malloc()` can be used to build dynamic data structures. See `examples/list.abc` for a simple linked-list implementation.
+Likewise, `malloc()` can be used to build dynamic data structures. See
+`examples/list.abc` for a simple linked-list implementation.
 
 ## Self-Hosting
 
-The file `examples/not-abc.abc` contains a compiler for the `not-abc` language written in `not-abc` itself.
+The file `examples/not-abc.abc` contains a compiler for the `not-abc` language
+written in `not-abc` itself.
 
 ```sh
 ./not-abc < examples/not-abc.abc > not-abc-compare.ll
 diff not-abc.ll not-abc-compare.ll
 ```
 
-If the generated LLVM IR is identical, the compiler has successfully compiled itself. In other words: **not-abc is self-hosting.**
+If the generated LLVM IR is identical, the compiler has successfully compiled
+itself. In other words: **not-abc is self-hosting.**
+
+
+## Background
+
+`not-abc` was developed as part of my undergraduate course *Introduction to
+High Performance Computing* at Ulm University.
+
+The goal of the course is to teach students how computers and compilers
+actually work. Instead of presenting these topics one after another, the course
+develops them in parallel.
+
+The first half of the semester alternates between a **bottom-up** and a
+**top-down** perspective. Eventually, both approaches meet in the middle:
+students understand both how modern hardware executes programs and how
+high-level source code is translated into machine code.
+
+### Bottom-up: Building a Computer
+
+Starting from NAND gates, students construct increasingly complex hardware
+components:
+
+- logic gates such as AND, OR and XOR,
+- flip-flops,
+- adders,
+- registers,
+- a simple ALU,
+- and finally a complete processor.
+
+The processor is controlled by an 8-bit instruction set and is gradually
+extended throughout the course. Once completed, students gain practical
+experience writing assembly programs for their own processor, including
+arithmetic, functions, stack frames and control flow.
+
+The hardware used in the course is generated using the ULM generator:
+
+https://github.com/michael-lehn/ulm-generator
+
+### Top-down: Building a Compiler
+
+In parallel, students program in a small C-like language called **ABC**.
+
+https://github.com/michael-lehn/abc-llvm
+
+The language starts with only a handful of features—functions, variables,
+control structures and pointers—but is powerful enough to implement
+increasingly sophisticated software.
+
+The programming assignments are designed as parts of a larger project rather
+than isolated exercises. Components developed throughout the semester are
+continuously reused and extended. For example, students implement linked lists
+for symbol tables, trees for expression trees, recursive-descent parsers, and
+many of the building blocks that eventually become part of a compiler.
+
+The objective is to let students experience how larger software systems emerge
+from many small, understandable steps.
+
+### The Result
+
+Towards the end of the semester, the two strands come together.
+
+Students extend the compiler to generate code for the processor they built
+themselves. At this point they have experienced the complete toolchain—from
+logic gates to assembly language, from parsing source code to code generation.
+
+`not-abc` is the language used for the final step. It is deliberately minimal,
+yet expressive enough to implement a complete compiler. The compiler included
+in this repository is written in `not-abc` itself, making the language
+self-hosting.
+
+### From Frontend to Machine Code
+
+The compiler developed during the course ultimately supports multiple
+code-generation backends.
+
+One backend generates code for the custom ULM processor that the students built
+themselves during the hardware part of the course. This demonstrates the
+complete path from a high-level programming language down to a processor whose
+architecture is fully understood.
+
+To show that exactly the same compiler frontend can also target real-world
+hardware, a second backend generates LLVM IR. LLVM's optimizing toolchain can
+then produce native executables for a wide range of architectures and operating
+systems without requiring any changes to the compiler frontend.
+
+This separation between frontend and backend also illustrates one of the
+fundamental ideas of compiler construction: once a language has been parsed and
+represented internally, supporting additional target architectures mainly
+requires implementing new code generators.
+
+### A Mathematical Perspective
+
+This course is taught as part of the mathematics curriculum rather than as a
+software engineering course.
+
+The teaching philosophy follows a classical mathematical approach. Instead of
+starting with general frameworks or abstract principles, we begin with small,
+concrete examples. Each example solves a real problem with only the concepts
+that are already available. As new problems arise, students naturally discover
+recurring patterns, leading to increasingly general abstractions.
+
+The objective is not merely to teach students how to use existing tools, but to
+develop the ability to understand, analyze, and construct them from first
+principles. Building a compiler is therefore not an end in itself. It is an
+exercise in abstraction, decomposition, recursion, data structures, algorithms,
+and systematic reasoning.
+
+In mathematics, we rarely learn a subject because it is expected to be
+immediately useful. We study it because it sharpens our way of thinking.
+Practical usefulness is usually a welcome consequence rather than the primary
+motivation.
+
+This philosophy is reflected throughout the course—from constructing a
+processor out of logic gates to writing a self-hosting compiler.

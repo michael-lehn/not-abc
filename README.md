@@ -349,11 +349,33 @@ in more detail than might initially have appeared necessary.
 This course is taught as part of the mathematics curriculum rather than as a
 software engineering course.
 
-The teaching philosophy follows a classical mathematical approach. Instead of
-starting with general frameworks or abstract principles, we begin with small,
-concrete examples. Each example solves a real problem with only the concepts
-that are already available. As new problems arise, students naturally discover
-recurring patterns, leading to increasingly general abstractions.
+The teaching philosophy follows the way mathematics is traditionally developed.
+Instead of starting with general frameworks or abstract principles, we begin
+with small, concrete examples. Each example solves a real problem with only the
+concepts that are already available. As new problems arise, students naturally
+discover recurring patterns, leading to increasingly general abstractions.
+
+Ironically, this description is itself rather abstract. Almost everyone agrees
+with it in principle, but its practical consequences become much clearer
+through an example.
+
+Before introducing finite state machines, many students have already worked
+with one without realizing it. Throughout the course, most students use Neovim,
+whose different editing modes provide an intuitive example of state-dependent
+behavior. Later, they implement a simple lexer for the teaching language. At
+that point, they have encountered the same underlying idea in two entirely
+different contexts before it is finally introduced as the mathematical concept
+of a finite state machine.
+
+Only then do we introduce the general mathematical concept of finite state
+machines. Once students already have an intuition for the problem, the formal
+description of deterministic and nondeterministic finite automata, together
+with their equivalence to regular languages, becomes much easier to understand.
+Mathematics no longer appears as an arbitrary formalism, but as a precise
+language for describing something students already understand intuitively.
+
+This pattern repeats throughout the course: experience first, abstraction
+afterwards.
 
 The objective is not merely to teach students how to use existing tools, but to
 develop the ability to understand, analyze, and construct them from first
@@ -361,10 +383,9 @@ principles. Building a compiler is therefore not an end in itself. It is an
 exercise in abstraction, decomposition, recursion, data structures, algorithms,
 and systematic reasoning.
 
-In mathematics, we rarely learn a subject because it is expected to be
-immediately useful. We study it because it sharpens our way of thinking.
-Practical usefulness is usually a welcome consequence rather than the primary
-motivation.
+In mathematics, we seldom study a subject simply because it is immediately
+useful. We study it because it sharpens our way of thinking. Practical
+usefulness is usually a welcome consequence rather than the primary motivation.
 
 This philosophy is reflected throughout the course—from constructing a
 processor out of logic gates to writing a self-hosting compiler.

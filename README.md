@@ -175,14 +175,6 @@ diff not-abc.ll not-abc-compare.ll
 If the generated LLVM IR is identical, the compiler has successfully compiled
 itself. In other words: **not-abc is self-hosting.**
 
-If you are interested in understanding how this compiler works, you may find
-the corresponding implementation in **ABC** easier to read:
-
-https://github.com/michael-lehn/abc-llvm/tree/main/not-abc
-
-The ABC implementation is the bootstrap compiler from which the initial
-`not-abc.ll` in this repository was generated.
-
 
 ## Bootstrap Compiler
 

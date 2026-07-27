@@ -659,7 +659,6 @@ define i64 @UStrCreate(i64 %0) {
 	%49 = icmp eq i64 %48, 0
 	br i1 %49, label %.L62, label %.L63
 .L63:
-	%hack = alloca i64, align 8
 	; load constant 8 into %50
 	%50 = add i64 8, 0
 	%51 = load i64, ptr %s, align 8
@@ -668,76 +667,53 @@ define i64 @UStrCreate(i64 %0) {
 	; load constant 1 into %54
 	%54 = add i64 1, 0
 	%55 = add i64 %53, %54
-	%56 = getelementptr i64, ptr %hack, i64 0
-	%57 = ptrtoint ptr %56 to i64
-	%58 = inttoptr i64 %57 to ptr
-	store i64 %55, ptr %58, align 8
-	%59  = add i64 %55, 0; bloody hack
-	store i64 %55, ptr %1, align 8
-	%60 = load i64, ptr %hack, align 8
-	; load constant 7 into %61
-	%61 = add i64 7, 0
-	%62 = add i64 %60, %61
-	; load constant 8 into %63
-	%63 = add i64 8, 0
-	%64 = sdiv i64 %62, %63
-	; load constant 8 into %65
-	%65 = add i64 8, 0
-	%66 = mul i64 %64, %65
-	%67 = getelementptr i64, ptr %hack, i64 0
-	%68 = ptrtoint ptr %67 to i64
-	%69 = inttoptr i64 %68 to ptr
-	store i64 %66, ptr %69, align 8
-	%70  = add i64 %66, 0; bloody hack
-	store i64 %66, ptr %1, align 8
-	%71 = load i64, ptr %hack, align 8
-	%72 = call i64 @malloc(i64 %71)
-	%73 = getelementptr i64, ptr %n, i64 0
-	%74 = ptrtoint ptr %73 to i64
-	%75 = inttoptr i64 %74 to ptr
-	store i64 %72, ptr %75, align 8
-	%76  = add i64 %72, 0; bloody hack
-	store i64 %72, ptr %1, align 8
-	%77 = load i64, ptr @ustrList, align 8
-	%78 = load i64, ptr %n, align 8
-	%79 = inttoptr i64 %78 to ptr
-	store i64 %77, ptr %79, align 8
-	%80  = add i64 %77, 0; bloody hack
+	%56 = call i64 @malloc(i64 %55)
+	%57 = getelementptr i64, ptr %n, i64 0
+	%58 = ptrtoint ptr %57 to i64
+	%59 = inttoptr i64 %58 to ptr
+	store i64 %56, ptr %59, align 8
+	%60  = add i64 %56, 0; bloody hack
+	store i64 %56, ptr %1, align 8
+	%61 = load i64, ptr @ustrList, align 8
+	%62 = load i64, ptr %n, align 8
+	%63 = inttoptr i64 %62 to ptr
+	store i64 %61, ptr %63, align 8
+	%64  = add i64 %61, 0; bloody hack
+	store i64 %61, ptr %1, align 8
+	%65 = load i64, ptr %s, align 8
+	%66 = load i64, ptr %n, align 8
+	; load constant 8 into %67
+	%67 = add i64 8, 0
+	%68 = add i64 %66, %67
+	%69 = call i64 @strcpy(i64 %68, i64 %65)
+	store i64 %69, ptr %1, align 8
+	%70 = load i64, ptr %n, align 8
+	%71 = getelementptr i64, ptr @ustrList, i64 0
+	%72 = ptrtoint ptr %71 to i64
+	%73 = inttoptr i64 %72 to ptr
+	store i64 %70, ptr %73, align 8
+	%74  = add i64 %70, 0; bloody hack
+	store i64 %70, ptr %1, align 8
+	%75 = load i64, ptr %n, align 8
+	; load constant 8 into %76
+	%76 = add i64 8, 0
+	%77 = add i64 %75, %76
+	%78 = getelementptr i64, ptr %ustr, i64 0
+	%79 = ptrtoint ptr %78 to i64
+	%80 = inttoptr i64 %79 to ptr
+	store i64 %77, ptr %80, align 8
+	%81  = add i64 %77, 0; bloody hack
 	store i64 %77, ptr %1, align 8
-	%81 = load i64, ptr %s, align 8
-	%82 = load i64, ptr %n, align 8
-	; load constant 8 into %83
-	%83 = add i64 8, 0
-	%84 = add i64 %82, %83
-	%85 = call i64 @strcpy(i64 %84, i64 %81)
-	store i64 %85, ptr %1, align 8
-	%86 = load i64, ptr %n, align 8
-	%87 = getelementptr i64, ptr @ustrList, i64 0
-	%88 = ptrtoint ptr %87 to i64
-	%89 = inttoptr i64 %88 to ptr
-	store i64 %86, ptr %89, align 8
-	%90  = add i64 %86, 0; bloody hack
-	store i64 %86, ptr %1, align 8
-	%91 = load i64, ptr %n, align 8
-	; load constant 8 into %92
-	%92 = add i64 8, 0
-	%93 = add i64 %91, %92
-	%94 = getelementptr i64, ptr %ustr, i64 0
-	%95 = ptrtoint ptr %94 to i64
-	%96 = inttoptr i64 %95 to ptr
-	store i64 %93, ptr %96, align 8
-	%97  = add i64 %93, 0; bloody hack
-	store i64 %93, ptr %1, align 8
 	br label %.L61
 .L62:
 	br label %.L61
 .L61:
-	%98 = load i64, ptr %ustr, align 8
-	store i64 %98, ptr %1, align 8
+	%82 = load i64, ptr %ustr, align 8
+	store i64 %82, ptr %1, align 8
 	br label %.L64
 .L64:
-	%99= load i64, ptr %1, align 8
-	ret i64 %99
+	%83= load i64, ptr %1, align 8
+	ret i64 %83
 }
 
 ; function testUStr

@@ -8,6 +8,10 @@ written in `not-abc` itself.
 The project is intended for educational purposes. It demonstrates that a
 surprisingly small language is sufficient to implement a complete compiler.
 
+**Note:** This project uses hard tabs with a tab width of 8. If the code looks
+misaligned on GitHub, append `?ts=8` to the URL or configure your GitHub tab
+width accordingly.
+
 ## Language Overview
 
 A `not-abc` program consists of global variables and function definitions.
@@ -151,10 +155,6 @@ clang -o foo foo.ll
 ## Example
 
 A more substantial example is available in `examples/factorial.abc`.
-
-**Note:** This project uses hard tabs with a tab width of 8. If the code looks
-misaligned on GitHub, append `?ts=8` to the URL or configure your GitHub tab
-width accordingly.
 
 ## Arrays and Structs (Hack)
 

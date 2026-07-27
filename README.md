@@ -152,6 +152,10 @@ clang -o foo foo.ll
 
 A more substantial example is available in `examples/factorial.abc`.
 
+**Note:** This project uses hard tabs with a tab width of 8. If the code looks
+misaligned on GitHub, append `?ts=8` to the URL or configure your GitHub tab
+width accordingly.
+
 ## Arrays and Structs (Hack)
 
 `not-abc` has neither arrays nor structs.

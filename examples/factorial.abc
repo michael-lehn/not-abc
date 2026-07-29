@@ -68,9 +68,9 @@ fn main()
     print("n = ");
     if (!readInt(&n)) {
         println("that's not an integer");
-    }
-    if (n < 0) {
+    } else if (n < 0) {
         println("that's a negative integer");
+    } else {
+	printInt(n); print("! = "); printInt(factorial(n)); putchar('\n');
     }
-    printInt(n); print("! = "); printInt(factorial(n)); putchar('\n');
 }

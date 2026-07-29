@@ -3,8 +3,8 @@ global foo;
 fn print(s)
 {
     while (#s) {
-	putchar(#s);
-	s = s + 1;
+        putchar(#s);
+        s = s + 1;
     }
 }
 
@@ -17,16 +17,16 @@ fn println(s)
 fn printInt(n)
 {
     if (n < 0) {
-	putchar('-');
-	n = -n;
+        putchar('-');
+        n = -n;
     }
     if (n == 0) {
-	putchar('0');
+        putchar('0');
     } else {
-	if (n / 10 > 0) {
-	    printInt(n / 10);
-	}
-	putchar(n % 10 + '0');
+        if (n / 10 > 0) {
+            printInt(n / 10);
+        }
+        putchar(n % 10 + '0');
     }
 }
 
@@ -34,8 +34,8 @@ fn printList(list)
 {
     local val;
     if (list) {
-	printList(*list);
-	printInt(*(list + 8)); putchar('\n');
+        printList(*list);
+        printInt(*(list + 8)); putchar('\n');
     }
 }
 
@@ -45,20 +45,20 @@ fn addToList(list, val)
     n = malloc(16);
     printInt(n); println(" is address of new node");
     if (!n) {
-	println("out of memory");
-	0;
+        println("out of memory");
+        0;
     } else {
-	*n = *list;
-	*(n + 8) = val;
-	*list = n;
+        *n = *list;
+        *(n + 8) = val;
+        *list = n;
     }
 }
 
 fn freeList(list)
 {
     if (list) {
-	freeList(*list);
-	free(list);
+        freeList(*list);
+        free(list);
     }
 }
 

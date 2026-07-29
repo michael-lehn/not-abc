@@ -4,8 +4,8 @@
 fn print(s)
 {
     while (s && #s) {
-	putchar(#s);
-	s = s + 1;
+        putchar(#s);
+        s = s + 1;
     }
     1;
 }
@@ -20,32 +20,32 @@ fn println(s)
 fn printInt(n)
 {
     if (n < 0) {
-	putchar('-');
-	n = -n;
+        putchar('-');
+        n = -n;
     }
     if (n == 0) {
-	putchar('0');
+        putchar('0');
     } else {
-	if (n / 10 > 0) {
-	    printInt(n / 10);
-	}
-	putchar(n % 10 + '0');
+        if (n / 10 > 0) {
+            printInt(n / 10);
+        }
+        putchar(n % 10 + '0');
     }
 }
 
 fn sprintInt(n, s)
 {
     if (n < 0) {
-	#s = '-'; s = s + 1;
-	n = -n;
+        #s = '-'; s = s + 1;
+        n = -n;
     }
     if (n == 0) {
-	#s = '0'; s = s + 1;
+        #s = '0'; s = s + 1;
     } else {
-	if (n / 10 > 0) {
-	    s = sprintInt(n / 10, s);
-	}
-	#s = n % 10 + '0'; s = s + 1;
+        if (n / 10 > 0) {
+            s = sprintInt(n / 10, s);
+        }
+        #s = n % 10 + '0'; s = s + 1;
     }
     #s = 0;
     s;
@@ -57,9 +57,9 @@ fn sprintInt(n, s)
 fn strcpy(dest, src)
 {
     while (#src) {
-	#dest = #src;
-	dest = dest + 1;
-	src = src + 1;
+        #dest = #src;
+        dest = dest + 1;
+        src = src + 1;
     }
     #dest = #src;
 }
@@ -67,8 +67,8 @@ fn strcpy(dest, src)
 fn strcmp(s1, s2)
 {
     while (#s1 && #s1 == #s2) {
-	s1 = s1 + 1;
-	s2 = s2 + 1;
+        s1 = s1 + 1;
+        s2 = s2 + 1;
     }
     #s1 - #s2;
 }
@@ -78,8 +78,8 @@ fn strlen(s)
     local n;
     n = 0;
     while (#s) {
-	n = n + 1;
-	s = s + 1;
+        n = n + 1;
+        s = s + 1;
     }
     n;
 }
@@ -96,19 +96,19 @@ fn UStrCreate(s)
     local n; n = ustrList;
 
     while (n) {
-	if (!strcmp(n + 8, s)) {
-	    ustr = n + 8;
-	    n = 0;
-	} else {
-	    n = *n;
-	}
+        if (!strcmp(n + 8, s)) {
+            ustr = n + 8;
+            n = 0;
+        } else {
+            n = *n;
+        }
     }
     if (!ustr) {
-	n = malloc(8 + strlen(s) + 1);
-	*n = ustrList;
-	strcpy(n+8, s);
-	ustrList = n;
-	ustr = n + 8;
+        n = malloc(8 + strlen(s) + 1);
+        *n = ustrList;
+        strcpy(n+8, s);
+        ustrList = n;
+        ustr = n + 8;
     }
     ustr;
 }
@@ -206,21 +206,21 @@ fn initLexer()
 fn nextCh()
 {
     if (lexerUpdateVal) {
-	if (lexerLengthVal + 1 > lexerInternalValCapacity) {
-	    println("TODO: support realloc");
-	}
+        if (lexerLengthVal + 1 > lexerInternalValCapacity) {
+            println("TODO: support realloc");
+        }
         #(lexerInternalVal + lexerLengthVal) = lexerCh;
-	lexerLengthVal = lexerLengthVal + 1;
+        lexerLengthVal = lexerLengthVal + 1;
         #(lexerInternalVal + lexerLengthVal) = 0;
     } else {
         lexerLengthVal = 0;
     }
     lexerCh = getchar();
     if (lexerCh == '\n') {
-	lexerCurrentRow = lexerCurrentRow + 1;
-	lexerCurrentCol = 0;
+        lexerCurrentRow = lexerCurrentRow + 1;
+        lexerCurrentCol = 0;
     } else {
-	lexerCurrentCol = lexerCurrentCol + 1;
+        lexerCurrentCol = lexerCurrentCol + 1;
     }
 }
 
@@ -261,148 +261,148 @@ fn getToken()
         *token = 3; // identifier
     } else if (lexerCh == '=') {
         nextCh();
-	if (lexerCh == '=') {
-	    nextCh();
-	    *token = 28; // ==
-	} else {
-	    *token = 4; // =
-	}
+        if (lexerCh == '=') {
+            nextCh();
+            *token = 28; // ==
+        } else {
+            *token = 4; // =
+        }
     } else if (lexerCh == '<') {
         nextCh();
-	if (lexerCh == '=') {
-	    nextCh();
-	    *token = 24; // <=
-	} else {
-	    *token = 25; // <
-	}
+        if (lexerCh == '=') {
+            nextCh();
+            *token = 24; // <=
+        } else {
+            *token = 25; // <
+        }
     } else if (lexerCh == '>') {
         nextCh();
-	if (lexerCh == '=') {
-	    nextCh();
-	    *token = 27; // >=
-	} else {
-	    *token = 26; // >
-	}
+        if (lexerCh == '=') {
+            nextCh();
+            *token = 27; // >=
+        } else {
+            *token = 26; // >
+        }
     } else if (lexerCh == '!') {
         nextCh();
-	if (lexerCh == '=') {
-	    nextCh();
-	    *token = 30; // !=
-	} else {
-	    *token = 29; // !
-	}
+        if (lexerCh == '=') {
+            nextCh();
+            *token = 30; // !=
+        } else {
+            *token = 29; // !
+        }
     } else if (lexerCh == '%') {
         nextCh();
-	*token = 31; // %
+        *token = 31; // %
     } else if (lexerCh == '#') {
         nextCh();
-	*token = 32; // #
+        *token = 32; // #
     } else if (lexerCh == '&') {
         nextCh();
-	if (lexerCh == '&') {
-	    nextCh();
-	    *token = 34; // &&
-	} else {
-	    *token = 33; // &
-	}
+        if (lexerCh == '&') {
+            nextCh();
+            *token = 34; // &&
+        } else {
+            *token = 33; // &
+        }
     } else if (lexerCh == '|') {
         nextCh();
-	if (lexerCh == '|') {
-	    nextCh();
-	    *token = 36; // ||
-	} else {
-	    *token = 35; // |
-	}
+        if (lexerCh == '|') {
+            nextCh();
+            *token = 36; // ||
+        } else {
+            *token = 35; // |
+        }
     } else if (lexerCh == ';') {
         nextCh();
-	*token = 5; // ;
+        *token = 5; // ;
     } else if (lexerCh == ',') {
         nextCh();
-	*token = 6; // ,
+        *token = 6; // ,
     } else if (lexerCh == '+') {
         nextCh();
-	*token = 7; // +
+        *token = 7; // +
     } else if (lexerCh == '-') {
         nextCh();
-	*token = 8; // -
+        *token = 8; // -
     } else if (lexerCh == '*') {
         nextCh();
-	*token = 9; // *
+        *token = 9; // *
     } else if (lexerCh == '/') {
         nextCh();
-	if (lexerCh == '/') {
-	    while (lexerCh != '\n') {
-		nextCh();
-	    }
-	    *token = getToken();
-	} else {
-	    *token = 10; // '/'
-	}
+        if (lexerCh == '/') {
+            while (lexerCh != '\n') {
+                nextCh();
+            }
+            *token = getToken();
+        } else {
+            *token = 10; // '/'
+        }
     } else if (lexerCh == '(') {
         nextCh();
-	*token = 12; // (
+        *token = 12; // (
     } else if (lexerCh == ')') {
         nextCh();
-	*token = 11; // )
+        *token = 11; // )
     } else if (lexerCh == '{') {
         nextCh();
-	*token = 13; // {
+        *token = 13; // {
     } else if (lexerCh == '}') {
         nextCh();
-	*token = 14; // }
+        *token = 14; // }
     } else if (lexerCh == '"') {
         nextCh();
-	*token = 15;
-	while (lexerCh != '"') {
-	    nextCh();
-	    if (lexerCh == '\n' || lexerCh == -1) {
-		*token = 0;
-	    }
-	}
-	if (*token) {
-	    nextCh();
-	}
+        *token = 15;
+        while (lexerCh != '"') {
+            nextCh();
+            if (lexerCh == '\n' || lexerCh == -1) {
+                *token = 0;
+            }
+        }
+        if (*token) {
+            nextCh();
+        }
     } else if (lexerCh == '\'') {
-	local escape; escape = 0;
+        local escape; escape = 0;
         nextCh();
-	*token = 16;
-	while (escape || lexerCh != '\'') {
-	    if (escape) {
-		escape = 0;
-	    } else if (!escape && lexerCh == '\\') {
-		escape = 1;
-	    }
-	    nextCh();
-	    if (lexerCh == '\n' || lexerCh == -1) {
-		*token = 0;
-	    }
-	}
-	if (*token) {
-	    nextCh();
-	}
+        *token = 16;
+        while (escape || lexerCh != '\'') {
+            if (escape) {
+                escape = 0;
+            } else if (!escape && lexerCh == '\\') {
+                escape = 1;
+            }
+            nextCh();
+            if (lexerCh == '\n' || lexerCh == -1) {
+                *token = 0;
+            }
+        }
+        if (*token) {
+            nextCh();
+        }
     } else if (lexerCh == -1) {
-	*token = 1;
+        *token = 1;
     } else {
         nextCh();
         *token = 0;
     }
     *(token + 8) = UStrCreate(lexerInternalVal);
     if (*token == 3) {
-	if (*(token + 8) == kw_if) {
-	    *token = 17;
-	} else if (*(token + 8) == kw_while) {
-	    *token = 18;
-	} else if (*(token + 8) == kw_global) {
-	    *token = 19;
-	} else if (*(token + 8) == kw_local) {
-	    *token = 20;
-	} else if (*(token + 8) == kw_else) {
-	    *token = 21;
-	} else if (*(token + 8) == kw_do) {
-	    *token = 22;
-	} else if (*(token + 8) == kw_fn) {
-	    *token = 23;
-	}
+        if (*(token + 8) == kw_if) {
+            *token = 17;
+        } else if (*(token + 8) == kw_while) {
+            *token = 18;
+        } else if (*(token + 8) == kw_global) {
+            *token = 19;
+        } else if (*(token + 8) == kw_local) {
+            *token = 20;
+        } else if (*(token + 8) == kw_else) {
+            *token = 21;
+        } else if (*(token + 8) == kw_do) {
+            *token = 22;
+        } else if (*(token + 8) == kw_fn) {
+            *token = 23;
+        }
     }
     *token;
 }
@@ -411,9 +411,9 @@ fn testLexer()
 {
     initLexer();
     while (getToken() != 1) {
-	printInt(*(token + 16)); print("."); printInt(*(token + 24));
-	print(": ("); printInt(*(token + 0)); print(") "); 
-	println(*(token + 8));
+        printInt(*(token + 16)); print("."); printInt(*(token + 24));
+        print(": ("); printInt(*(token + 0)); print(") "); 
+        println(*(token + 8));
     }
 }
 
@@ -421,13 +421,13 @@ fn testLexer()
 // symtab
 //
 // Offset in symtab info:
-// 	0 isGlobal
-// 	8 offset (used if isGlobal == 0)
+//         0 isGlobal
+//         8 offset (used if isGlobal == 0)
 //
 // Offset in symtab nodes
-// 	 0 next
-// 	 8 ident
-// 	16 offset (only exists for nodes in symtabLocalVar)
+//          0 next
+//          8 ident
+//         16 offset (only exists for nodes in symtabLocalVar)
 
 global symtabGlobalVar, symtabLocalVar;
 
@@ -436,10 +436,10 @@ fn symtab_isInList(list, ident)
     local found; found = 0;
 
     while (list && !found) {
-	if (ident == *(list + 8)) {
-	    found = list;
-	}
-	list = *list;
+        if (ident == *(list + 8)) {
+            found = list;
+        }
+        list = *list;
     }
     found;
 }
@@ -448,14 +448,14 @@ fn symtabGetInfo(ident, infoPtr)
 {
     local found;
     if (found = symtab_isInList(symtabLocalVar, ident)) {
-	if (infoPtr) {
-	    *(infoPtr + 0) = 0;
-	    *(infoPtr + 8) = *(found + 16);
-	}
+        if (infoPtr) {
+            *(infoPtr + 0) = 0;
+            *(infoPtr + 8) = *(found + 16);
+        }
     } else if (found = symtab_isInList(symtabGlobalVar, ident)) {
-	if (infoPtr) {
-	    *(infoPtr + 0) = 1;
-	}
+        if (infoPtr) {
+            *(infoPtr + 0) = 1;
+        }
     }
     found != 0;
 }
@@ -470,18 +470,18 @@ fn symtabAddGlobal(ident)
     local added, n;
 
     if (symtab_isInList(symtabGlobalVar, ident)) {
-	added = 0;
+        added = 0;
     } else {
-	n = malloc(16);
-	if (!n) {
-	    println("out of memory");
-	    added = 0;
-	} else {
-	    *(n + 0) = symtabGlobalVar;
-	    *(n + 8) = ident;
-	    symtabGlobalVar = n;
-	    added = 1;
-	}
+        n = malloc(16);
+        if (!n) {
+            println("out of memory");
+            added = 0;
+        } else {
+            *(n + 0) = symtabGlobalVar;
+            *(n + 8) = ident;
+            symtabGlobalVar = n;
+            added = 1;
+        }
     }
     added;
 }
@@ -491,19 +491,19 @@ fn symtabAddLocal(ident, offset)
     local added, n;
 
     if (symtab_isInList(symtabLocalVar, ident)) {
-	added = 0;
+        added = 0;
     } else {
-	n = malloc(24);
-	if (!n) {
-	    println("out of memory");
-	    added = 0;
-	} else {
-	    *(n +  0) = symtabLocalVar;
-	    *(n +  8) = ident;
-	    *(n + 16) = offset;
-	    symtabLocalVar = n;
-	    added = 1;
-	}
+        n = malloc(24);
+        if (!n) {
+            println("out of memory");
+            added = 0;
+        } else {
+            *(n +  0) = symtabLocalVar;
+            *(n +  8) = ident;
+            *(n + 16) = offset;
+            symtabLocalVar = n;
+            added = 1;
+        }
     }
     added;
 }
@@ -513,9 +513,9 @@ fn symtabFreeLocals()
     local next;
 
     while (symtabLocalVar) {
-	next = *(symtabLocalVar + 0);
-	free(symtabLocalVar);
-	symtabLocalVar = next;
+        next = *(symtabLocalVar + 0);
+        free(symtabLocalVar);
+        symtabLocalVar = next;
     }
 }
 
@@ -525,8 +525,8 @@ fn symtabPrintGlobals()
 
     n = symtabGlobalVar;
     while (n) {
-	genDefGlobal(*(n + 8));
-	n = *n;
+        genDefGlobal(*(n + 8));
+        n = *n;
     }
 }
 
@@ -536,8 +536,8 @@ fn symtabPrintLocals()
 
     n = symtabLocalVar;
     while (n) {
-	print(*(n + 8)); print(" has offset "); printInt(*(n+16)); println(0);
-	n = *n;
+        print(*(n + 8)); print(" has offset "); printInt(*(n+16)); println(0);
+        n = *n;
     }
 }
 
@@ -547,20 +547,20 @@ fn checkInfo(ident) {
     infoPtr = "16 bytes ......"; // 0-byte included
 
     if (symtabIsDefined(ident)) {
-	print(ident); println(" is defined");
+        print(ident); println(" is defined");
     } else {
-	print(ident); println(" is not defined");
+        print(ident); println(" is not defined");
     }
 
     if (symtabGetInfo(ident, infoPtr)) {
-	if (*(infoPtr + 0)) {
-	    print(ident); println(" is global");
-	} else {
-	    print(ident); print(" is local with offset ");
-	    printInt(*(infoPtr + 8)); println(0);
-	}
+        if (*(infoPtr + 0)) {
+            print(ident); println(" is global");
+        } else {
+            print(ident); print(" is local with offset ");
+            printInt(*(infoPtr + 8)); println(0);
+        }
     } else {
-	print("unknown identifier "); println(ident);
+        print("unknown identifier "); println(ident);
     }
 }
 
@@ -599,9 +599,9 @@ fn genResetReg()
 
 
 // offsets in genFunctionBuildingInfo
-// 	 0	fnName
-//  	 8	bbClosed
-// 	16 	retReg
+//          0        fnName
+//           8        bbClosed
+//         16         retReg
 
 global genFunctionBuildingInfo;
 
@@ -627,7 +627,7 @@ fn genGetLabel()
 fn genDefLabel(labelIdent)
 {
     if (*genFunctionBuildingInfo && !*(genFunctionBuildingInfo + 8)) {
-	genJump(labelIdent);
+        genJump(labelIdent);
     }
     print(".L"); printInt(labelIdent); println(":");
     *(genFunctionBuildingInfo + 8) = 0;
@@ -635,7 +635,7 @@ fn genDefLabel(labelIdent)
 
 fn genJump(labelIdent)
 {
-    print("	br label %.L"); printInt(labelIdent); println(0);
+    print("        br label %.L"); printInt(labelIdent); println(0);
     *(genFunctionBuildingInfo + 8) = 1;
 }
 
@@ -644,13 +644,13 @@ fn genJumpIfTrue(condVal, labelIdent)
     local condReg; condReg = genGetReg();
     local cmpReg; cmpReg = genGetReg();
 
-    print("	%"); printInt(condReg); print(" = sub i64 %");
+    print("        %"); printInt(condReg); print(" = sub i64 %");
     printInt(condVal); println(", 0");
-    print("	%"); printInt(cmpReg); print(" = icmp ne i64 %");
+    print("        %"); printInt(cmpReg); print(" = icmp ne i64 %");
     printInt(condReg); println(", 0");
 
     local contLabel; contLabel = genGetLabel();
-    print("	br i1 %"); printInt(cmpReg);
+    print("        br i1 %"); printInt(cmpReg);
     print(", label %.L"); printInt(labelIdent);
     print(", label %.L"); printInt(contLabel);
     println(0);
@@ -663,13 +663,13 @@ fn genJumpIfFalse(condVal, labelIdent)
     local condReg; condReg = genGetReg();
     local cmpReg; cmpReg = genGetReg();
 
-    print("	%"); printInt(condReg); print(" = sub i64 %");
+    print("        %"); printInt(condReg); print(" = sub i64 %");
     printInt(condVal); println(", 0");
-    print("	%"); printInt(cmpReg); print(" = icmp eq i64 %");
+    print("        %"); printInt(cmpReg); print(" = icmp eq i64 %");
     printInt(condReg); println(", 0");
 
     local contLabel; contLabel = genGetLabel();
-    print("	br i1 %"); printInt(cmpReg);
+    print("        br i1 %"); printInt(cmpReg);
     print(", label %.L"); printInt(labelIdent);
     print(", label %.L"); printInt(contLabel);
     println(0);
@@ -678,9 +678,9 @@ fn genJumpIfFalse(condVal, labelIdent)
 }
 
 // offsets in genStringList
-//     0	next
-//     8	ident
-//     16	cStr
+//     0        next
+//     8        ident
+//     16        cStr
 
 global genStringList;
 global genStringCount;
@@ -709,15 +709,15 @@ fn genDefString(val)
 fn genPrintStringList()
 {
     while (genStringList) {
-	print("@"); print(*(genStringList + 8));
-	print(" = global ["); printInt(strlen(*(genStringList + 16)));
-	print(" x i8] c"); print(*(genStringList + 16));
-	putchar(92); print("00"); putchar(34); println(", align 8");
+        print("@"); print(*(genStringList + 8));
+        print(" = global ["); printInt(strlen(*(genStringList + 16)));
+        print(" x i8] c"); print(*(genStringList + 16));
+        putchar(92); print("00"); putchar(34); println(", align 8");
 
-	local n; n = genStringList;
-	genStringList = *genStringList;
-	free(*(n + 16));
-	free(n);
+        local n; n = genStringList;
+        genStringList = *genStringList;
+        free(*(n + 16));
+        free(n);
     }
 }
 
@@ -725,21 +725,21 @@ fn parseEscape(c)
 {
     local ascii;
     if (c == 'n') {
-	ascii = '\n';
+        ascii = '\n';
     } else if (c == 't') {
-	ascii = '\t';
+        ascii = '\t';
     } else if (c == 'r') {
-	ascii = '\r';
+        ascii = '\r';
     } else if (c == '0') {
-	ascii = '\0';
+        ascii = '\0';
     } else if (c == '\\') {
-	ascii = '\\';
+        ascii = '\\';
     } else if (c == '\'') {
-	ascii = '\'';
+        ascii = '\'';
     } else if (c == '"') {
-	ascii = '"';
+        ascii = '"';
     } else {
-	ascii = c;
+        ascii = c;
     }
 
     ascii;
@@ -748,28 +748,28 @@ fn parseEscape(c)
 fn genConstant(val)
 {
     local reg; reg = genGetReg();
-    print("	; load constant "); print(val); print(" into %"); printInt(reg);
+    print("        ; load constant "); print(val); print(" into %"); printInt(reg);
     println(0);
     if (#val == '\'') {
-	local ascii;
-	if (#(val + 1) == '\\') {
-	    ascii = parseEscape(#(val + 2));
-	} else {
-	    ascii = #(val + 1);
-	}
-	print("	%"); printInt(reg); print(" = add i64 "); printInt(ascii);
-	println(", 0");
+        local ascii;
+        if (#(val + 1) == '\\') {
+            ascii = parseEscape(#(val + 2));
+        } else {
+            ascii = #(val + 1);
+        }
+        print("        %"); printInt(reg); print(" = add i64 "); printInt(ascii);
+        println(", 0");
     } else {
-	print("	%"); printInt(reg); print(" = add i64 "); print(val);
-	println(", 0");
+        print("        %"); printInt(reg); print(" = add i64 "); print(val);
+        println(", 0");
     }
     reg;
 }
 
 // offsets in genFnParamList and genFnParamListLast:
-// 	 0	next
-//  	 8	ident  	
-// 	16 	reg
+//          0        next
+//           8        ident          
+//         16         reg
 
 global genFnParamList, genFnParamListLast;
 
@@ -780,9 +780,9 @@ fn genFuncDefParam(ident)
     *(n + 8) = ident;
 
     if (!genFnParamList) {
-	genFnParamList = genFnParamListLast = n;
+        genFnParamList = genFnParamListLast = n;
     } else {
-	genFnParamListLast = *genFnParamListLast = n;
+        genFnParamListLast = *genFnParamListLast = n;
     }
     symtabAddLocal(ident, 0);
 }
@@ -795,12 +795,12 @@ fn genFuncDefBegin(name)
     print("define i64 @"); print(name); print("("); 
     local n; n = genFnParamList;
     while (n) {
-	*(n + 16) = genGetReg();
-	print("i64 %"); printInt(*(n + 16));
-	if (*n) {
-	    print(", ");
-	}
-	n = *n;
+        *(n + 16) = genGetReg();
+        print("i64 %"); printInt(*(n + 16));
+        if (*n) {
+            print(", ");
+        }
+        n = *n;
     }
     println(") {");
 
@@ -809,18 +809,18 @@ fn genFuncDefBegin(name)
 
     n = genFnParamList;
     while (n) {
-	symtabAddLocal(*(n + 8), 0);
-	print("	%"); print(*(n + 8)); println(" = alloca i64, align 8");
-	print("	store i64 %"); printInt(*(n + 16));
-	print(", ptr %"); print(*(n + 8)); println(", align 8");
-	local f; f = n;
-	n = *n;
-	free(f);
+        symtabAddLocal(*(n + 8), 0);
+        print("        %"); print(*(n + 8)); println(" = alloca i64, align 8");
+        print("        store i64 %"); printInt(*(n + 16));
+        print(", ptr %"); print(*(n + 8)); println(", align 8");
+        local f; f = n;
+        n = *n;
+        free(f);
     }
     genFnParamList = 0;
 
     *(genFunctionBuildingInfo + 16) = genGetReg();
-    print("	%"); printInt(*(genFunctionBuildingInfo + 16));
+    print("        %"); printInt(*(genFunctionBuildingInfo + 16));
     println(" = alloca i64, align 8 ; ptr to ret val");
 
     // hack: set *after* genDefLabel(entryLabel)
@@ -833,9 +833,9 @@ fn genFuncDefEnd()
 
     local leaveLabel; leaveLabel = genGetLabel();
     genDefLabel(leaveLabel);
-    print("	%"); printInt(dest); print("= load i64, ptr %");
+    print("        %"); printInt(dest); print("= load i64, ptr %");
     printInt(*(genFunctionBuildingInfo + 16)); println(", align 8");
-    print("	ret i64 %"); printInt(dest); println(0);
+    print("        ret i64 %"); printInt(dest); println(0);
     println("}"); println(0);
 
     *genFunctionBuildingInfo = 0;
@@ -845,104 +845,104 @@ fn genFuncDefEnd()
 //
 // instr (instruction code)
 //
-// 	 0	add
-// 	 1	sub
-// 	 2	mul
-// 	 3	div
-// 	 4	mod
-// 	 5	eq
-// 	 6	ne
-// 	 7	le
-// 	 8	lt
-// 	 9	ge
-// 	10	gt
+//          0        add
+//          1        sub
+//          2        mul
+//          3        div
+//          4        mod
+//          5        eq
+//          6        ne
+//          7        le
+//          8        lt
+//          9        ge
+//         10        gt
 //
 
 fn genInstr(instr, left, right)
 {
     local dest; dest = genGetReg();
     if (instr == 0) {
-	print("	%"); printInt(dest);
-	print(" = add");
-	print(" i64 %"); printInt(right); print(", %"); printInt(left);
-	println(0);
+        print("        %"); printInt(dest);
+        print(" = add");
+        print(" i64 %"); printInt(right); print(", %"); printInt(left);
+        println(0);
     } else if (instr == 1) {
-	print("	%"); printInt(dest);
-	print(" = sub");
-	print(" i64 %"); printInt(right); print(", %"); printInt(left);
-	println(0);
+        print("        %"); printInt(dest);
+        print(" = sub");
+        print(" i64 %"); printInt(right); print(", %"); printInt(left);
+        println(0);
     } else if (instr == 2) {
-	print("	%"); printInt(dest);
-	print(" = mul");
-	print(" i64 %"); printInt(right); print(", %"); printInt(left);
-	println(0);
+        print("        %"); printInt(dest);
+        print(" = mul");
+        print(" i64 %"); printInt(right); print(", %"); printInt(left);
+        println(0);
     } else if (instr == 3) {
-	print("	%"); printInt(dest);
-	print(" = sdiv");
-	print(" i64 %"); printInt(right); print(", %"); printInt(left);
-	println(0);
+        print("        %"); printInt(dest);
+        print(" = sdiv");
+        print(" i64 %"); printInt(right); print(", %"); printInt(left);
+        println(0);
     } else if (instr == 4) {
-	print("	%"); printInt(dest);
-	print(" = srem");
-	print(" i64 %"); printInt(right); print(", %"); printInt(left);
-	println(0);
+        print("        %"); printInt(dest);
+        print(" = srem");
+        print(" i64 %"); printInt(right); print(", %"); printInt(left);
+        println(0);
     } else if (instr == 5) {
-	print("	%"); printInt(dest);
-	print(" = icmp eq");
-	print(" i64 %"); printInt(right); print(", %"); printInt(left);
-	println(0);
-	left = dest; dest = genGetReg();
-	print("	%"); printInt(dest);
-	print(" = zext i1 %"); printInt(left); println(" to i64");
+        print("        %"); printInt(dest);
+        print(" = icmp eq");
+        print(" i64 %"); printInt(right); print(", %"); printInt(left);
+        println(0);
+        left = dest; dest = genGetReg();
+        print("        %"); printInt(dest);
+        print(" = zext i1 %"); printInt(left); println(" to i64");
     } else if (instr == 6) {
-	print("	%"); printInt(dest);
-	print(" = icmp ne");
-	print(" i64 %"); printInt(right); print(", %"); printInt(left);
-	println(0);
-	left = dest; dest = genGetReg();
-	print("	%"); printInt(dest);
-	print(" = zext i1 %"); printInt(left); println(" to i64");
+        print("        %"); printInt(dest);
+        print(" = icmp ne");
+        print(" i64 %"); printInt(right); print(", %"); printInt(left);
+        println(0);
+        left = dest; dest = genGetReg();
+        print("        %"); printInt(dest);
+        print(" = zext i1 %"); printInt(left); println(" to i64");
     } else if (instr == 7) {
-	print("	%"); printInt(dest);
-	print(" = icmp sle");
-	print(" i64 %"); printInt(right); print(", %"); printInt(left);
-	println(0);
-	left = dest; dest = genGetReg();
-	print("	%"); printInt(dest);
-	print(" = zext i1 %"); printInt(left); println(" to i64");
+        print("        %"); printInt(dest);
+        print(" = icmp sle");
+        print(" i64 %"); printInt(right); print(", %"); printInt(left);
+        println(0);
+        left = dest; dest = genGetReg();
+        print("        %"); printInt(dest);
+        print(" = zext i1 %"); printInt(left); println(" to i64");
     } else if (instr == 8) {
-	print("	%"); printInt(dest);
-	print(" = icmp slt");
-	print(" i64 %"); printInt(right); print(", %"); printInt(left);
-	println(0);
-	left = dest; dest = genGetReg();
-	print("	%"); printInt(dest);
-	print(" = zext i1 %"); printInt(left); println(" to i64");
+        print("        %"); printInt(dest);
+        print(" = icmp slt");
+        print(" i64 %"); printInt(right); print(", %"); printInt(left);
+        println(0);
+        left = dest; dest = genGetReg();
+        print("        %"); printInt(dest);
+        print(" = zext i1 %"); printInt(left); println(" to i64");
     } else if (instr == 9) {
-	print("	%"); printInt(dest);
-	print(" = icmp sge");
-	print(" i64 %"); printInt(right); print(", %"); printInt(left);
-	println(0);
-	left = dest; dest = genGetReg();
-	print("	%"); printInt(dest);
-	print(" = zext i1 %"); printInt(left); println(" to i64");
+        print("        %"); printInt(dest);
+        print(" = icmp sge");
+        print(" i64 %"); printInt(right); print(", %"); printInt(left);
+        println(0);
+        left = dest; dest = genGetReg();
+        print("        %"); printInt(dest);
+        print(" = zext i1 %"); printInt(left); println(" to i64");
     } else if (instr == 10) {
-	print("	%"); printInt(dest);
-	print(" = icmp sgt");
-	print(" i64 %"); printInt(right); print(", %"); printInt(left);
-	println(0);
-	left = dest; dest = genGetReg();
-	print("	%"); printInt(dest);
-	print(" = zext i1 %"); printInt(left); println(" to i64");
+        print("        %"); printInt(dest);
+        print(" = icmp sgt");
+        print(" i64 %"); printInt(right); print(", %"); printInt(left);
+        println(0);
+        left = dest; dest = genGetReg();
+        print("        %"); printInt(dest);
+        print(" = zext i1 %"); printInt(left); println(" to i64");
     } else {
-	println("genInstr: unknown instr");
+        println("genInstr: unknown instr");
     }
     dest;
 }
 
 fn genAddLocal(ident)
 {
-    print("	%"); print(ident); println(" = alloca i64, align 8");
+    print("        %"); print(ident); println(" = alloca i64, align 8");
     symtabAddLocal(ident, 0);
 }
 
@@ -954,14 +954,14 @@ fn genAddGlobal(ident)
 fn genDefGlobal(ident)
 {
     if (#ident != '.') {
-	print("@"); print(ident); println(" = global i64 0");
+        print("@"); print(ident); println(" = global i64 0");
     }
 }
 
 fn i64ToPtr(val)
 {
     local ptr; ptr = genGetReg();
-    print("	%"); printInt(ptr); print(" = inttoptr i64 %");
+    print("        %"); printInt(ptr); print(" = inttoptr i64 %");
     printInt(val); println(" to ptr");
     ptr;
 }
@@ -969,7 +969,7 @@ fn i64ToPtr(val)
 fn ptrToI64(ptr)
 {
     local val; val = genGetReg();
-    print("	%"); printInt(val); print(" = ptrtoint ptr %");
+    print("        %"); printInt(val); print(" = ptrtoint ptr %");
     printInt(ptr); println(" to i64");
     val;
 }
@@ -977,7 +977,7 @@ fn ptrToI64(ptr)
 fn i8ToI64(val)
 {
     local dest; dest = genGetReg(); 
-    print("	%"); printInt(dest); print(" = zext i8 %");
+    print("        %"); printInt(dest); print(" = zext i8 %");
     printInt(val); println(" to i64");
     dest;
 }
@@ -985,7 +985,7 @@ fn i8ToI64(val)
 fn i64ToI8(val)
 {
     local dest; dest = genGetReg(); 
-    print("	%"); printInt(dest); print(" = trunc i64 %");
+    print("        %"); printInt(dest); print(" = trunc i64 %");
     printInt(val); println(" to i8");
     dest;
 }
@@ -993,7 +993,7 @@ fn i64ToI8(val)
 fn i32ToI64(val)
 {
     local dest; dest = genGetReg(); 
-    print("	%"); printInt(dest); print(" = sext i32 %");
+    print("        %"); printInt(dest); print(" = sext i32 %");
     printInt(val); println(" to i64");
     dest;
 }
@@ -1002,7 +1002,7 @@ fn genFetchByte(addr)
 {
     addr = i64ToPtr(addr);
     local dest; dest = genGetReg();
-    print("	%"); printInt(dest); print(" = load i8, ptr %");
+    print("        %"); printInt(dest); print(" = load i8, ptr %");
     printInt(addr); println(", align 8");
     dest = i8ToI64(dest);
 }
@@ -1011,7 +1011,7 @@ fn genFetch(addr)
 {
     addr = i64ToPtr(addr);
     local dest; dest = genGetReg();
-    print("	%"); printInt(dest); print(" = load i64, ptr %");
+    print("        %"); printInt(dest); print(" = load i64, ptr %");
     printInt(addr); println(", align 8");
     dest;
 }
@@ -1020,13 +1020,13 @@ fn genStoreByte(val, addr)
 {
     addr = i64ToPtr(addr);
     local valI8; valI8 = i64ToI8(val);
-    print("	store i8 %"); printInt(valI8); print(", ptr %");
+    print("        store i8 %"); printInt(valI8); print(", ptr %");
     printInt(addr); println(", align 8");
 
     local hack; hack = genGetReg();
     // because we have no return statement. Make sure stored value is in
     // last used register.
-    print("	%"); printInt(hack); print("  = add i64 %");
+    print("        %"); printInt(hack); print("  = add i64 %");
     printInt(val); println(", 0; bloody hack");
 }
 
@@ -1035,11 +1035,11 @@ fn genStore(val, addr)
 {
     addr = i64ToPtr(addr);
     local hack; hack = genGetReg();
-    print("	store i64 %"); printInt(val); print(", ptr %");
+    print("        store i64 %"); printInt(val); print(", ptr %");
     printInt(addr); println(", align 8");
     // because we have no return statement. Make sure stored value is in
     // last used register.
-    print("	%"); printInt(hack); print("  = add i64 %");
+    print("        %"); printInt(hack); print("  = add i64 %");
     printInt(val); println(", 0; bloody hack");
 }
 
@@ -1049,14 +1049,14 @@ fn genLoadAddr(ident)
     local infoPtr; infoPtr = "16 bytes ......"; // 0-byte included
 
     if (!symtabGetInfo(ident, infoPtr)) {
-	print("unknown identifier "); println(ident);
+        print("unknown identifier "); println(ident);
     }
     if (*infoPtr) {
-	print("	%"); printInt(addr); print(" = getelementptr i64, ptr @");
-	print(ident); println(", i64 0");
+        print("        %"); printInt(addr); print(" = getelementptr i64, ptr @");
+        print(ident); println(", i64 0");
     } else {
-	print("	%"); printInt(addr); print(" = getelementptr i64, ptr %");
-	print(ident); println(", i64 0");
+        print("        %"); printInt(addr); print(" = getelementptr i64, ptr %");
+        print(ident); println(", i64 0");
     }
     addr = ptrToI64(addr);
     addr;
@@ -1067,27 +1067,27 @@ fn genLoadVar(ident)
     local infoPtr; infoPtr = "16 bytes ......"; // 0-byte included
 
     if (!symtabGetInfo(ident, infoPtr)) {
-	print("unknown identifier "); println(ident);
+        print("unknown identifier "); println(ident);
     }
     local dest; dest = genGetReg();
     if (*infoPtr) {
-	print("	%"); printInt(dest); print(" = load i64, ptr @");
-	print(ident); println(", align 8");
+        print("        %"); printInt(dest); print(" = load i64, ptr @");
+        print(ident); println(", align 8");
     } else {
-	print("	%"); printInt(dest); print(" = load i64, ptr %");
-	print(ident); println(", align 8");
+        print("        %"); printInt(dest); print(" = load i64, ptr %");
+        print(ident); println(", align 8");
     }
     dest;
 }
 
 // offset in argList
-// 	0	next
-// 	8	argReg
+//         0        next
+//         8        argReg
 
 // offset in genFnArgStack
-//   	 0	next
-//    	 8	fnName
-//    	16	argList
+//            0        next
+//             8        fnName
+//            16        argList
 
 global genFnArgStack;
 
@@ -1113,23 +1113,23 @@ fn genCallEnd()
     local extend; extend = 0;
     local retVal; retVal = genGetReg();
     if (*(genFnArgStack + 8) == UStrCreate("getchar")) {
-	print("	%"); printInt(retVal);
-	print(" = call i32 @"); print(*(genFnArgStack + 8)); print("(");
-	extend = 1;
+        print("        %"); printInt(retVal);
+        print(" = call i32 @"); print(*(genFnArgStack + 8)); print("(");
+        extend = 1;
     } else {
-	print("	%"); printInt(retVal);
-	print(" = call i64 @"); print(*(genFnArgStack + 8)); print("(");
+        print("        %"); printInt(retVal);
+        print(" = call i64 @"); print(*(genFnArgStack + 8)); print("(");
     }
     local n; n = *(genFnArgStack + 16);
     local f;
     while (n) {
-	print("i64 %"); printInt(*(n + 8));
-	if (*n) {
-	    print(", ");
-	}
-	f = n;
-	n = *n;
-	free(f);
+        print("i64 %"); printInt(*(n + 8));
+        if (*n) {
+            print(", ");
+        }
+        f = n;
+        n = *n;
+        free(f);
     }
     println(")");
 
@@ -1137,7 +1137,7 @@ fn genCallEnd()
     genFnArgStack = *genFnArgStack;
     free(f);
     if (extend) {
-	retVal = i32ToI64(retVal);
+        retVal = i32ToI64(retVal);
     }
     retVal;
 }
@@ -1160,9 +1160,9 @@ fn genSaveBoolInTmp(val, tmp)
     local valReg;
 
     if (val) {
-	valReg = genConstant(UStrCreate("1"));
+        valReg = genConstant(UStrCreate("1"));
     } else {
-	valReg = genConstant(UStrCreate("0"));
+        valReg = genConstant(UStrCreate("0"));
     }
     genStore(valReg, addr);
 }
@@ -1175,7 +1175,7 @@ fn genLoadFromTmp(tmp)
 
 fn genStoreReturnVal(retVal)
 {
-    print("	store i64 %"); printInt(retVal);
+    print("        store i64 %"); printInt(retVal);
     print(", ptr %"); printInt(*(genFunctionBuildingInfo + 16));
     println(", align 8");
 }
@@ -1246,9 +1246,9 @@ fn testGen()
     x = genFetchByte(x);
     genStore(x, y);
     genCallBegin(UStrCreate("putchar"));
-	genCallBegin(UStrCreate("putchar"));
-	genCallAddArg(x, 0);
-	genCallAddArg(genCallEnd());
+        genCallBegin(UStrCreate("putchar"));
+        genCallAddArg(x, 0);
+        genCallAddArg(genCallEnd());
     genCallEnd();
 
     x = genGetTmp();
@@ -1270,31 +1270,31 @@ fn testGen()
 //                  16 right, arglistLen, argExpr
 //                  24 argList, argPos
 // Expression kinds:
-//  	Unary 
-//    	0	address
-//    	1	deref
-//    	2	deref_byte
-//  	Binary
-//    	3	add
-//    	4	sub
-//    	5	mul
-//    	6	div
-//    	7	assign
-//    	8	mod
-//    	9	equal
-//    	10	not equal
-//    	11	less
-//    	12	less equal
-//    	13	greater	
-//    	14	greater equal
-//    	15	logical and
-//    	16	logical or
-//  	Primary
-//    	17	integer	
-//    	18	identifier
-//    	19	call
-//  	Other
-//    	20	argument node
+//          Unary 
+//            0        address
+//            1        deref
+//            2        deref_byte
+//          Binary
+//            3        add
+//            4        sub
+//            5        mul
+//            6        div
+//            7        assign
+//            8        mod
+//            9        equal
+//            10        not equal
+//            11        less
+//            12        less equal
+//            13        greater        
+//            14        greater equal
+//            15        logical and
+//            16        logical or
+//          Primary
+//            17        integer        
+//            18        identifier
+//            19        call
+//          Other
+//            20        argument node
 
 fn createUnaryExpr(kind, child)
 {
@@ -1354,15 +1354,15 @@ fn releaseExpr(expr)
 {
     if (!expr) {
     } else if (*expr >= 0 && *expr < 3) {
-	releaseExpr(*(expr + 8));
+        releaseExpr(*(expr + 8));
     } else if (*expr >= 3 && *expr < 17) {
-	releaseExpr(*(expr + 8));
-	releaseExpr(*(expr + 16));
+        releaseExpr(*(expr + 8));
+        releaseExpr(*(expr + 16));
     } else if (*expr == 19) {
-	releaseExpr(*(expr + 24));
+        releaseExpr(*(expr + 24));
     } else if (*expr == 20) {
-	releaseExpr(*(expr + 16));
-	releaseExpr(*(expr + 8));
+        releaseExpr(*(expr + 16));
+        releaseExpr(*(expr + 8));
     }
     free(expr);
 }
@@ -1371,68 +1371,68 @@ fn printExprTree(expr)
 {
     if (!expr) {
     } else if (*expr >= 0 && *expr < 3) {
-	print("[ ");
-	if (*expr == 0) {
-	    print("addr ");
-	} else if (*expr == 1) {
-	    print("deref ");
-	} else if (*expr == 2) {
-	    print("deref byte ");
-	} else {
-	    println("printExprTree_err0");
-	}
-	printExprTree(*(expr + 8));
-	print("] ");
+        print("[ ");
+        if (*expr == 0) {
+            print("addr ");
+        } else if (*expr == 1) {
+            print("deref ");
+        } else if (*expr == 2) {
+            print("deref byte ");
+        } else {
+            println("printExprTree_err0");
+        }
+        printExprTree(*(expr + 8));
+        print("] ");
     } else if (*expr >= 17 && *expr < 20) {
-	if (*expr == 17 || *expr == 18) {
-	    print("["); print(*(expr + 8)); print("]");
-	} else if (*expr == 19) {
-	    print("[call "); print(*(expr + 8));
-	    printExprTree(*(expr + 24));
-	    print("]");
-	} else {
-	    println("printExprTree_err1");
-	}
+        if (*expr == 17 || *expr == 18) {
+            print("["); print(*(expr + 8)); print("]");
+        } else if (*expr == 19) {
+            print("[call "); print(*(expr + 8));
+            printExprTree(*(expr + 24));
+            print("]");
+        } else {
+            println("printExprTree_err1");
+        }
     } else if (*expr >= 3 && *expr < 17) {               
-	print("[ ");
-	if (*expr == 3) {
-	    print("+ ");
-	} else if (*expr == 4) {
-	    print("- ");
-	} else if (*expr == 5) {
-	    print("* ");
-	} else if (*expr == 6) {
-	    print("/ ");
-	} else if (*expr == 7) {
-	    print("{=} ");
-	} else if (*expr == 8) {
-	    print("mod ");
-	} else if (*expr == 9) {
-	    print("{=}{=} ");
-	} else if (*expr == 10) {
-	    print("{!}{=} ");
-	} else if (*expr == 11) {
-	    print("< ");
-	} else if (*expr == 12) {
-	    print("<{=} ");
-	} else if (*expr == 13) {
-	    print("> ");
-	} else if (*expr == 14) {
-	    print(">{=} ");
-	} else if (*expr == 15) {
-	    print("and ");
-	} else if (*expr == 16) {
-	    print("or ");
-	} else {
-	    println("printExprTree_err2");
-	}
-	printExprTree(*(expr + 8));                                               
-	print(" ");
-	printExprTree(*(expr + 16));                                              
-	print("] ");                                                            
+        print("[ ");
+        if (*expr == 3) {
+            print("+ ");
+        } else if (*expr == 4) {
+            print("- ");
+        } else if (*expr == 5) {
+            print("* ");
+        } else if (*expr == 6) {
+            print("/ ");
+        } else if (*expr == 7) {
+            print("{=} ");
+        } else if (*expr == 8) {
+            print("mod ");
+        } else if (*expr == 9) {
+            print("{=}{=} ");
+        } else if (*expr == 10) {
+            print("{!}{=} ");
+        } else if (*expr == 11) {
+            print("< ");
+        } else if (*expr == 12) {
+            print("<{=} ");
+        } else if (*expr == 13) {
+            print("> ");
+        } else if (*expr == 14) {
+            print(">{=} ");
+        } else if (*expr == 15) {
+            print("and ");
+        } else if (*expr == 16) {
+            print("or ");
+        } else {
+            println("printExprTree_err2");
+        }
+        printExprTree(*(expr + 8));                                               
+        print(" ");
+        printExprTree(*(expr + 16));                                              
+        print("] ");                                                            
     } else if (*expr == 20) { 
-	printExprTree(*(expr + 8));
-	printExprTree(*(expr + 16));
+        printExprTree(*(expr + 8));
+        printExprTree(*(expr + 16));
     }
 }
 
@@ -1441,35 +1441,35 @@ fn genInstrFromExprKind(exprKind)
     local genInstr;
     genInstr = -1;
     if (exprKind == 3) { // add
-	genInstr = 0;
+        genInstr = 0;
     } else if (exprKind == 4) { // sub
-	genInstr = 1;
+        genInstr = 1;
     } else if (exprKind == 5) { // mul
-	genInstr = 2;
+        genInstr = 2;
     } else if (exprKind == 6) { // div
-	genInstr = 3;
+        genInstr = 3;
     } else if (exprKind == 7) { // assign
-	println("genInstrFromExprKind: assign should not be done here");
+        println("genInstrFromExprKind: assign should not be done here");
     } else if (exprKind == 8) { // mod
-	genInstr = 4;
+        genInstr = 4;
     } else if (exprKind == 9) { // equal
-	genInstr = 5;
+        genInstr = 5;
     } else if (exprKind == 10) { // not equal
-	genInstr = 6;
+        genInstr = 6;
     } else if (exprKind == 11) { // less
-	genInstr = 8;
+        genInstr = 8;
     } else if (exprKind == 12) { // less equal
-	genInstr = 7;
+        genInstr = 7;
     } else if (exprKind == 13) { // greater
-	genInstr = 10;
+        genInstr = 10;
     } else if (exprKind == 14) { // greater equal
-	genInstr = 9;
+        genInstr = 9;
     } else if (exprKind == 15) { // logical and
-	println("genInstrFromExprKind: && should not be done here");
+        println("genInstrFromExprKind: && should not be done here");
     } else if (exprKind == 16) { // logical or
-	println("genInstrFromExprKind: || should not be done here");
+        println("genInstrFromExprKind: || should not be done here");
     } else {
-	println("genInstrFromExprKind: case not handled");
+        println("genInstrFromExprKind: case not handled");
     }
     genInstr;
 }
@@ -1478,13 +1478,13 @@ fn loadExprAddress(expr)
 {                                                                                
     local dest; dest = -1;
     if (*expr == 18) { // identifier
-	dest = genLoadAddr(*(expr + 8));
+        dest = genLoadAddr(*(expr + 8));
     } else if (*expr == 1 || *expr == 2) { // deref or deref_byte
-	dest = loadExpr(*(expr + 8));
+        dest = loadExpr(*(expr + 8));
     } else {
-	println("What?");
-	print("expr kind is: "); printInt(*expr); println(0);
-	printExprTree(expr);
+        println("What?");
+        print("expr kind is: "); printInt(*expr); println(0);
+        printExprTree(expr);
     }
     dest;
 }
@@ -1498,91 +1498,91 @@ fn loadExpr(expr)
     local left, right;
 
     if (*expr == 17) { // integer
-	dest = genConstant(*(expr + 8));
+        dest = genConstant(*(expr + 8));
     } else if (*expr == 18) { // identifier
-	dest = genLoadVar(*(expr + 8));
+        dest = genLoadVar(*(expr + 8));
     } else if (*expr == 0) { // address
-	dest = loadExprAddress(*(expr + 8));
+        dest = loadExprAddress(*(expr + 8));
     } else if (*expr == 1) { // deref
         dest = genFetch(loadExpr(*(expr + 8)));
     } else if (*expr == 2) { // deref byte
         dest = genFetchByte(loadExpr(*(expr + 8)));
     } else if (*expr == 19) { // call
-	genCallBegin(*(expr + 8), *(expr + 16));
-	n = *(expr + 24);
-	while (n) {
-	    genCallAddArg(loadExpr(*(n+16)), 0);
-	    n = *(n + 8);
-	}
-	dest = genCallEnd();
+        genCallBegin(*(expr + 8), *(expr + 16));
+        n = *(expr + 24);
+        while (n) {
+            genCallAddArg(loadExpr(*(n+16)), 0);
+            n = *(n + 8);
+        }
+        dest = genCallEnd();
     } else if (*expr >= 3 && *expr < 17) { // binary
-	if (*expr == 15) { // logical and
-	    endLabel = genGetLabel();
-	    rhsLabel = genGetLabel();
-	    trueLabel = genGetLabel();
+        if (*expr == 15) { // logical and
+            endLabel = genGetLabel();
+            rhsLabel = genGetLabel();
+            trueLabel = genGetLabel();
 
-	    tmp = genGetTmp();
+            tmp = genGetTmp();
 
-	    // handle: left
-	    left = loadExpr(*(expr + 8));
-	    genJumpIfTrue(left, rhsLabel);
-	    genSaveBoolInTmp(0, tmp);
-	    println("	; jump to end");
-	    genJump(endLabel);
+            // handle: left
+            left = loadExpr(*(expr + 8));
+            genJumpIfTrue(left, rhsLabel);
+            genSaveBoolInTmp(0, tmp);
+            println("        ; jump to end");
+            genJump(endLabel);
 
-	    genDefLabel(rhsLabel);
-	    right = loadExpr(*(expr + 16));
-	    genJumpIfTrue(right, trueLabel);
-	    genSaveBoolInTmp(0, tmp);
-	    println("	; jump to end");
-	    genJump(endLabel);
+            genDefLabel(rhsLabel);
+            right = loadExpr(*(expr + 16));
+            genJumpIfTrue(right, trueLabel);
+            genSaveBoolInTmp(0, tmp);
+            println("        ; jump to end");
+            genJump(endLabel);
 
-	    genDefLabel(trueLabel);
-	    genSaveBoolInTmp(1, tmp);
-	    genDefLabel(endLabel);
+            genDefLabel(trueLabel);
+            genSaveBoolInTmp(1, tmp);
+            genDefLabel(endLabel);
 
-	    dest = genLoadFromTmp(tmp);
-	} else if (*expr == 16) { // logical or
-	    // loical: left || right
-	    endLabel = genGetLabel();
-	    rhsLabel = genGetLabel();
-	    trueLabel = genGetLabel();
+            dest = genLoadFromTmp(tmp);
+        } else if (*expr == 16) { // logical or
+            // loical: left || right
+            endLabel = genGetLabel();
+            rhsLabel = genGetLabel();
+            trueLabel = genGetLabel();
 
-	    tmp = genGetTmp();
+            tmp = genGetTmp();
 
-	    // handle: left
-	    left = loadExpr(*(expr + 8));
-	    genJumpIfFalse(left, rhsLabel);
-	    genSaveBoolInTmp(1, tmp);
-	    genJump(endLabel);
+            // handle: left
+            left = loadExpr(*(expr + 8));
+            genJumpIfFalse(left, rhsLabel);
+            genSaveBoolInTmp(1, tmp);
+            genJump(endLabel);
 
-	    genDefLabel(rhsLabel);
-	    right = loadExpr(*(expr + 16));
-	    genJumpIfTrue(right, trueLabel);
-	    genSaveBoolInTmp(0, tmp);
-	    genJump(endLabel);
+            genDefLabel(rhsLabel);
+            right = loadExpr(*(expr + 16));
+            genJumpIfTrue(right, trueLabel);
+            genSaveBoolInTmp(0, tmp);
+            genJump(endLabel);
 
-	    genDefLabel(trueLabel);
-	    genSaveBoolInTmp(1, tmp);
-	    genDefLabel(endLabel);
+            genDefLabel(trueLabel);
+            genSaveBoolInTmp(1, tmp);
+            genDefLabel(endLabel);
 
-	    dest = genLoadFromTmp(tmp);
-	} else if (*expr == 7) { // assign
+            dest = genLoadFromTmp(tmp);
+        } else if (*expr == 7) { // assign
             val = loadExpr(*(expr + 16));                           
             addr = loadExprAddress(*(expr + 8));
-	    if (**(expr + 8) == 2) { // left is dref_byte node
-		genStoreByte(val, addr);                                                 
-	    } else {
-		genStore(val, addr);                                                 
-	    }
+            if (**(expr + 8) == 2) { // left is dref_byte node
+                genStoreByte(val, addr);                                                 
+            } else {
+                genStore(val, addr);                                                 
+            }
             dest = val;                                                          
-	} else {
-	    left = loadExpr(*(expr + 8));
-	    right = loadExpr(*(expr + 16));
-	    dest = genInstr(genInstrFromExprKind(*expr), right, left);
-	}
+        } else {
+            left = loadExpr(*(expr + 8));
+            right = loadExpr(*(expr + 16));
+            dest = genInstr(genInstrFromExprKind(*expr), right, left);
+        }
     } else {
-	println("loadExpr: not all cases handled");
+        println("loadExpr: not all cases handled");
     }
     dest;
 }
@@ -1614,8 +1614,8 @@ fn testExpr()
     print("; "); printExprTree(expr);
     println(0);
     expr = createBinaryExpr(6,
-			    createIdentifierExpr(cX),
-			    expr);
+                            createIdentifierExpr(cX),
+                            expr);
     print("; "); printExprTree(expr);
     println(0);
                                                                                  
@@ -1644,8 +1644,8 @@ fn testExpr()
 fn expected(kind)
 {
     if (*token != kind) {
-	printInt(*(token + 16)); print("."); printInt(*(token + 24));
-	print(" expected token kind: "); printInt(kind); println(0);
+        printInt(*(token + 16)); print("."); printInt(*(token + 24));
+        print(" expected token kind: "); printInt(kind); println(0);
     }
 }
 
@@ -1659,37 +1659,37 @@ fn exprKindFromTokenKind(kind)
 {
     local exprKind; exprKind = -1;
 
-    if (kind == 4) { 			// token kind: '='
-	exprKind = 7; 			// assign
-    } else if (kind == 7) { 		// token kind: '+'
-	exprKind = 3; 			// add
-    } else if (kind == 8) { 		// token kind: '-'
-	exprKind = 4; 			// sub
-    } else if (kind == 9) { 		// token kind: '*'
-	exprKind = 5; 			// mul
-    } else if (kind == 10) { 		// token kind: '/'
-	exprKind = 6; 			// div
-    } else if (kind == 31) { 		// token kind: '%'
-	exprKind = 8; 			// mod
-    } else if (kind == 28) { 		// token kind: '=='
-	exprKind = 9; 			// equal
-    } else if (kind == 30) { 		// token kind: '!='
-	exprKind = 10; 			// not equal
-    } else if (kind == 25) { 		// token kind: '<'
-	exprKind = 11; 			// less
-    } else if (kind == 24) { 		// token kind: '<='
-	exprKind = 12; 			// less equal
-    } else if (kind == 26) { 		// token kind: '>'
-	exprKind = 13; 			// greater
-    } else if (kind == 27) { 		// token kind: '>='
-	exprKind = 14; 			// greater equal
-    } else if (kind == 34) { 		// token kind: '&&'
-	exprKind = 15; 			// logical and
-    } else if (kind == 36) { 		// token kind: '||'
-	exprKind = 16; 			// logical or
+    if (kind == 4) {                         // token kind: '='
+        exprKind = 7;                         // assign
+    } else if (kind == 7) {                 // token kind: '+'
+        exprKind = 3;                         // add
+    } else if (kind == 8) {                 // token kind: '-'
+        exprKind = 4;                         // sub
+    } else if (kind == 9) {                 // token kind: '*'
+        exprKind = 5;                         // mul
+    } else if (kind == 10) {                 // token kind: '/'
+        exprKind = 6;                         // div
+    } else if (kind == 31) {                 // token kind: '%'
+        exprKind = 8;                         // mod
+    } else if (kind == 28) {                 // token kind: '=='
+        exprKind = 9;                         // equal
+    } else if (kind == 30) {                 // token kind: '!='
+        exprKind = 10;                         // not equal
+    } else if (kind == 25) {                 // token kind: '<'
+        exprKind = 11;                         // less
+    } else if (kind == 24) {                 // token kind: '<='
+        exprKind = 12;                         // less equal
+    } else if (kind == 26) {                 // token kind: '>'
+        exprKind = 13;                         // greater
+    } else if (kind == 27) {                 // token kind: '>='
+        exprKind = 14;                         // greater equal
+    } else if (kind == 34) {                 // token kind: '&&'
+        exprKind = 15;                         // logical and
+    } else if (kind == 36) {                 // token kind: '||'
+        exprKind = 16;                         // logical or
     } else {
-	print("kind = "); printInt(kind); println(0);
-	println("exprKindFromToken: case not handled");
+        print("kind = "); printInt(kind); println(0);
+        println("exprKindFromToken: case not handled");
     }
     exprKind;
 }
@@ -1697,32 +1697,32 @@ fn exprKindFromTokenKind(kind)
 fn tokenKindPrec(kind)
 {
     local p; p = 0;
-    if (kind == 9) {			// token kind: '*'
-	p = 13;
-    } else if (kind == 10) {		// token kind: '/'
-	p = 13;
-    } else if (kind == 31) {		// token kind: '%'
-	p = 13;
-    } else if (kind == 7) {		// token kind: '+'
-	p = 12;
-    } else if (kind == 8) {		// token kind: '-'
-	p = 12;
-    } else if (kind == 26) {		// token kind: '>'
-	p = 10;
-    } else if (kind == 27) {		// token kind: '>='
-	p = 10;
-    } else if (kind == 25) {		// token kind: '<'
-	p = 10;
-    } else if (kind == 24) {		// token kind: '<='
-	p = 10;
-    } else if (kind == 28) {		// token kind: '=='
-	p = 9;
-    } else if (kind == 30) {		// token kind: '!='
-	p = 9;
-    } else if (kind == 34) {		// token kind: '&&'
-	p = 5;
-    } else if (kind == 36) {		// token kind: '||'
-	p = 4;
+    if (kind == 9) {                        // token kind: '*'
+        p = 13;
+    } else if (kind == 10) {                // token kind: '/'
+        p = 13;
+    } else if (kind == 31) {                // token kind: '%'
+        p = 13;
+    } else if (kind == 7) {                // token kind: '+'
+        p = 12;
+    } else if (kind == 8) {                // token kind: '-'
+        p = 12;
+    } else if (kind == 26) {                // token kind: '>'
+        p = 10;
+    } else if (kind == 27) {                // token kind: '>='
+        p = 10;
+    } else if (kind == 25) {                // token kind: '<'
+        p = 10;
+    } else if (kind == 24) {                // token kind: '<='
+        p = 10;
+    } else if (kind == 28) {                // token kind: '=='
+        p = 9;
+    } else if (kind == 30) {                // token kind: '!='
+        p = 9;
+    } else if (kind == 34) {                // token kind: '&&'
+        p = 5;
+    } else if (kind == 36) {                // token kind: '||'
+        p = 4;
     }
 }
 
@@ -1732,15 +1732,15 @@ fn parseExpr()
     if (!left) {
         left = 0;
     } else {
-	while (*token == 4) { // kind: '='
-	    local kind; kind = *token;
-	    getToken();
-	    local right; right = parseExpr();
-	    if (!right) {
-		error("expected expression");
-	    }
-	    left = createBinaryExpr(exprKindFromTokenKind(kind), left, right);
-	}
+        while (*token == 4) { // kind: '='
+            local kind; kind = *token;
+            getToken();
+            local right; right = parseExpr();
+            if (!right) {
+                error("expected expression");
+            }
+            left = createBinaryExpr(exprKindFromTokenKind(kind), left, right);
+        }
     }
     left;
 }
@@ -1749,22 +1749,22 @@ fn parseBinary(prec)
 {
     local left; left = parsePrefix();
     if (!left) {
-	left = 0;
+        left = 0;
     } else {
-	local p; p = tokenKindPrec(*token);
-	while (p >= prec) {
-	    while (tokenKindPrec(*token) == p) {
-		local kind; kind = *token;
-		getToken();
-		local right; right = parseBinary(p + 1);
-		if (!right) {
-		    error("expression expected\n");
-		}
-		left = createBinaryExpr(exprKindFromTokenKind(kind),
-				        left, right);
-	    }
-	    p = p - 1;
-	}
+        local p; p = tokenKindPrec(*token);
+        while (p >= prec) {
+            while (tokenKindPrec(*token) == p) {
+                local kind; kind = *token;
+                getToken();
+                local right; right = parseBinary(p + 1);
+                if (!right) {
+                    error("expression expected\n");
+                }
+                left = createBinaryExpr(exprKindFromTokenKind(kind),
+                                        left, right);
+            }
+            p = p - 1;
+        }
     }
     left;
 }
@@ -1773,30 +1773,30 @@ fn parsePrefix()
 {
     local expr;
 
-    if (*token == 29) { 			// kind: '!'
-	getToken();
-	expr = createBinaryExpr(9,		// equal
-				parsePrefix(),
-				createIntegerExpr(UStrCreate("0")));
-    } else if (*token == 8) {			// kind: '-'
-	getToken();
-	expr = createBinaryExpr(4,		// sub
-				createIntegerExpr(UStrCreate("0")),
-				parsePrefix());
-    } else if (*token == 33) {			// kind: '&'
-	getToken();
-	expr = createUnaryExpr(0,		// address
-			       parsePrefix());
-    } else if (*token == 9) {			// kind: '*'
-	getToken();
-	expr = createUnaryExpr(1,		// deref
-			       parsePrefix());
-    } else if (*token == 32) {			// kind: '#'
-	getToken();
-	expr = createUnaryExpr(2,		// deref_byte
-			       parsePrefix());
+    if (*token == 29) {                         // kind: '!'
+        getToken();
+        expr = createBinaryExpr(9,                // equal
+                                parsePrefix(),
+                                createIntegerExpr(UStrCreate("0")));
+    } else if (*token == 8) {                        // kind: '-'
+        getToken();
+        expr = createBinaryExpr(4,                // sub
+                                createIntegerExpr(UStrCreate("0")),
+                                parsePrefix());
+    } else if (*token == 33) {                        // kind: '&'
+        getToken();
+        expr = createUnaryExpr(0,                // address
+                               parsePrefix());
+    } else if (*token == 9) {                        // kind: '*'
+        getToken();
+        expr = createUnaryExpr(1,                // deref
+                               parsePrefix());
+    } else if (*token == 32) {                        // kind: '#'
+        getToken();
+        expr = createUnaryExpr(2,                // deref_byte
+                               parsePrefix());
     } else {
-	expr = parseFactor();
+        expr = parseFactor();
     }
     expr;
 }
@@ -1812,46 +1812,46 @@ fn parseFactor()
         expr = createIntegerExpr(*(token + 8));
         getToken();
     } else if (*token == 15) { // string literal
-	ident = genDefString(*(token + 8));
-	getToken();
-	symtabAddGlobal(ident);
-	expr = createUnaryExpr(0, // address
-			       createIdentifierExpr(ident));
-    } else if (*token == 3) { // identifier
-	ident = *(token + 8);
+        ident = genDefString(*(token + 8));
         getToken();
-	// hack: for now no support for function pointers
-	if (*token == 12) { // kind '('
-	    getToken();
-	    callExpr = createCallExpr(ident);
-	    argExpr = parseExpr();
-	    if (argExpr) {
-		addArgExpr(callExpr, argExpr);
-		while (*token == 6) { // kind: ','
-		    getToken();
-		    argExpr = parseExpr();
-		    if (!argExpr) {
-			error("expression exprected");
-		    }
-		    addArgExpr(callExpr, argExpr);
-		}
-	    }
-	    if (*token != 11) { // kind ')'
-		expected("expected )");
-	    }
-	    getToken();
-	    expr = callExpr;
-	} else {
-	    expr = createIdentifierExpr(ident);
-	}
+        symtabAddGlobal(ident);
+        expr = createUnaryExpr(0, // address
+                               createIdentifierExpr(ident));
+    } else if (*token == 3) { // identifier
+        ident = *(token + 8);
+        getToken();
+        // hack: for now no support for function pointers
+        if (*token == 12) { // kind '('
+            getToken();
+            callExpr = createCallExpr(ident);
+            argExpr = parseExpr();
+            if (argExpr) {
+                addArgExpr(callExpr, argExpr);
+                while (*token == 6) { // kind: ','
+                    getToken();
+                    argExpr = parseExpr();
+                    if (!argExpr) {
+                        error("expression exprected");
+                    }
+                    addArgExpr(callExpr, argExpr);
+                }
+            }
+            if (*token != 11) { // kind ')'
+                expected("expected )");
+            }
+            getToken();
+            expr = callExpr;
+        } else {
+            expr = createIdentifierExpr(ident);
+        }
     } else if (*token == 12) { // kind: '('
         getToken();
         expr = parseExpr();
         if (!expr) {
-	    error("expected expression");
+            error("expected expression");
         }
         if (*token != 11) { // kind ')'
-	    expected("expected )");
+            expected("expected )");
         }
         getToken();
     } else {
@@ -1901,22 +1901,22 @@ fn parseGlobal()
 {
     local succ;
     if (*token != 19) { // kind: global
-	succ = 0;
+        succ = 0;
     } else {
-	getToken();
-	local done; done = 0;
-	while (*token == 3 && !done) { // identifier
-	    genAddGlobal(*(token + 8));
-	    getToken();
-	    if (*token != 6) { // kind: ','
-		done = 1;
-	    } else {
-		getToken();
-	    }
-	}
-	expected(5); // kind ';'
-	getToken();
-	succ = 1;
+        getToken();
+        local done; done = 0;
+        while (*token == 3 && !done) { // identifier
+            genAddGlobal(*(token + 8));
+            getToken();
+            if (*token != 6) { // kind: ','
+                done = 1;
+            } else {
+                getToken();
+            }
+        }
+        expected(5); // kind ';'
+        getToken();
+        succ = 1;
     }
     succ;
 }
@@ -1925,23 +1925,23 @@ fn parseGlobal()
 fn parseLocal()
 {
     local succ;
-    if (*token != 20) {	// kind: local
-	succ = 0;
+    if (*token != 20) {        // kind: local
+        succ = 0;
     } else {
-	getToken();
-	local done; done = 0;
-	while (*token == 3 && !done) { // identifier
-	    genAddLocal(*(token + 8));
-	    getToken();
-	    if (*token != 6) { // kind: ','
-		done = 1;
-	    } else {
-		getToken();
-	    }
-	}
-	expected(5); // kind ';'
-	getToken();
-	succ = 1;
+        getToken();
+        local done; done = 0;
+        while (*token == 3 && !done) { // identifier
+            genAddLocal(*(token + 8));
+            getToken();
+            if (*token != 6) { // kind: ','
+                done = 1;
+            } else {
+                getToken();
+            }
+        }
+        expected(5); // kind ';'
+        getToken();
+        succ = 1;
     }
     succ;
 }
@@ -1950,37 +1950,37 @@ fn parseLocal()
 fn parseFn()
 {
     local succ;
-    if (*token != 23) { 			// kind: fn
-	succ = 0;
+    if (*token != 23) {                         // kind: fn
+        succ = 0;
     } else {
-	getToken();
-	expected(3); 				// identifier
-	local fnName; fnName = *(token + 8);
-	getToken();
+        getToken();
+        expected(3);                                 // identifier
+        local fnName; fnName = *(token + 8);
+        getToken();
 
-	expected(12); 				// kind: '('
-	getToken();
+        expected(12);                                 // kind: '('
+        getToken();
 
-	if (*token == 3) {			// identifier
-	    genFuncDefParam(*(token + 8));
-	    getToken();
-	    while (*token == 6) {		// kind: ','
-		getToken();
-		expected(3);			// kind: identifier
-		genFuncDefParam(*(token + 8));
-		getToken();
-	    }
-	}
-	genFuncDefBegin(fnName);
+        if (*token == 3) {                        // identifier
+            genFuncDefParam(*(token + 8));
+            getToken();
+            while (*token == 6) {                // kind: ','
+                getToken();
+                expected(3);                        // kind: identifier
+                genFuncDefParam(*(token + 8));
+                getToken();
+            }
+        }
+        genFuncDefBegin(fnName);
 
-	expected(11);				// kind: ')'
-	getToken();
+        expected(11);                                // kind: ')'
+        getToken();
 
-	expected(13);				// kind: '{'
-	parseCompoundStmt();
+        expected(13);                                // kind: '{'
+        parseCompoundStmt();
 
-	genFuncDefEnd();
-	succ = 1;
+        genFuncDefEnd();
+        succ = 1;
     }
     succ;
 }
@@ -1989,19 +1989,19 @@ fn parseFn()
 fn parseCompoundStmt()
 {
     local succ;
-    if (*token != 13) {			// kind: '{'
-	succ = 0;
+    if (*token != 13) {                        // kind: '{'
+        succ = 0;
     } else {
-	getToken();
-	while (parseExprStmt()
-	    || parseLocal()
-	    || parseWhileStmt()
-	    || parseIfStmt())
-	{
-	}
-	expected(14);				// kind: '}'
-	getToken();
-	succ = 1;
+        getToken();
+        while (parseExprStmt()
+            || parseLocal()
+            || parseWhileStmt()
+            || parseIfStmt())
+        {
+        }
+        expected(14);                                // kind: '}'
+        getToken();
+        succ = 1;
     }
     succ;
 }
@@ -2012,14 +2012,14 @@ fn parseExprStmt()
     local succ;
     local expr; expr = parseExpr();
     if (!expr) {
-	succ = 0;
+        succ = 0;
     } else {
-	expected(5);				// kind: ';'
-	getToken();
-	local retVal; retVal = loadExpr(expr);
-	genStoreReturnVal(retVal);
-	releaseExpr(expr);
-	succ = 1;
+        expected(5);                                // kind: ';'
+        getToken();
+        local retVal; retVal = loadExpr(expr);
+        genStoreReturnVal(retVal);
+        releaseExpr(expr);
+        succ = 1;
     }
     succ;
 }
@@ -2028,37 +2028,37 @@ fn parseExprStmt()
 fn parseWhileStmt()
 {
     local succ;
-    if (*token != 18) {					// kind: while
-	succ = 0;
+    if (*token != 18) {                                        // kind: while
+        succ = 0;
     } else {
-	getToken();
+        getToken();
 
-	local condLabel; condLabel = genGetLabel();
-	local doneLabel; doneLabel = genGetLabel();
+        local condLabel; condLabel = genGetLabel();
+        local doneLabel; doneLabel = genGetLabel();
 
-	expected(12);					// kind: '('
-	getToken();
+        expected(12);                                        // kind: '('
+        getToken();
 
-	local expr; expr = parseExpr();
-	if (!expr) {
-	    error("expression expected");
-	}
+        local expr; expr = parseExpr();
+        if (!expr) {
+            error("expression expected");
+        }
 
-	expected(11);					// kind: ')'
-	getToken();
+        expected(11);                                        // kind: ')'
+        getToken();
 
-	genDefLabel(condLabel);
-	local condVal; condVal = loadExpr(expr);
-	genJumpIfFalse(condVal, doneLabel);
-	releaseExpr(expr);
+        genDefLabel(condLabel);
+        local condVal; condVal = loadExpr(expr);
+        genJumpIfFalse(condVal, doneLabel);
+        releaseExpr(expr);
 
-	if (!parseCompoundStmt()) {
-	    error("compound for then branch expected");
-	}
+        if (!parseCompoundStmt()) {
+            error("compound for then branch expected");
+        }
      
-	genJump(condLabel);
-	genDefLabel(doneLabel);
-	succ = 1;
+        genJump(condLabel);
+        genDefLabel(doneLabel);
+        succ = 1;
     }
     succ;
 }
@@ -2067,45 +2067,45 @@ fn parseWhileStmt()
 fn parseIfStmt()
 {
     local succ;
-    if (*token != 17) { 				// kind: if
-	succ = 0;
+    if (*token != 17) {                                 // kind: if
+        succ = 0;
     } else {
-	getToken();
+        getToken();
 
-	local doneLabel; doneLabel = genGetLabel();
-	local elseLabel; elseLabel = genGetLabel();
+        local doneLabel; doneLabel = genGetLabel();
+        local elseLabel; elseLabel = genGetLabel();
 
-	expected(12);					// kind: '('
-	getToken();
+        expected(12);                                        // kind: '('
+        getToken();
 
-	local expr; expr = parseExpr();
-	if (!expr) {
-	    error("expression expected");
-	}
+        local expr; expr = parseExpr();
+        if (!expr) {
+            error("expression expected");
+        }
 
-	expected(11);					// kind: )
-	getToken();
+        expected(11);                                        // kind: )
+        getToken();
 
-	local condVal; condVal = loadExpr(expr);
-	genJumpIfFalse(condVal, elseLabel);
-	releaseExpr(expr);
+        local condVal; condVal = loadExpr(expr);
+        genJumpIfFalse(condVal, elseLabel);
+        releaseExpr(expr);
 
-	if (!parseCompoundStmt()) {
-	    error("compound for then branch expected");
-	}
-	genJump(doneLabel);
+        if (!parseCompoundStmt()) {
+            error("compound for then branch expected");
+        }
+        genJump(doneLabel);
 
-	genDefLabel(elseLabel);
-	if (*token == 21) {				// kind: else
-	    getToken();
-	    if (*token == 17) {				// kind: if
-		parseIfStmt();
-	    } else if (!parseCompoundStmt()) {
-		error("compound for else branch expected");
-	    }
-	}
-	genDefLabel(doneLabel);
-	succ = 1;
+        genDefLabel(elseLabel);
+        if (*token == 21) {                                // kind: else
+            getToken();
+            if (*token == 17) {                                // kind: if
+                parseIfStmt();
+            } else if (!parseCompoundStmt()) {
+                error("compound for else branch expected");
+            }
+        }
+        genDefLabel(doneLabel);
+        succ = 1;
     }
     succ;
 }

@@ -1,11 +1,8 @@
 # Session 00 — Getting Ready
 
-Unlike the other sessions, Session 00 does not have a worksheet.
-
-Its purpose is simply to make sure that every student starts the course with a
-working development environment. In practice, this means installing the
-required software, testing the tools, and solving the inevitable installation
-problems before the actual course begins.
+Unlike the later sessions, Session 00 is not about introducing new programming
+concepts. Its purpose is to ensure that everyone starts Session 01 with a
+working development environment.
 
 Students are, of course, welcome to install everything beforehand. Instructions
 are available for Windows (WSL), macOS, and Ubuntu Linux. However, no
@@ -15,7 +12,7 @@ will get everything working together.
 Experience from previous years suggests that software installation is one of
 the few things in computer science that occasionally resists scientific
 explanation. Two students may have identical hardware and operating systems,
-yet completely different problems. Or no problems at all.
+yet completely different problems—or no problems at all.
 
 For that reason, Session 00 is intentionally relaxed. We bring power strips,
 students bring their laptops, and together we make sure everyone is ready for
@@ -49,3 +46,30 @@ The goal of these repositories is to reduce the installation process to a
 single command whenever possible. Keeping the installation separate from the
 course material allows the setup to evolve independently as operating systems,
 package managers, and compiler versions change over time.
+
+## Lecturer Notes
+
+Unlike the later sessions, Session 00 already includes a small worksheet. Its
+purpose is not to teach new concepts but to verify that the installation was
+successful. Students work through a few simple tasks:
+
+- using the terminal,
+- creating and editing a source file,
+- compiling and running a small C program,
+- compiling and running a small ABC program.
+
+This serves two purposes.
+
+First, students whose installation already works immediately become familiar
+with the basic development workflow:
+
+> edit → compile → run → fix errors
+
+Second, it allows us to focus our attention on the comparatively small group of
+students whose installation still causes problems. Instead of waiting for
+everyone to finish, the rest of the class already starts working through the
+worksheet.
+
+I also hand out a printed Vim cheat sheet during this session. Students are
+free to continue using Nano throughout the course, but those who are curious
+about Neovim already have a compact reference available from day one.

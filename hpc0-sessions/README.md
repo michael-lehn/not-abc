@@ -19,13 +19,28 @@ Problems that look trivial to an experienced programmer can easily become
 insurmountable obstacles for someone writing their first programs.
 
 For that reason, the actual programming happened during two-hour classroom
-sessions. Students brought their own laptops, and the instructors worked
-directly with them until everyone had successfully implemented the exercises on
-their own. The goal was never to show finished solutions, but to help every
-student reach them independently.
+sessions. Students brought their own laptops, and I worked with them
+individually until everyone had successfully implemented the exercises on their
+own.
 
-A typical course consists of around **20 students** and is supervised by **two
-instructors**. No previous programming experience is assumed.
+The course is typically taught by two instructors. I lead the sessions, while
+the second instructor is usually a teaching assistant who completed the course
+only a few years earlier. Having recently gone through exactly the same
+learning process, they often remember very well where beginners struggle and
+can provide a perspective that complements my own.
+
+One advantage of this format is that every semester is different. The videos
+remain largely unchanged, but the classroom sessions evolve continuously. The
+worksheets are adjusted, explanations change, and discussions naturally follow
+the interests and questions of the current group of students. Teaching a small
+group makes it possible to respond to individual difficulties instead of
+following a fixed script.
+
+The goal was never to present finished solutions, but to help every student
+arrive at them independently.
+
+A typical course consists of around **20 students**. No previous programming
+experience is assumed.
 
 Designing such a course is surprisingly similar to teaching first-year
 mathematics. One cannot simply present all concepts at once. Every session must

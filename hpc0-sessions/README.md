@@ -23,11 +23,21 @@ sessions. Students brought their own laptops, and I worked with them
 individually until everyone had successfully implemented the exercises on their
 own.
 
-The course is typically taught by two instructors. I lead the sessions, while
-the second instructor is usually a teaching assistant who completed the course
-only a few years earlier. Having recently gone through exactly the same
-learning process, they often remember very well where beginners struggle and
-can provide a perspective that complements my own.
+The sessions are led by me, together with a teaching assistant who usually
+completed the course only a few years earlier. Having recently gone through
+exactly the same learning process, they often remember very well where
+beginners struggle and can provide a perspective that complements my own.
+
+The worksheets probably convey the atmosphere better than any description
+could. In essence, however, a session is simply a room full of people trying to
+write software. Some students collaborate, others prefer to work quietly on
+their own, and everyone is free to switch between these modes whenever they
+like.
+
+Meanwhile, the two of us walk around the room answering questions. Sometimes
+the discussion is about compiler design or computer architecture. Sometimes it
+is about a missing semicolon. Both are perfectly valid questions. There are no
+"stupid questions" during a session.
 
 One advantage of this format is that every semester is different. The videos
 remain largely unchanged, but the classroom sessions evolve continuously. The

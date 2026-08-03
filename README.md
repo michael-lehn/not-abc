@@ -22,9 +22,9 @@ whenever my schedule allows.
 The translated worksheets, lecturer notes, and additional teaching material can
 be found here:
 
-- [HPC0 Sessions](hpc0-sessions/README.md)
-  - [Session 00 – Getting Ready](hpc0-sessions/session00/README.md)
-  - [Session 01 – Top-Down: Experiments with ABC](hpc0-sessions/session01/README.md)
+- [HPC0 Sessions](hpc0-sessions/)
+  - [Session 00 – Getting Ready](hpc0-sessions/session00/)
+  - [Session 01 – Top-Down: Experiments with ABC](hpc0-sessions/session01/)
 
 ## Language Overview
 

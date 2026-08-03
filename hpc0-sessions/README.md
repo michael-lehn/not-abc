@@ -1,5 +1,8 @@
 # HPC0 Sessions
 
+  - [Session 00 – Getting Ready](hpc0-sessions/session00/README.md)
+  - [Session 01 – Top-Down: Experiments with ABC](hpc0-sessions/session01/README.md)
+
 As mentioned in the top-level `README.md`, the `not-abc` language and compiler
 were developed as part of my undergraduate course **Introduction to High
 Performance Computing** at Ulm University.

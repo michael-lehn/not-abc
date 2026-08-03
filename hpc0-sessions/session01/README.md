@@ -43,9 +43,10 @@ course. Among other things, students encounter
 - text editors,
 - additional language features.
 
-The long-term structure of the course is intentionally not explained in detail
-at this point. Rather than spending a significant amount of time motivating
-future topics, we prefer students to start programming as early as possible.
+One of my teaching principles is to start programming as early as possible.
+Rather than explaining the long-term purpose of every topic in advance, I
+prefer to let students discover those connections themselves as the course
+progresses.
 
 The worksheet therefore focuses on practical skills such as
 

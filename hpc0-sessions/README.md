@@ -8,8 +8,9 @@ As mentioned in the top-level `README.md`, the `not-abc` language and compiler
 were developed as part of my undergraduate course **Introduction to High
 Performance Computing** at Ulm University.
 
-This directory contains the teaching material used during the course. The
-complete course consists of **26 sessions**, numbered **Session 00** to
+This directory contains the teaching material used during the course.
+
+The complete course consists of **26 sessions**, numbered **Session 00** to
 **Session 25**.
 
 

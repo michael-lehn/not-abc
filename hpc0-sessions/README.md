@@ -8,7 +8,10 @@ As mentioned in the top-level `README.md`, the `not-abc` language and compiler
 were developed as part of my undergraduate course **Introduction to High
 Performance Computing** at Ulm University.
 
-This directory contains the teaching material used during the course.
+This directory contains the teaching material used during the course. The
+complete course consists of **26 sessions**, numbered **Session 00** to
+**Session 25**.
+
 
 The course was taught in a **flipped classroom** format.
 
@@ -66,13 +69,10 @@ In our case, this challenge was called **Tuesday and Friday**. During the
 summer semester we met every Tuesday and Friday for two hours. Between these
 meetings, students prepared by watching the videos.
 
-The complete course consists of **26 sessions**, numbered **Session 00** to
-**Session 25**.
 
-All lecture videos are already available in English (spoken by a German
-mathematician with a noticeable accent—but hopefully understandable). The
-session worksheets currently exist only in German. I plan to translate them
-into English gradually as time permits and make them available here.
+All lecture videos are already available in English. The session worksheets
+currently exist only in German. I plan to translate them into English gradually
+as time permits and make them available here.
 
 Each session directory will also contain a small `README.md` with **lecturer
 notes**. These are not part of the student material. Instead, they describe the

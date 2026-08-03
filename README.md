@@ -25,6 +25,7 @@ be found here:
 - [HPC0 Sessions](hpc0-sessions/)
   - [Session 00 – Getting Ready](hpc0-sessions/session00/)
   - [Session 01 – Top-Down: Experiments with ABC](hpc0-sessions/session01/)
+  - [Session 02 – Bottom-Up: Logic Gates](hpc0-sessions/session02)
 
 ## Language Overview
 

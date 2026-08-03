@@ -27,6 +27,10 @@ be found here:
   - [Session 01 – Top-Down: Experiments with ABC](hpc0-sessions/session01/)
   - [Session 02 – Bottom-Up: Logic Gates](hpc0-sessions/session02)
 
+The complete course consists of **26 sessions**, numbered **Session 00** to
+**Session 25**.
+
+
 ## Language Overview
 
 A `not-abc` program consists of global variables and function definitions.

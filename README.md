@@ -12,6 +12,20 @@ surprisingly small language is sufficient to implement a complete compiler.
 misaligned on GitHub, append `?ts=8` to the URL or configure your GitHub tab
 width accordingly.
 
+## Work in Progress: Teaching Material
+
+I am currently translating the teaching material for my undergraduate course
+**Introduction to High Performance Computing (HPC0)** into English. This is an
+ongoing effort and will take some time, but I try to make regular progress
+whenever my schedule allows.
+
+The translated worksheets, lecturer notes, and additional teaching material can
+be found here:
+
+- [HPC0 Sessions](hpc0-sessions/README.md)
+  - [Session 00 – Getting Ready](hpc0-sessions/session00/README.md)
+  - [Session 01 – Top-Down: Experiments with ABC](hpc0-sessions/session01/README.md)
+
 ## Language Overview
 
 A `not-abc` program consists of global variables and function definitions.

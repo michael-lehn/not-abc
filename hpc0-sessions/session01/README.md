@@ -7,9 +7,9 @@ This directory contains the lecturer notes for **Session 01** of the HPC0 course
 Before students start working on the worksheet in the classroom, they are
 expected to watch the following videos:
 
-- https://www.youtube.com/watch?v=UW_aVHYz3Y0
-- https://www.youtube.com/watch?v=gnplpV9H5Ko
-- https://www.youtube.com/watch?v=ycfB_F1K260
+- [**S01.01 – ABC Examples 1:** Program Control Flow](https://www.youtube.com/watch?v=UW_aVHYz3Y0)
+- [**S01.02 – ABC Examples 2:** Local and Global Variables](https://www.youtube.com/watch?v=gnplpV9H5Ko)
+- [**S01.03 – ABC Examples 3:** Looking Behind the Scenes — Generated Assembly Code and Compiler Optimizations](https://www.youtube.com/watch?v=ycfB_F1K260)
 
 At Ulm University, these videos are also made available through Moodle for
 offline viewing. The accompanying lecture slides are distributed as well and

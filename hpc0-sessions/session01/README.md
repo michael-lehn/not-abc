@@ -1,6 +1,6 @@
 # Lecturer Notes — Worksheet 1
 
-This repository contains the lecturer notes for **Worksheet 1** of the HPC0 course.
+This directory contains the lecturer notes for **Session 01** of the HPC0 course.
 
 ## Prerequisites
 

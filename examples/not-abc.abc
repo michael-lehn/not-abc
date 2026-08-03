@@ -1946,7 +1946,7 @@ fn parseLocal()
     succ;
 }
 
-// fn = "fn" "(" [identifier { "," identifier } ]")" compound-stmt
+// fn = "fn" identifier "(" [identifier { "," identifier } ]")" compound-stmt
 fn parseFn()
 {
     local succ;

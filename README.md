@@ -46,7 +46,8 @@ The grammar is:
 top-level     = { global | fn } EOI
 global        = "global" identifier { "," identifier } ";"
 local         = "local" identifier { "," identifier } ";"
-fn            = "fn" identifier "(" ")" compound-stmt
+fn            = "fn" identifier "(" [identifier { "," identifier } ]")"
+                compound-stmt
 
 compound-stmt = "{"
                   { expr-stmt | local | while-stmt | if-stmt }

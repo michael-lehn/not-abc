@@ -1,0 +1,123 @@
+@ <stdio.hdr>
+
+enum TokenKind {
+    EOI, // = 0 (end of input)
+    BAD,
+    INTEGER,
+    PLUS,
+    ASTERISK,
+    SEMICOLON,
+    LPAREN,
+    RPAREN,
+};
+
+global token: int = 0;
+global ch: int = 0;
+global val: int = 0;
+
+fn getToken()
+{
+    if (ch >= '0' && ch <= '9') {
+        val = 0;
+        while (ch >= '0' && ch <= '9') {
+            val = val * 10;
+            val = val + ch - '0';
+            ch = getchar();
+        }
+        token = INTEGER;
+    } else if (ch == '+') {
+        ch = getchar();
+        token = PLUS;
+    } else if (ch == '*') {
+        ch = getchar();
+        token = ASTERISK;
+    } else if (ch == ';') {
+        ch = getchar();
+        token = SEMICOLON;
+    } else if (ch == '(') {
+        ch = getchar();
+        token = LPAREN;
+    } else if (ch == ')') {
+        ch = getchar();
+        token = RPAREN;
+    } else if (ch == EOF) {
+        token = EOI;
+    } else {
+        ch = getchar();
+        getToken();
+    }
+}
+
+global reg: int;
+
+fn parseSum(): int;
+
+fn parseInt(): int
+{
+    if (token == INTEGER) {
+        getToken();
+        printf("\tload %d, %%%d\n", val, ++reg);
+        return reg;
+    } if (token == LPAREN) {
+        getToken();
+        local sum: int = parseSum();
+        if (sum < 0) {
+            printf("sum expected\n");
+            return -1;
+        }
+        if (token != RPAREN) {
+            printf("expected ')'\n");
+            return -1;
+        }
+        getToken();
+        return sum;
+    } else {
+        return -1;
+    }
+}
+
+fn parseProd(): int
+{
+    local prod: int = parseInt();
+    if (prod < 0) {
+        return -1;
+    }
+    while (token == ASTERISK) {
+        getToken();
+        local factor: int = parseInt();
+        if (factor < 0) {
+            printf("expected factor\n");
+            return -1;
+        }
+        printf("\tmul %%%d, %%%d, %%%d\n", factor, prod, ++reg);
+    }
+    return reg;
+}
+
+fn parseSum(): int
+{
+    local sum: int = parseProd();
+    if (sum < 0) {
+        return -1;
+    }
+    while (token == PLUS) {
+        getToken();
+        local summand: int = parseProd();
+        if (summand < 0) {
+            printf("expected summand\n");
+            return -1;
+        }
+        printf("\tadd %%%d, %%%d, %%%d\n", summand, sum, ++reg);
+    }
+    return reg;
+}
+
+fn main()
+{
+    getToken();
+    for (local sum: int = -1; (sum = parseSum()) >= 0; ) {
+        if (token == SEMICOLON) {
+            getToken();
+        }
+    }
+}

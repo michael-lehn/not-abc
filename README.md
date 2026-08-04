@@ -26,6 +26,7 @@ be found here:
   - [Session 00 – Getting Ready](hpc0-sessions/session00/)
   - [Session 01 – Top-Down: Experiments with ABC](hpc0-sessions/session01/)
   - [Session 02 – Bottom-Up: Logic Gates](hpc0-sessions/session02)
+  - [Session 03 – Top-Down: Control Flow and Function Calls](hpc0-sessions/session03/)
 
 The complete course consists of **26 sessions**, numbered **Session 00** to
 **Session 25**.

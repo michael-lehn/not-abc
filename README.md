@@ -414,3 +414,10 @@ usefulness is usually a welcome consequence rather than the primary motivation.
 
 This philosophy is reflected throughout the course—from constructing a
 processor out of logic gates to writing a self-hosting compiler.
+
+## License
+
+Copyright (C) 2026 Michael C. Lehn, Ulm University
+
+This project is licensed under the GNU General Public License
+version 3 or later. See [LICENSE](LICENSE) for details.

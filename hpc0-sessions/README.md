@@ -4,6 +4,7 @@
   - [Session 01 – Top-Down: Experiments with ABC](session01)
   - [Session 02 – Bottom-Up: Logic Gates](session02)
   - [Session 03 – Top-Down: Control Flow and Function Calls](hpc0-sessions/session03/)
+  - [Session 04 – Bottom-Up: Building a simple ALU (Part 1 of 2)](hpc0-sessions/session04/)
 
 As mentioned in the top-level `README.md`, the `not-abc` language and compiler
 were developed as part of my undergraduate course **Introduction to High

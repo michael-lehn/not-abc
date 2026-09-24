@@ -5,7 +5,7 @@
   - [Session 02 – Bottom-Up: Logic Gates](session02)
   - [Session 03 – Top-Down: Control Flow and Function Calls](session03)
   - [Session 04 – Bottom-Up: Building a simple ALU (Part 1 of 2)](session04)
-  - Session 05 - Top-Down: Control Structures, Arrays and Local Variables
+  - [Session 05 - Top-Down: Control Structures, Arrays and Local Variables](session05/)
   - [Session 06 – Bottom-Up: Building a simple ALU (Part 2 of 2)](session06)
 
 As mentioned in the top-level `README.md`, the `not-abc` language and compiler

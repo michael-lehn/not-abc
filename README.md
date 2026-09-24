@@ -28,7 +28,7 @@ be found here:
   - [Session 02 – Bottom-Up: Logic Gates](hpc0-sessions/session02)
   - [Session 03 – Top-Down: Control Flow and Function Calls](hpc0-sessions/session03/)
   - [Session 04 – Bottom-Up: Building a simple ALU (Part 1 of 2)](hpc0-sessions/session04/)
-  - Session 05 - Top-Down: Control Structures, Arrays and Local Variables
+  - [Session 05 - Top-Down: Control Structures, Arrays and Local Variables](hpc0-sessions/session05/)
   - [Session 06 – Bottom-Up: Building a simple ALU (Part 2 of 2)](hpc0-sessions/session06/)
 
 The complete course consists of **26 sessions**, numbered **Session 00** to

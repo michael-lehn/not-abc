@@ -1,4 +1,4 @@
-# HPC0 --- Worksheet 5: From Control Flow to Memory
+# HPC0 --- Worksheet 5: Stack, Arrays and Pointers
 
 ## Lecturer Notes
 

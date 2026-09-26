@@ -7,6 +7,7 @@
   - [Session 04 – Bottom-Up: Building a simple ALU (Part 1 of 2)](session04)
   - [Session 05 - Top-Down: Control Structures, Arrays and Local Variables](session05/)
   - [Session 06 – Bottom-Up: Building a simple ALU (Part 2 of 2)](session06)
+  - [Session 07 – Top-Down: Pointers, Structs, Lists, ...](session07)
 
 As mentioned in the top-level `README.md`, the `not-abc` language and compiler
 were developed as part of my undergraduate course **Introduction to High

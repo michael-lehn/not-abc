@@ -33,6 +33,23 @@ be found here:
   - [Session 07 – Top-Down: Pointers, Structs, Lists, ...](hpc0-sessions/session07)
   - [Session 08 – Bottom-Up: ULM (Ulm Lecture Machine) on Paper](hpc0-sessions/session08/)
   - [Session 09 – Top-Down: Building a Symbol Table](hpc0-sessions/session09)
+  - Session 10 – Bottom-Up: First Steps in Assembly Programming
+  - Session 11 - A Bloody Compiler Project: Building a Lexer
+  - Session 12 - Top-Down: Strings, Pointers, and Unique String
+  - Session 13 - A Bloody Compiler Project: A Bloody Compiler Project: Expression Trees
+  - Session 14 – Bottom-Up: Function Calls and the Stack
+  - Session 15 - A Bloody Compiler Project: From Parsing to Code Generation
+  - Session 16 - Top-Down: Unions, Memory Layout, and Type Design
+  - Session 17 - A Bloody Compiler Project: Variables and Assignments
+  - Session 18 – Bottom-Up: Function Calls and Stack Frames
+  - Session 19 - A Bloody Compiler Project: Code Generation for Conditional Jumps, Function Calls and Stack Frames
+  - Session 20 - Top-Down: From Algebraic Data Types to Dynamic Polymorphism
+  - Session 21 - A Bloody Compiler Project: Extending the Lexer
+  - Session 22 - A Bloody Compiler Project: Control Structures
+  - Session 23 - A Bloody Compiler Project: Function Calls
+  - Session 24 - A Bloody Compiler Project: Support for Pointers
+  - Session 25 - A Bloody Compiler Project: Writing Programs with Our Compiler
+  - Session 26 - A Bloody Compiler Project: Adding an LLVM Backend and Moving toward Self-Hosting
 
 The complete course consists of **26 sessions**, numbered **Session 00** to
 **Session 25**.

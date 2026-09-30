@@ -31,6 +31,7 @@ be found here:
   - [Session 05 - Top-Down: Control Structures, Arrays and Local Variables](hpc0-sessions/session05/)
   - [Session 06 – Bottom-Up: Building a simple ALU (Part 2 of 2)](hpc0-sessions/session06/)
   - [Session 07 – Top-Down: Pointers, Structs, Lists, ...](hpc0-sessions/session07)
+  - [Session 07 – Top-Down: Building a Symbol Table](hpc0-sessions/session09)
 
 The complete course consists of **26 sessions**, numbered **Session 00** to
 **Session 25**.

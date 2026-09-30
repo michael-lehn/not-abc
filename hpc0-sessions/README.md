@@ -25,8 +25,7 @@
   - Session 22 - A Bloody Compiler Project: Control Structures
   - Session 23 - A Bloody Compiler Project: Function Calls
   - Session 24 - A Bloody Compiler Project: Support for Pointers
-  - Session 25 - A Bloody Compiler Project: Writing Programs with Our Compiler
-  - Session 26 - A Bloody Compiler Project: Adding an LLVM Backend and Moving toward Self-Hosting
+  - Session 25 - A Bloody Compiler Project: Adding an LLVM Backend and Moving toward Self-Hosting
 
 As mentioned in the top-level `README.md`, the `not-abc` language and compiler
 were developed as part of my undergraduate course **Introduction to High

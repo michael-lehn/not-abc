@@ -48,8 +48,7 @@ be found here:
   - Session 22 - A Bloody Compiler Project: Control Structures
   - Session 23 - A Bloody Compiler Project: Function Calls
   - Session 24 - A Bloody Compiler Project: Support for Pointers
-  - Session 25 - A Bloody Compiler Project: Writing Programs with Our Compiler
-  - Session 26 - A Bloody Compiler Project: Adding an LLVM Backend and Moving toward Self-Hosting
+  - Session 25 - A Bloody Compiler Project: Adding an LLVM Backend and Moving toward Self-Hosting
 
 The complete course consists of **26 sessions**, numbered **Session 00** to
 **Session 25**.

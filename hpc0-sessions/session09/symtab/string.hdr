@@ -1,0 +1,1 @@
+type String: array[42] of char;

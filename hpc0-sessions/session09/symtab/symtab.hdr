@@ -1,0 +1,20 @@
+@ "string.hdr"
+
+struct SymtabInfo
+{
+    isGlobal: bool;
+    offset: int;
+};
+
+extern fn symtabGetInfo(ident: String, info: -> SymtabInfo): bool; 
+extern fn symtabIsDefined(ident: String): bool;
+
+extern fn symtabAddGlobal(ident: String): bool;
+extern fn symtabAddLocal(ident: String, offset: int): bool;
+extern fn symtabFreeLocals();
+
+extern fn symtabPrintGlobals();
+extern fn symtabPrintLocals();
+
+
+

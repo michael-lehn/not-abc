@@ -6,7 +6,7 @@ struct SymtabInfo
     offset: int;
 };
 
-extern fn symtabGetInfo(ident: String, info: -> SymtabInfo): bool; 
+extern fn symtabGetInfo(ident: String, info: ->SymtabInfo): bool; 
 extern fn symtabIsDefined(ident: String): bool;
 
 extern fn symtabAddGlobal(ident: String): bool;

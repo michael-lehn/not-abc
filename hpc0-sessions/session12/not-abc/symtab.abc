@@ -5,17 +5,17 @@
 @ "symtab.hdr"
 
 struct Node {
-    ident: String;
+    ident: ->UStr;
     offset: int;
     next: -> Node;
 };
 
-global globalVar, localVar: ->Node;
+global globalVar, localVar: -> Node;
 
-fn isInList(list: ->readonly Node, ident: String): ->readonly Node
+fn isInList(list: ->readonly Node, ident: ->UStr): ->readonly Node
 {
     while (list) {
-	if (!strcmp(list->ident, ident)) {
+	if (list->ident == ident) {
 	    return list;
 	}
 	list = list->next;
@@ -23,7 +23,7 @@ fn isInList(list: ->readonly Node, ident: String): ->readonly Node
     return nullptr;
 }
 
-fn symtabGetInfo(ident: String, info: ->SymtabInfo): bool
+fn symtabGetInfo(ident: ->UStr, info: -> SymtabInfo): bool
 {
     assert(info);
     local found: ->readonly Node;
@@ -39,12 +39,12 @@ fn symtabGetInfo(ident: String, info: ->SymtabInfo): bool
     }
 }
 
-fn symtabIsDefined(ident: String): bool
+fn symtabIsDefined(ident: ->UStr): bool
 {
     return isInList(localVar, ident) || isInList(globalVar, ident);
 }
 
-fn symtabAddGlobal(ident: String): bool
+fn symtabAddGlobal(ident: ->UStr): bool
 {
     if (!isInList(globalVar, ident)) {
 	local n: ->Node = malloc(sizeof(*n));
@@ -58,7 +58,7 @@ fn symtabAddGlobal(ident: String): bool
     }
 }
 
-fn symtabAddLocal(ident: String, offset: int): bool
+fn symtabAddLocal(ident: ->UStr, offset: int): bool
 {
     if (!isInList(localVar, ident)) {
 	local n: ->Node = malloc(sizeof(*n));

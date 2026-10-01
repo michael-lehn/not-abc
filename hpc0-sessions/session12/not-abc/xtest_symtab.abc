@@ -5,22 +5,22 @@
  fn main()
  {
      // add some global and local variables
-     assert(symtabAddGlobal((String)"foo"));                    
-     symtabAddLocal((String)"bar", -8);                     
+     assert(symtabAddGlobal(UStrCreate("foo")));                    
+     symtabAddLocal(UStrCreate("bar"), -8);                     
      printf("GLOBAL VARIABLES:\n");
      symtabPrintGlobals();        
      printf("LOCAL VARIABLES:\n");
      symtabPrintLocals();
 
-     assert(symtabIsDefined((String)"foo"));
-     assert(!symtabAddGlobal((String)"foo"));
+     assert(symtabIsDefined(UStrCreate("foo")));
+     assert(!symtabAddGlobal(UStrCreate("foo")));
 
      local info: SymtabInfo;
-     symtabGetInfo((String)"foo", &info);
+     symtabGetInfo(UStrCreate("foo"), &info);
      assert(info.isGlobal);
 
-     symtabAddLocal((String)"bar", -8);                     
-     symtabGetInfo((String)"bar", &info);
+     symtabAddLocal(UStrCreate("bar"), -8);                     
+     symtabGetInfo(UStrCreate("bar"), &info);
      assert(!info.isGlobal);
      assert(info.offset == -8);
 

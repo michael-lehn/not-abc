@@ -34,7 +34,7 @@ be found here:
   - [Session 08 – Bottom-Up: ULM (Ulm Lecture Machine) on Paper](hpc0-sessions/session08/)
   - [Session 09 – Top-Down: Building a Symbol Table](hpc0-sessions/session09)
   - Session 10 – Bottom-Up: First Steps in Assembly Programming
-  - Session 11 - A Bloody Compiler Project: Let There Be a Lexer
+  - [Session 11 - A Bloody Compiler Project: Let There Be a Lexer](hpc0-sessions/session11)
   - Session 12 - Top-Down: Strings, Pointers, and Unique String
   - Session 13 - A Bloody Compiler Project: Expression Trees
   - Session 14 – Bottom-Up: Function Calls and the Stack

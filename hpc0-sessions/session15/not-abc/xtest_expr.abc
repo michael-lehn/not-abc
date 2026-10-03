@@ -1,0 +1,17 @@
+@ <stdio.hdr>
+@ "expr.hdr"
+
+fn main()
+{
+    local expr: -> Expr;
+
+    expr = createBinaryExpr(EXPR_ADD,
+                            createBinaryExpr(EXPR_MUL,
+                                             createIntegerExpr(UStrCreate("2")),
+                                             createIntegerExpr(UStrCreate("3"))),
+                            createIntegerExpr(UStrCreate("4")));
+    printExprTree(expr);
+    printf("\n");
+
+    releaseExpr(expr);
+}

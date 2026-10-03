@@ -38,7 +38,7 @@ be found here:
   - [Session 12 - Top-Down: Strings, Pointers, and Unique String](hpc0-sessions/session12)
   - [Session 13 - A Bloody Compiler Project: Expression Trees](hpc0-sessions/session13)
   - Session 14 – Bottom-Up: Function Calls and the Stack
-  - Session 15 – A Bloody Compiler Project: Build System & Pimpin' the Grammar
+  - [Session 15 – A Bloody Compiler Project: Build System & Pimpin' the Grammar](hpc0-sessions/session15)
   - Session 16 - Top-Down: Unions, Memory Layout, and Type Design
   - Session 17 - A Bloody Compiler Project: From Parsing to Code Generation
   - Session 18 – Bottom-Up: Function Calls and Stack Frames

@@ -15,13 +15,13 @@
   - [Session 12 - Top-Down: Strings, Pointers, and Unique String](session12)
   - [Session 13 - A Bloody Compiler Project: Expression Trees](session13)
   - Session 14 – Bottom-Up: Function Calls and the Stack
-  - Session 15 - A Bloody Compiler Project: From Parsing to Code Generation
+  - Session 15 – A Bloody Compiler Project: Build System & Pimpin' the Grammar
   - Session 16 - Top-Down: Unions, Memory Layout, and Type Design
-  - Session 17 - A Bloody Compiler Project: Variables and Assignments
+  - Session 17 - A Bloody Compiler Project: From Parsing to Code Generation
   - Session 18 – Bottom-Up: Function Calls and Stack Frames
-  - Session 19 - A Bloody Compiler Project: Code Generation for Conditional Jumps, Function Calls and Stack Frames
+  - Session 19 - A Bloody Compiler Project: Variables and Assignments
   - Session 20 - Top-Down: From Algebraic Data Types to Dynamic Polymorphism
-  - Session 21 - A Bloody Compiler Project: Extending the Lexer
+  - Session 21 - A Bloody Compiler Project: Code Generation for Conditional Jumps, Function Calls and Stack Frames
   - Session 22 - A Bloody Compiler Project: Control Structures
   - Session 23 - A Bloody Compiler Project: Function Calls
   - Session 24 - A Bloody Compiler Project: Support for Pointers

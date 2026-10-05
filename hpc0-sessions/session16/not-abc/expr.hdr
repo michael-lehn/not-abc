@@ -2,22 +2,26 @@
 
 enum ExprKind
 {
-    EXPR_ADD,
+    EXPR_UNARY,                         // new: begin
+    EXPR_UNARY_MINUS = EXPR_UNARY,
+    EXPR_UNARY_END,
+
+    EXPR_BINARY = EXPR_UNARY_END,       // new: end
+    EXPR_ADD = EXPR_BINARY,
+    EXPR_SUB,
     EXPR_MUL,
+    EXPR_DIV,
+    EXPR_MOD,
+    EXPR_BINARY_END,
 
+    EXPR_PRIMARY = EXPR_BINARY_END,
     EXPR_INTEGER,
+    EXPR_CALL,
+    EXPR_PRIMARY_END,
+
+    EXPR_ARGNODE,
 };
 
-struct Expr
-{
-    kind: ExprKind;
-    binary:     struct Binary {
-        left, right: ->Expr;
-    };
-    primary: struct Primary {
-        decimal: ->UStr;
-    };
-};
 struct Expr
 {
     kind: ExprKind;
@@ -46,8 +50,11 @@ struct Expr
 };
 
 // constructors (caller becomes owner)
+extern fn createUnaryExpr(kind: ExprKind, child: ->Expr): ->Expr;
 extern fn createBinaryExpr(kind: ExprKind, left: ->Expr, right: ->Expr): ->Expr;
 extern fn createIntegerExpr(val: ->UStr): ->Expr;
+extern fn createCallExpr(fnName: ->UStr): ->Expr;
+extern fn addArgExpr(callExpr: ->Expr, argExpr: ->Expr);
 
 // destructor
 extern fn releaseExpr(expr: ->Expr);

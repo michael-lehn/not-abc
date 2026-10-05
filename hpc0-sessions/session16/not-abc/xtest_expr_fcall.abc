@@ -1,0 +1,16 @@
+@ <stdio.hdr>
+@ "expr.hdr"
+
+fn main()
+{
+    local expr: -> Expr;
+
+    expr = createCallExpr(UStrCreate("foo"));
+    addArgExpr(expr, createIntegerExpr(UStrCreate("4")));
+    addArgExpr(expr, createIntegerExpr(UStrCreate("2")));
+
+    printExprTree(expr);
+    printf("\n");
+
+    releaseExpr(expr);
+}

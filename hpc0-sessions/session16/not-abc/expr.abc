@@ -1,0 +1,95 @@
+@ <stdio.hdr>
+@ <stdlib.hdr>
+@ "expr.hdr"
+
+fn createBinaryExpr(kind: ExprKind, left: ->Expr, right: ->Expr): ->Expr
+{
+    local n: -> Expr = malloc(sizeof(*n));
+    assert(n);
+    n->kind = kind;
+    n->binary.left = left;
+    n->binary.right = right;
+    return n;
+}
+
+fn createIntegerExpr(val: ->UStr): ->Expr
+{
+    local n: -> Expr = malloc(sizeof(*n));
+    assert(n);
+    n->kind = EXPR_INTEGER;
+    n->primary.decimal = val;
+    return n;
+}
+
+fn createCallExpr(fnName: ->UStr): ->Expr
+{
+    local n: -> Expr = malloc(sizeof(*n));
+    n->kind = EXPR_CALL;
+    n->primary.call.fnName = fnName;
+    n->primary.call.argListLen = 0;
+    n->primary.call.argList = nullptr;
+    return n;
+}
+
+fn releaseExpr(expr: ->Expr)
+{
+    if (expr->kind >= EXPR_BINARY && expr->kind < EXPR_BINARY_END) {
+	releaseExpr(expr->binary.left);
+	releaseExpr(expr->binary.right);
+    } else if (expr->kind == EXPR_CALL) {
+	releaseExpr(expr->primary.call.argList);
+    } else if (expr->kind == EXPR_ARGNODE) {
+	releaseExpr(expr->arg.expr);
+	if (expr->arg.next) {
+	    releaseExpr(expr->arg.next);
+	}
+    }
+    free(expr);
+}
+
+fn addArgExpr(callExpr: ->Expr, argExpr: ->Expr)
+{
+    local n: -> Expr = malloc(sizeof(*n));
+    n->kind = EXPR_ARGNODE;
+    n->arg.expr = argExpr;
+    n->arg.pos = callExpr->primary.call.argListLen;
+    n->arg.next = callExpr->primary.call.argList;
+    ++callExpr->primary.call.argListLen;
+    callExpr->primary.call.argList = n;
+}
+
+fn printExprTree(expr: ->Expr)
+{
+    if (expr->kind >= EXPR_PRIMARY && expr->kind < EXPR_PRIMARY_END) {               
+        switch (expr->kind) {                                                    
+            case EXPR_INTEGER:
+		printf("[%s]", expr->primary.decimal);
+		break;
+	    case EXPR_CALL:
+		printf("[call %s ", expr->primary.call.fnName);
+		printExprTree(expr->primary.call.argList);
+		printf("]");
+		break;
+            default: assert(0);                                                  
+	}
+    } else if (expr->kind >= EXPR_BINARY && expr->kind < EXPR_BINARY_END) {               
+        printf("[ ");
+        switch (expr->kind) {
+            case EXPR_ADD: printf("+ "); break;
+            case EXPR_SUB: printf("- "); break;
+            case EXPR_MUL: printf("* "); break;
+            case EXPR_DIV: printf("/ "); break;
+            case EXPR_MOD: printf("mod "); break;
+            default: assert(0);
+        }
+        printExprTree(expr->binary.left);
+        printf(" ");
+        printExprTree(expr->binary.right);
+        printf("] ");
+    } else if (expr->kind == EXPR_ARGNODE) { 
+	if (expr->arg.next) {
+	    printExprTree(expr->arg.next);
+	}
+	printExprTree(expr->arg.expr);
+    }
+}

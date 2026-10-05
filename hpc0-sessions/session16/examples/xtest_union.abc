@@ -1,0 +1,28 @@
+@ <stdio.hdr>
+
+struct IEEE_754
+{
+    union {
+        d: double;
+        i: u64;
+	c: array[8] of char;
+    };
+};
+
+global x: IEEE_754 = { .d = 1};
+
+fn main()
+{
+    printf("x.d = %g\n", x.d);
+    printf("x.i = 0x%016llX = %llu\n", x.i, x.i);
+
+    printf("Some Info:\n");
+    printf("sizeof(x) = %zu\n", sizeof(x));
+    printf("sizeof(IEEE_754) = %zu\n", sizeof(IEEE_754));
+    printf("&x   = %p\n", &x);
+    printf("&x.d = %p\n", &x.d);
+    printf("&x.i = %p\n", &x.i);
+    for (local i: int = 0; i < 8; ++i) {
+	printf("x.c[%d] = %02X\n", i, x.c[i]);
+    }
+}

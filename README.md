@@ -33,7 +33,7 @@ be found here:
   - [Session 07 – Top-Down: Pointers, Structs, Lists, ...](hpc0-sessions/session07)
   - Session 08 – Bottom-Up: ULM (Ulm Lecture Machine) on Paper
   - [Session 09 – Top-Down: Building a Symbol Table](hpc0-sessions/session09)
-  - Session 10 – Bottom-Up: First Steps in Assembly Programming
+  - [Session 10 – Bottom-Up: Assembly & Code Generation](hpc0-session1/session10)
   - [Session 11 - A Bloody Compiler Project: Let There Be a Lexer](hpc0-sessions/session11)
   - [Session 12 - Top-Down: Strings, Pointers, and Unique String](hpc0-sessions/session12)
   - [Session 13 - A Bloody Compiler Project: Expression Trees](hpc0-sessions/session13)

@@ -1,0 +1,14 @@
+extern fn genInit();
+extern fn genExit();
+
+type GenReg: unsigned;
+extern fn genReleaseReg(reg: GenReg);
+extern fn genConstant(val: ->readonly char): GenReg;
+
+enum GenInstr
+{
+    GEN_ADD,
+    GEN_SUB,
+};
+
+extern fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg;

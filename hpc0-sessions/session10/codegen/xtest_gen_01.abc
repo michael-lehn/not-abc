@@ -1,0 +1,14 @@
+@ <stdio.hdr>
+@ "gen.hdr"
+
+fn main()
+{
+    genInit();
+    local a: GenReg = genConstant("42");
+    local b: GenReg = genConstant("13");
+    genReleaseReg(a);
+    local c: GenReg = genInstr(GEN_SUB, a, b);
+    genReleaseReg(b);
+    genReleaseReg(c);
+    genExit();
+}

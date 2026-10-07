@@ -1,0 +1,98 @@
+@ <stdio.hdr>
+@ "gen.hdr"
+
+//------------------------------------------------------------------------------
+
+enum Segment
+{
+    UNDEFINED,
+    TEXT,
+    DATA,
+    BSS,
+};
+
+global curSegment: Segment  = UNDEFINED;
+
+fn setSegment(seg: Segment)
+{
+    if (seg == curSegment) {
+	return;
+    } else {
+	switch (seg) {
+	    default: assert(0 && "not all cases handled");
+	    case TEXT: printf("\t.text\n"); break;
+	    case DATA: printf("\t.data\n"); break;
+	    case BSS: printf("\t.bss\n"); break;
+	}
+	curSegment = seg;
+    }
+}
+
+//------------------------------------------------------------------------------
+
+global usedReg: array[16] of int;
+global numUsedReg: int;
+
+fn getReg(): GenReg
+{
+    for (local r: GenReg = 4; r < sizeof(usedReg)/sizeof(usedReg[0]); ++r) {
+        if (!usedReg[r]) {
+            usedReg[r] = 1;
+	    ++numUsedReg;
+            return r;
+        }
+    }
+    assert(0 && "getReg: out of registers!\n");
+    return 0;
+}
+
+//------------------------------------------------------------------------------
+
+fn genReleaseReg(reg: GenReg)
+{
+    assert(usedReg[reg]);
+    if (usedReg[reg]) {
+	usedReg[reg] = 0;
+	--numUsedReg;
+    }
+}
+
+fn genInit()
+{
+    setSegment(TEXT);
+    printf("\tloadz \t0, \t%%1\n");
+}
+
+fn genExit()
+{
+    printf("\thalt \t0\n");
+}
+
+fn genConstant(val: ->readonly char): GenReg
+{
+    local reg: GenReg = getReg();
+    setSegment(TEXT);
+    printf("\tloadz \t%s, \t%%%d\n", val, reg);
+    return reg;
+}
+
+//------------------------------------------------------------------------------
+
+fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg
+{
+    local dest: GenReg = getReg();
+    setSegment(TEXT);
+    switch (instr) {
+	case GEN_ADD:
+	    printf("\taddq \t%%%d, \t%%%d, \t%%%d\n", left, right, dest);
+	    return dest;
+	case GEN_SUB:
+	    printf("\tsubq \t%%%d, \t%%%d, \t%%%d\n", left, right, dest);
+	    return dest;
+	default: assert(0 && "not all cases handled");
+    }
+    assert(0 && "ups: internal error (forgotten return in a case??)");
+    return 0; // never reached
+}
+
+

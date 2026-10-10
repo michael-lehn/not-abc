@@ -34,21 +34,21 @@ be found here:
   - Session 08 – Bottom-Up: ULM (Ulm Lecture Machine) on Paper
   - [Session 09 – Top-Down: Building a Symbol Table](hpc0-sessions/session09)
   - [Session 10 – Bottom-Up: Assembly & Code Generation](hpc0-sessions/session10)
-  - [Session 11 - A Bloody Compiler Project: Let There Be a Lexer](hpc0-sessions/session11)
+  - [Session 11 - Not A Bloody Compiler Project: Let There Be a Lexer](hpc0-sessions/session11)
   - [Session 12 - Top-Down: Strings, Pointers, and Unique String](hpc0-sessions/session12)
-  - [Session 13 - A Bloody Compiler Project: Expression Trees](hpc0-sessions/session13)
+  - [Session 13 - Not A Bloody Compiler Project: Expression Trees](hpc0-sessions/session13)
   - [Session 14 – Bottom-Up: Function Calls and the Stack](hpc0-sessions/session14)
-  - [Session 15 – A Bloody Compiler Project: Build System & Pimpin' the Grammar](hpc0-sessions/session15)
+  - [Session 15 – Not A Bloody Compiler Project: Build System & Pimpin' the Grammar](hpc0-sessions/session15)
   - [Session 16 - Top-Down: Unions, Memory Layout, and Type Design](hpc0-sessions/session16)
-  - Session 17 - A Bloody Compiler Project: From Parsing to Code Generation
+  - Session 17 - Not A Bloody Compiler Project: From Parsing to Code Generation
   - Session 18 – Bottom-Up: Function Calls and Stack Frames
-  - Session 19 - A Bloody Compiler Project: Variables and Assignments
+  - Session 19 - Not A Bloody Compiler Project: Variables and Assignments
   - Session 20 - Top-Down: From Algebraic Data Types to Dynamic Polymorphism
-  - Session 21 - A Bloody Compiler Project: Code Generation for Conditional Jumps, Function Calls and Stack Frames
-  - Session 22 - A Bloody Compiler Project: Control Structures
-  - Session 23 - A Bloody Compiler Project: Function Calls
-  - Session 24 - A Bloody Compiler Project: Support for Pointers
-  - Session 25 - A Bloody Compiler Project: Adding an LLVM Backend and Moving toward Self-Hosting
+  - Session 21 - Not A Bloody Compiler Project: Code Generation for Conditional Jumps, Function Calls and Stack Frames
+  - Session 22 - Not A Bloody Compiler Project: Control Structures
+  - Session 23 - Not A Bloody Compiler Project: Function Calls
+  - Session 24 - Not A Bloody Compiler Project: Support for Pointers
+  - Session 25 - Not A Bloody Compiler Project: Adding an LLVM Backend and Moving toward Self-Hosting
 
 
 The complete course consists of **26 sessions**, numbered **Session 00** to

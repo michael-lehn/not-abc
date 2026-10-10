@@ -1,0 +1,175 @@
+@ <stdio.hdr>
+@ <stdlib.hdr>
+@ "gen.hdr"
+
+//------------------------------------------------------------------------------
+
+enum Segment
+{
+    UNDEFINED,
+    TEXT,
+    DATA,
+    BSS,
+};
+
+global curSegment: Segment  = UNDEFINED;
+
+fn setSegment(seg: Segment)
+{
+    if (seg == curSegment) {
+	return;
+    } else {
+	switch (seg) {
+	    default: assert(0 && "not all cases handled");
+	    case TEXT: printf("\t.text\n"); break;
+	    case DATA: printf("\t.data\n"); break;
+	    case BSS: printf("\t.bss\n"); break;
+	}
+	curSegment = seg;
+    }
+}
+
+//------------------------------------------------------------------------------
+
+global usedReg: array[16] of int;
+global numUsedReg: int;
+
+fn getReg(): GenReg
+{
+    for (local r: GenReg = 4; r < sizeof(usedReg)/sizeof(usedReg[0]); ++r) {
+        if (!usedReg[r]) {
+            usedReg[r] = 1;
+	    ++numUsedReg;
+            return r;
+        }
+    }
+    assert(0 && "getReg: out of registers!\n");
+    return 0;
+}
+
+//------------------------------------------------------------------------------
+
+fn genReleaseReg(reg: GenReg)
+{
+    assert(usedReg[reg]);
+    if (usedReg[reg]) {
+	usedReg[reg] = 0;
+	--numUsedReg;
+    }
+}
+
+fn genInit()
+{
+    setSegment(TEXT);
+    printf("\tloadz \t0, \t%%1\n\n");
+
+    printf("\tsubq \t8, \t%%1, \t%%1\n");
+    printf("\tcall \tmain, \t%%3\n");
+    printf("\tmovq \t(%%1), \t%%4\n");
+    printf("\taddq \t8, \t%%1, \t%%1\n");
+    printf("\thalt \t%%4\n\n");
+
+    printf("putchar:\n");
+    printf("\tsubq \t8, \t%%1, \t%%1\n");
+    printf("\tmovq \t%%3, \t(%%1)\n");
+    printf("\tmovq \t16(%%1), \t%%4\n");
+    printf("\tputc \t%%4\n");
+    printf("\tmovq \t(%%1), \t%%3\n");
+    printf("\taddq \t8, \t%%1, \t%%1\n");
+    printf("\tret  \t%%3\n\n");
+
+    printf("getchar:\n");
+    printf("\tsubq \t8, \t%%1, \t%%1\n");
+    printf("\tmovq \t%%3, \t(%%1)\n");
+    printf("\tgetc \t%%4\n");
+    printf("\tmovq \t%%4, \t8(%%1)\n");
+    printf("\tmovq \t(%%1), \t%%3\n");
+    printf("\taddq \t8, \t%%1, \t%%1\n");
+    printf("\tret \t%%3\n\n");
+}
+
+fn genExit()
+{
+    printf("\thalt \t0\n");
+}
+
+fn genConstant(val: ->readonly char): GenReg
+{
+    local reg: GenReg = getReg();
+    setSegment(TEXT);
+    printf("\tloadz \t%s, \t%%%d\n", val, reg);
+    return reg;
+}
+
+//------------------------------------------------------------------------------
+
+fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg
+{
+    local dest: GenReg = getReg();
+    setSegment(TEXT);
+    switch (instr) {
+	case GEN_ADD:
+	    printf("\taddq \t%%%d, \t%%%d, \t%%%d\n", left, right, dest);
+	    return dest;
+	case GEN_SUB:
+	    printf("\tsubq \t%%%d, \t%%%d, \t%%%d\n", left, right, dest);
+	    return dest;
+	default: assert(0 && "not all cases handled");
+    }
+    assert(0 && "ups: internal error (forgotten return in a case??)");
+    return 0; // never reached
+}
+
+// added in session 14
+fn genFuncDefBegin(name: ->readonly char)
+{
+    setSegment(TEXT);
+    printf("%s:\n", name);
+    printf("\tsubq \t8, \t%%1, \t%%1\n");
+    printf("\tmovq \t%%3, \t(%%1)\n");
+}
+
+fn genFuncDefEnd()
+{
+    setSegment(TEXT);
+    printf("\tmovq \t(%%1), \t%%3\n");
+    printf("\taddq \t8, \t%%1, \t%%1\n");
+    printf("\tret \t%%3\n");
+}
+
+struct CallInfo
+{
+    fnName:  ->readonly char;
+    numArgs: unsigned;
+};
+
+global callInfo: CallInfo;
+
+fn genCallBegin(fnName: ->readonly char, numArgs: unsigned)
+{
+    setSegment(TEXT);
+    assert(!callInfo.fnName);
+    callInfo.fnName = fnName;
+    callInfo.numArgs = numArgs;
+
+    printf("\tsubq \t%u, \t%%1, \t%%1\n", 8*(callInfo.numArgs + 1));
+}
+
+fn genCallAddArg(argReg: GenReg, argPos: unsigned)
+{
+    setSegment(TEXT);
+    printf("\tmovq \t%%%d, \t%u(%%1)\n", argReg,
+           8 * (callInfo.numArgs - argPos));
+}
+
+fn genCallEnd(): GenReg
+{
+    setSegment(TEXT);
+    local retVal: GenReg = getReg();
+    printf("\tcall \t%s, %%3\n", callInfo.fnName);
+    printf("\tmovq \t(%%1), \t%%%u\n", retVal);
+    printf("\taddq \t%u, \t%%1, \t%%1\n", 8 * (1 + callInfo.numArgs));
+    callInfo.fnName = nullptr;
+    return retVal;
+}
+

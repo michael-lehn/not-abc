@@ -1,0 +1,17 @@
+@ "gen.hdr"
+
+fn main()
+{
+    genInit();
+
+    genFuncDefBegin("main");
+    genCallBegin("getchar", 0);
+    local ch: GenReg = genCallEnd();
+
+    genCallBegin("putchar", 1);
+    genCallAddArg(ch, 0);
+    genReleaseReg(genCallEnd());
+    genReleaseReg(ch);
+
+    genFuncDefEnd();
+}                                                                                

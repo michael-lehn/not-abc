@@ -1,0 +1,56 @@
+@ "ustr.hdr"
+
+enum ExprKind
+{
+    EXPR_ADD,
+    EXPR_MUL,
+
+    EXPR_INTEGER,
+};
+
+struct Expr
+{
+    kind: ExprKind;
+    binary:     struct Binary {
+        left, right: ->Expr;
+    };
+    primary: struct Primary {
+        decimal: ->UStr;
+    };
+};
+struct Expr
+{
+    kind: ExprKind;
+    union {
+	unary: struct Unary {
+	    child: ->Expr;
+	};
+	binary:	struct Binary {
+	    left, right: ->Expr;
+	};
+	primary: struct Primary {
+	    decimal: ->UStr;
+	    identifier: ->UStr;
+	    call: struct Call {
+		fnName: ->UStr;
+		argListLen: unsigned;
+		argList: ->Expr;
+	    };
+	};
+	arg: struct ArgList {
+	    next: ->Expr;
+	    expr: ->Expr;
+	    pos: unsigned;
+	};
+    };
+};
+
+// constructors (caller becomes owner)
+extern fn createBinaryExpr(kind: ExprKind, left: ->Expr, right: ->Expr): ->Expr;
+extern fn createIntegerExpr(val: ->UStr): ->Expr;
+
+// destructor
+extern fn releaseExpr(expr: ->Expr);
+
+// meothods
+extern fn printExprTree(expr: ->Expr);

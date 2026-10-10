@@ -1,0 +1,82 @@
+@ <stdio.hdr>
+@ <stdlib.hdr>
+@ "lexer.hdr"
+@ "parser.hdr"
+
+fn syntaxError(msg: ->readonly char)
+{
+    printf("error: %s\n", msg);
+    exit(1);
+}
+
+fn exprKindFromToken(token: Token): ExprKind
+{
+    switch (token.kind) {
+        case PLUS: return EXPR_ADD;
+        case ASTERISK: return EXPR_MUL;
+        default:
+	    printf("token: %d (%s)\n", token.kind, tokenKindStr(token.kind));
+            assert(0 && "internal error: exprKindFromToken");
+            return 0;
+    }
+}
+
+fn tokenKindPrec(kind: TokenKind): int
+{
+    switch (kind) {
+	default: return 0;
+	case ASTERISK: return 13;
+	case PLUS: return 12;
+    }
+}
+
+fn parseBinary(prec: int): ->Expr;
+fn parseFactor(): ->Expr;
+
+fn parseExpr(): ->Expr
+{
+    return parseBinary(1);
+}
+
+fn parseBinary(prec: int): ->Expr
+{
+    local left: ->Expr = parseFactor();
+    if (!left) {
+	return nullptr;
+    }
+    for (local p: int = tokenKindPrec(token.kind); p >= prec; --p) {
+	while (tokenKindPrec(token.kind) == p) {
+	    local tok: Token = token;
+	    getToken();
+	    local right: ->Expr = parseBinary(p + 1);
+	    if (!right) {
+		syntaxError("expression expected\n");
+	    }
+	    left = createBinaryExpr(exprKindFromToken(tok), left, right);
+	}
+    }
+    return left;
+}
+
+fn parseFactor(): ->Expr
+{
+    if (token.kind == DECIMAL_LITERAL) {
+	local expr: ->Expr = createIntegerExpr(token.val);
+	getToken();
+	return expr;
+    } else if (token.kind == LPAREN) {
+	getToken();
+	local expr: ->Expr = parseExpr();
+	if (!expr) {
+	    syntaxError("expression expected");
+	}
+	if (token.kind != RPAREN) {
+	    syntaxError("')' expected");
+	}
+	getToken();
+	return expr;
+    } else {
+	return nullptr;
+    }
+}
+

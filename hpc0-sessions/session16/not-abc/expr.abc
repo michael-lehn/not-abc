@@ -2,6 +2,15 @@
 @ <stdlib.hdr>
 @ "expr.hdr"
 
+fn createUnaryExpr(kind: ExprKind, child: ->Expr): ->Expr
+{
+    local n: -> Expr = malloc(sizeof(*n));
+    assert(n);
+    n->kind = kind;
+    n->unary.child = child;
+    return n;
+}
+
 fn createBinaryExpr(kind: ExprKind, left: ->Expr, right: ->Expr): ->Expr
 {
     local n: -> Expr = malloc(sizeof(*n));
@@ -33,7 +42,9 @@ fn createCallExpr(fnName: ->UStr): ->Expr
 
 fn releaseExpr(expr: ->Expr)
 {
-    if (expr->kind >= EXPR_BINARY && expr->kind < EXPR_BINARY_END) {
+    if (expr->kind >= EXPR_UNARY && expr->kind < EXPR_UNARY_END) {
+	releaseExpr(expr->unary.child);
+    } else if (expr->kind >= EXPR_BINARY && expr->kind < EXPR_BINARY_END) {
 	releaseExpr(expr->binary.left);
 	releaseExpr(expr->binary.right);
     } else if (expr->kind == EXPR_CALL) {
@@ -60,7 +71,15 @@ fn addArgExpr(callExpr: ->Expr, argExpr: ->Expr)
 
 fn printExprTree(expr: ->Expr)
 {
-    if (expr->kind >= EXPR_PRIMARY && expr->kind < EXPR_PRIMARY_END) {               
+    if (expr->kind >= EXPR_UNARY && expr->kind < EXPR_UNARY_END) {               
+        printf("[ ");
+        switch (expr->kind) {
+            case EXPR_UNARY_MINUS: printf("- "); break;
+            default: assert(0);
+        }
+        printExprTree(expr->unary.child);
+        printf("] ");
+    } else if (expr->kind >= EXPR_PRIMARY && expr->kind < EXPR_PRIMARY_END) {               
         switch (expr->kind) {                                                    
             case EXPR_INTEGER:
 		printf("[%s]", expr->primary.decimal);

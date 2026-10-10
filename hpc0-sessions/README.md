@@ -13,7 +13,7 @@
   - [Session 10 – Bottom-Up: Assembly & Code Generation](session10)
   - [Session 11 - Not A Bloody Compiler Project: Let There Be a Lexer](session11)
   - [Session 12 - Top-Down: Strings, Pointers, and Unique String](session12)
-  - [Session 13 - Not A Bloody Compiler Project: Expression Trees](session13)
+  - [Session 13 - Not A Bloody Compiler Project: Let There Be Trees … and a Parser](session13)
   - [Session 14 – Bottom-Up: Function Calls and the Stack](session14)
   - [Session 15 – Not A Bloody Compiler Project: Build System & Pimpin' the Grammar](session15)
   - [Session 16 - Top-Down: Unions, Memory Layout, and Type Design](session16)

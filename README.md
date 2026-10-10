@@ -36,7 +36,7 @@ be found here:
   - [Session 10 – Bottom-Up: Assembly & Code Generation](hpc0-sessions/session10)
   - [Session 11 - Not A Bloody Compiler Project: Let There Be a Lexer](hpc0-sessions/session11)
   - [Session 12 - Top-Down: Strings, Pointers, and Unique String](hpc0-sessions/session12)
-  - [Session 13 - Not A Bloody Compiler Project: Expression Trees](hpc0-sessions/session13)
+  - [Session 13 - Not A Bloody Compiler Project: Let There Be Trees … and a Parser](hpc0-sessions/session13)
   - [Session 14 – Bottom-Up: Function Calls and the Stack](hpc0-sessions/session14)
   - [Session 15 – Not A Bloody Compiler Project: Build System & Pimpin' the Grammar](hpc0-sessions/session15)
   - [Session 16 - Top-Down: Unions, Memory Layout, and Type Design](hpc0-sessions/session16)

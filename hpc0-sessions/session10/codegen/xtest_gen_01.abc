@@ -10,5 +10,6 @@ fn main()
     local c: GenReg = genInstr(GEN_SUB, a, b);
     genReleaseReg(b);
     genReleaseReg(c);
+    genConstant("123");
     genExit();
 }

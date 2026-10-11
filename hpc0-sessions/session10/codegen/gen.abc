@@ -84,10 +84,10 @@ fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg
     setSegment(TEXT);
     switch (instr) {
 	case GEN_ADD:
-	    printf("\taddq \t%%%d, \t%%%d, \t%%%d\n", left, right, dest);
+	    printf("\taddq \t%%%d, \t%%%d, \t%%%d\n", right, left, dest);
 	    return dest;
 	case GEN_SUB:
-	    printf("\tsubq \t%%%d, \t%%%d, \t%%%d\n", left, right, dest);
+	    printf("\tsubq \t%%%d, \t%%%d, \t%%%d\n", right, left, dest);
 	    return dest;
 	default: assert(0 && "not all cases handled");
     }

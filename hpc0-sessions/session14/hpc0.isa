@@ -191,10 +191,28 @@ R_MR	    (OP u 8) (data u 4) (addr u 4) (offset s 16)
 :   getc    %x
     ulm_setReg(ulm_readChar() & 0xFF, x);
 
-0x0E    RR
+# HPC0 extensions
+
+0xF0    RR
 :   call    %x
     ulm_absJump(ulm_regVal(x), x);
 
-0x0F    U20_R
+0xF1    U20_R
 :   call    imm, %dest
     ulm_absJump(imm, dest);
+
+0xF2 R_R_R
+: imulq %x, %y, %z
+    ulm_mul64(ulm_regVal(x), ulm_regVal(y), z);
+
+0xF3 R_R_R
+: iquotq %x, %y, %z
+    ulm_iquot64(ulm_regVal(x), ulm_regVal(y), z);
+
+0xF4 R_R_R
+: iremq %x, %y, %z
+    ulm_irem64(ulm_regVal(x), ulm_regVal(y), z);
+
+0xF5 R_R_R
+: idivq %x, %y, %z
+    ulm_idiv64(ulm_regVal(x), ulm_regVal(y), z);

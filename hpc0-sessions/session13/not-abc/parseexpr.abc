@@ -1,7 +1,7 @@
 @ <stdio.hdr>
 @ <stdlib.hdr>
 @ "lexer.hdr"
-@ "parser.hdr"
+@ "parseexpr.hdr"
 
 fn syntaxError(msg: ->readonly char)
 {

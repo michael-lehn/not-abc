@@ -18,32 +18,6 @@ struct Expr
         decimal: ->UStr;
     };
 };
-struct Expr
-{
-    kind: ExprKind;
-    union {
-	unary: struct Unary {
-	    child: ->Expr;
-	};
-	binary:	struct Binary {
-	    left, right: ->Expr;
-	};
-	primary: struct Primary {
-	    decimal: ->UStr;
-	    identifier: ->UStr;
-	    call: struct Call {
-		fnName: ->UStr;
-		argListLen: unsigned;
-		argList: ->Expr;
-	    };
-	};
-	arg: struct ArgList {
-	    next: ->Expr;
-	    expr: ->Expr;
-	    pos: unsigned;
-	};
-    };
-};
 
 // constructors (caller becomes owner)
 extern fn createBinaryExpr(kind: ExprKind, left: ->Expr, right: ->Expr): ->Expr;

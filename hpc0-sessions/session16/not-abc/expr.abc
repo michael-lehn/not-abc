@@ -99,7 +99,7 @@ fn printExprTree(expr: ->Expr)
             case EXPR_MUL: printf("* "); break;
             case EXPR_DIV: printf("/ "); break;
             case EXPR_MOD: printf("mod "); break;
-            default: assert(0);
+            default: assert(0 && "node kind not handled");
         }
         printExprTree(expr->binary.left);
         printf(" ");

@@ -75,7 +75,7 @@ fn printExprTree(expr: ->Expr)
         printf("[ ");
         switch (expr->kind) {
             case EXPR_UNARY_MINUS: printf("- "); break;
-            default: assert(0);
+            default: assert(0 && "node kind not handled");
         }
         printExprTree(expr->unary.child);
         printf("] ");
@@ -89,7 +89,7 @@ fn printExprTree(expr: ->Expr)
 		printExprTree(expr->primary.call.argList);
 		printf("]");
 		break;
-            default: assert(0);                                                  
+            default: assert(0 && "node kind not handled");
 	}
     } else if (expr->kind >= EXPR_BINARY && expr->kind < EXPR_BINARY_END) {               
         printf("[ ");
@@ -110,5 +110,7 @@ fn printExprTree(expr: ->Expr)
 	    printExprTree(expr->arg.next);
 	}
 	printExprTree(expr->arg.expr);
+    } else {
+        assert(0 && "node kind not handled");
     }
 }

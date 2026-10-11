@@ -8,6 +8,7 @@ fn main()
     local expr: ->Expr = parseExpr();
     if (expr && token.kind == EOI) {
 	printExprTree(expr);
+	releaseExpr(expr);
     }
     printf("\n");
 }

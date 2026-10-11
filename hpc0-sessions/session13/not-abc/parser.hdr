@@ -1,3 +1,0 @@
-@ "expr.hdr"
-
-extern fn parseExpr(): ->Expr;

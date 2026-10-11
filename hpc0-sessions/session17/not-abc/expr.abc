@@ -121,7 +121,8 @@ fn loadExpr(expr: ->Expr): GenReg
         switch (expr->kind) {                                                    
             case EXPR_INTEGER: return genConstant(expr->primary.decimal);
 	    case EXPR_CALL:
-		genCallBegin(expr->primary.call.fnName, expr->primary.call.argListLen);
+		genCallBegin(expr->primary.call.fnName,
+			     expr->primary.call.argListLen);
 		for (local n: ->Expr = expr->primary.call.argList; n; n = n->arg.next) {
 		    local argReg: GenReg = loadExpr(n->arg.expr);
 		    genReleaseReg(argReg);

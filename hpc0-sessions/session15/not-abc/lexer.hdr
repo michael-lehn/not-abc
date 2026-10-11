@@ -34,7 +34,11 @@ enum TokenKind
 
     FN,
     IF,
+    GLOBAL,
+    LOCAL,
+    ELSE,
     WHILE,
+    DO,
 };
 
 // type TokenVal: array[13] of char;

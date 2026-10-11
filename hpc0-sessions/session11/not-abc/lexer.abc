@@ -60,6 +60,9 @@ fn tokenKindStr(token: TokenKind): ->readonly char
     	case ASTERISK: return "ASTERISK";
     	case SLASH: return "SLASH";
     	case PERCENT: return "PERCENT";
+
+    	case STRING_LITERAL: return "STRING_LITERAL";
+	case CHARACTER_LITERAL: return "CHARACTER_LITERAL";
     }
 }
 
@@ -177,6 +180,26 @@ fn getToken(): TokenKind
     } else if (ch == '%') {
         nextCh();
         return token.kind = PERCENT;
+    } else if (ch == '"') {
+        nextCh();
+	while (ch != '"') {
+	    nextCh();
+	    if (ch == '\n' || ch == EOF) {
+		return BAD_TOKEN;
+	    }
+	}
+        nextCh();
+        return token.kind = STRING_LITERAL;
+    } else if (ch == '\'') {
+        nextCh();
+	while (ch != '\'') {
+	    nextCh();
+	    if (ch == '\n' || ch == EOF) {
+		return BAD_TOKEN;
+	    }
+	}
+        nextCh();
+        return token.kind = CHARACTER_LITERAL;
     } else if (ch == EOF) {
         return token.kind = EOI;
     } else {

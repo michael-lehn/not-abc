@@ -29,6 +29,9 @@ enum TokenKind
     ASTERISK,
     SLASH,
     PERCENT,
+
+    STRING_LITERAL,
+    CHARACTER_LITERAL,
 };
 
 type TokenVal: array[13] of char;

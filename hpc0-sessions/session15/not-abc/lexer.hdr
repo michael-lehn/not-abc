@@ -32,6 +32,9 @@ enum TokenKind
     SLASH,
     PERCENT,
 
+    STRING_LITERAL,
+    CHARACTER_LITERAL,
+
     FN,
     IF,
     GLOBAL,

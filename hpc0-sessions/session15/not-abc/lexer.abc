@@ -67,6 +67,9 @@ fn tokenKindStr(token: TokenKind): ->readonly char
     	case SLASH: return "SLASH";
     	case PERCENT: return "PERCENT";
 
+    	case STRING_LITERAL: return "STRING_LITERAL";
+	case CHARACTER_LITERAL: return "CHARACTER_LITERAL";
+
     	case FN: return "FN";
     	case IF: return "IF";
     	case GLOBAL: return "GLOBAL";
@@ -191,6 +194,26 @@ fn getToken_(): TokenKind
     } else if (ch == '%') {
         nextCh();
         return token.kind = PERCENT;
+    } else if (ch == '"') {
+        nextCh();
+	while (ch != '"') {
+	    nextCh();
+	    if (ch == '\n' || ch == EOF) {
+		return BAD_TOKEN;
+	    }
+	}
+        nextCh();
+        return token.kind = STRING_LITERAL;
+    } else if (ch == '\'') {
+        nextCh();
+	while (ch != '\'') {
+	    nextCh();
+	    if (ch == '\n' || ch == EOF) {
+		return BAD_TOKEN;
+	    }
+	}
+        nextCh();
+        return token.kind = CHARACTER_LITERAL;
     } else if (ch == EOF) {
         return token.kind = EOI;
     } else {

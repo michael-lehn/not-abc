@@ -12,3 +12,11 @@ enum GenInstr
 };
 
 extern fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg;
+
+// added in session 14
+extern fn genFuncDefBegin(name: ->readonly char);
+extern fn genFuncDefEnd();
+
+extern fn genCallBegin(fnName: ->readonly char, numArgs: unsigned);
+extern fn genCallAddArg(argReg: GenReg, argPos: unsigned);
+extern fn genCallEnd(): GenReg;

@@ -1,4 +1,5 @@
 @ <stdio.hdr>
+@ <stdlib.hdr>
 @ "gen.hdr"
 
 //------------------------------------------------------------------------------
@@ -60,7 +61,31 @@ fn genReleaseReg(reg: GenReg)
 fn genInit()
 {
     setSegment(TEXT);
-    printf("\tloadz \t0, \t%%1\n");
+    printf("\tloadz \t0, \t%%1\n\n");
+
+    printf("\tsubq \t8, \t%%1, \t%%1\n");
+    printf("\tcall \tmain, \t%%3\n");
+    printf("\tmovq \t(%%1), \t%%4\n");
+    printf("\taddq \t8, \t%%1, \t%%1\n");
+    printf("\thalt \t%%4\n\n");
+
+    printf("putchar:\n");
+    printf("\tsubq \t8, \t%%1, \t%%1\n");
+    printf("\tmovq \t%%3, \t(%%1)\n");
+    printf("\tmovq \t16(%%1), \t%%4\n");
+    printf("\tputc \t%%4\n");
+    printf("\tmovq \t(%%1), \t%%3\n");
+    printf("\taddq \t8, \t%%1, \t%%1\n");
+    printf("\tret  \t%%3\n\n");
+
+    printf("getchar:\n");
+    printf("\tsubq \t8, \t%%1, \t%%1\n");
+    printf("\tmovq \t%%3, \t(%%1)\n");
+    printf("\tgetc \t%%4\n");
+    printf("\tmovq \t%%4, \t8(%%1)\n");
+    printf("\tmovq \t(%%1), \t%%3\n");
+    printf("\taddq \t8, \t%%1, \t%%1\n");
+    printf("\tret \t%%3\n\n");
 }
 
 fn genExit()
@@ -95,4 +120,55 @@ fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg
     return 0; // never reached
 }
 
+// added in session 14
+fn genFuncDefBegin(name: ->readonly char)
+{
+    setSegment(TEXT);
+    printf("%s:\n", name);
+    printf("\tsubq \t8, \t%%1, \t%%1\n");
+    printf("\tmovq \t%%3, \t(%%1)\n");
+}
 
+fn genFuncDefEnd()
+{
+    setSegment(TEXT);
+    printf("\tmovq \t(%%1), \t%%3\n");
+    printf("\taddq \t8, \t%%1, \t%%1\n");
+    printf("\tret \t%%3\n");
+}
+
+struct CallInfo
+{
+    fnName:  ->readonly char;
+    numArgs: unsigned;
+};
+
+global callInfo: CallInfo;
+
+fn genCallBegin(fnName: ->readonly char, numArgs: unsigned)
+{
+    setSegment(TEXT);
+    assert(!callInfo.fnName);
+    callInfo.fnName = fnName;
+    callInfo.numArgs = numArgs;
+
+    printf("\tsubq \t%u, \t%%1, \t%%1\n", 8*(callInfo.numArgs + 1));
+}
+
+fn genCallAddArg(argReg: GenReg, argPos: unsigned)
+{
+    setSegment(TEXT);
+    printf("\tmovq \t%%%d, \t%u(%%1)\n", argReg,
+           8 * (callInfo.numArgs - argPos));
+}
+
+fn genCallEnd(): GenReg
+{
+    setSegment(TEXT);
+    local retVal: GenReg = getReg();
+    printf("\tcall \t%s, %%3\n", callInfo.fnName);
+    printf("\tmovq \t(%%1), \t%%%u\n", retVal);
+    printf("\taddq \t%u, \t%%1, \t%%1\n", 8 * (1 + callInfo.numArgs));
+    callInfo.fnName = nullptr;
+    return retVal;
+}

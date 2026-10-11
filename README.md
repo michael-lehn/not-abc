@@ -40,7 +40,7 @@ be found here:
   - [Session 14 – Bottom-Up: Function Calls and the Stack](hpc0-sessions/session14)
   - [Session 15 – Not A Bloody Compiler Project: Build System & Pimpin' the Grammar](hpc0-sessions/session15)
   - [Session 16 - Top-Down: Unions, Memory Layout, and Type Design](hpc0-sessions/session16)
-  - Session 17 - Not A Bloody Compiler Project: From Parsing to Code Generation
+  - [Session 17 - Not A Bloody Compiler Project: From Parsing to Code Generation](hpc0-sessions/session17)
   - Session 18 – Bottom-Up: Function Calls and Stack Frames
   - Session 19 - Not A Bloody Compiler Project: Variables and Assignments
   - Session 20 - Top-Down: From Algebraic Data Types to Dynamic Polymorphism

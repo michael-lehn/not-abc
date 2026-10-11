@@ -1,6 +1,6 @@
 @ <stdio.hdr>
 @ "lexer.hdr"
-@ "parser.hdr"
+@ "parseexpr.hdr"
 
 fn main()
 {

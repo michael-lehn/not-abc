@@ -1,4 +1,4 @@
 @ "expr.hdr"
 
 extern fn parseExpr(): ->Expr;
-extern fn expected(kind: TokenKind)
+extern fn expected(kind: TokenKind);

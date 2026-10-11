@@ -66,6 +66,17 @@ fn tokenKindStr(token: TokenKind): ->readonly char
     	case ASTERISK: return "ASTERISK";
     	case SLASH: return "SLASH";
     	case PERCENT: return "PERCENT";
+
+    	case STRING_LITERAL: return "STRING_LITERAL";
+	case CHARACTER_LITERAL: return "CHARACTER_LITERAL";
+
+    	case FN: return "FN";
+    	case IF: return "IF";
+    	case GLOBAL: return "GLOBAL";
+    	case LOCAL: return "LOCAL";
+    	case ELSE: return "ELSE";
+    	case WHILE: return "WHILE";
+    	case DO: return "DO";
     }
 }
 
@@ -183,6 +194,26 @@ fn getToken_(): TokenKind
     } else if (ch == '%') {
         nextCh();
         return token.kind = PERCENT;
+    } else if (ch == '"') {
+        nextCh();
+	while (ch != '"') {
+	    nextCh();
+	    if (ch == '\n' || ch == EOF) {
+		return BAD_TOKEN;
+	    }
+	}
+        nextCh();
+        return token.kind = STRING_LITERAL;
+    } else if (ch == '\'') {
+        nextCh();
+	while (ch != '\'') {
+	    nextCh();
+	    if (ch == '\n' || ch == EOF) {
+		return BAD_TOKEN;
+	    }
+	}
+        nextCh();
+        return token.kind = CHARACTER_LITERAL;
     } else if (ch == EOF) {
         return token.kind = EOI;
     } else {
@@ -191,7 +222,7 @@ fn getToken_(): TokenKind
     }
 }
 
-global kw_fn, kw_if: ->UStr;
+global kw_fn, kw_if, kw_global, kw_local, kw_else, kw_while, kw_do: ->UStr;
 
 fn getToken(): TokenKind
 {
@@ -200,6 +231,11 @@ fn getToken(): TokenKind
 	first = false;
 	kw_fn = UStrCreate("fn");
 	kw_if = UStrCreate("if");
+	kw_global = UStrCreate("global");
+	kw_local = UStrCreate("local");
+	kw_else = UStrCreate("else");
+	kw_while = UStrCreate("while");
+	kw_do = UStrCreate("do");
     }
     getToken_();
     token.val = UStrCreate(internalVal);
@@ -208,6 +244,16 @@ fn getToken(): TokenKind
 	    token.kind = FN;
 	} else if (token.val == kw_if) {
 	    token.kind = IF;
+	} else if (token.val == kw_global) {
+	    token.kind = GLOBAL;
+	} else if (token.val == kw_local) {
+	    token.kind = LOCAL;
+	} else if (token.val == kw_else) {
+	    token.kind = ELSE;
+	} else if (token.val == kw_while) {
+	    token.kind = WHILE;
+	} else if (token.val == kw_do) {
+	    token.kind = DO;
 	}
     }
     return token.kind;

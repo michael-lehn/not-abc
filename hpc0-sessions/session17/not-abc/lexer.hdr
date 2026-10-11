@@ -32,9 +32,16 @@ enum TokenKind
     SLASH,
     PERCENT,
 
+    STRING_LITERAL,
+    CHARACTER_LITERAL,
+
     FN,
     IF,
+    GLOBAL,
+    LOCAL,
+    ELSE,
     WHILE,
+    DO,
 };
 
 // type TokenVal: array[13] of char;

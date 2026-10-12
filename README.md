@@ -44,7 +44,7 @@ be found here:
   - [Session 18 - Not A Bloody Compiler Project: From Expressions to Programs](hpc0-sessions/session18)
   - Session 19 - Bottom-Up: Calling Conventions (Part II) 
   - Session 20 - Not A Bloody Compiler Project: Variables and Assignments
-  - Session 21 - Not A Bloody Compiler Project: Code Generation for Conditional Jumps, Function Calls and Stack Frames
+  - Session 21 - Bottom-Up: Code Generation for Conditional Jumps, Function Calls and Stack Frames
   - Session 22 - Not A Bloody Compiler Project: Control Structures
   - Session 23 - Not A Bloody Compiler Project: Function Calls
   - Session 24 - Not A Bloody Compiler Project: Support for Pointers

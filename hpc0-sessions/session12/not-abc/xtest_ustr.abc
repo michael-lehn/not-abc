@@ -3,6 +3,8 @@
 
 fn main()
 {
+    assert(UStrCreate(nullptr) == nullptr);
+
     local a1: array[] of char = "hallo";
     local a2: array[] of char = "hello";
     local a3: array[] of char = "hallo";

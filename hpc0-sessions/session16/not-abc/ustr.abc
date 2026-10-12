@@ -13,6 +13,9 @@ global list: -> UStrNode;
 
 fn UStrCreate(s: ->readonly char): ->UStr
 {
+    if (!s) {
+	return nullptr;
+    }
     local n: -> UStrNode = list;
     for (; n; n = n->next) {
 	if (!strcmp(s, n->data)) {

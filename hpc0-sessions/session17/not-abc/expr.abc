@@ -42,13 +42,16 @@ fn createCallExpr(fnName: ->UStr): ->Expr
 
 fn releaseExpr(expr: ->Expr)
 {
+    assert(expr);
     if (expr->kind >= EXPR_UNARY && expr->kind < EXPR_UNARY_END) {
 	releaseExpr(expr->unary.child);
     } else if (expr->kind >= EXPR_BINARY && expr->kind < EXPR_BINARY_END) {
 	releaseExpr(expr->binary.left);
 	releaseExpr(expr->binary.right);
     } else if (expr->kind == EXPR_CALL) {
-	releaseExpr(expr->primary.call.argList);
+	if (expr->primary.call.argList) {
+	    releaseExpr(expr->primary.call.argList);
+	}
     } else if (expr->kind == EXPR_ARGNODE) {
 	releaseExpr(expr->arg.expr);
 	if (expr->arg.next) {
@@ -71,6 +74,7 @@ fn addArgExpr(callExpr: ->Expr, argExpr: ->Expr)
 
 fn printExprTree(expr: ->Expr)
 {
+    assert(expr);
     if (expr->kind >= EXPR_UNARY && expr->kind < EXPR_UNARY_END) {               
         printf("[ ");
         switch (expr->kind) {
@@ -86,7 +90,9 @@ fn printExprTree(expr: ->Expr)
 		break;
 	    case EXPR_CALL:
 		printf("[call %s ", expr->primary.call.fnName);
-		printExprTree(expr->primary.call.argList);
+		if (expr->primary.call.argList) {
+		    printExprTree(expr->primary.call.argList);
+		}
 		printf("]");
 		break;
             default: assert(0 && "node kind not handled");
@@ -117,6 +123,7 @@ fn printExprTree(expr: ->Expr)
 
 fn loadExpr(expr: ->Expr): GenReg
 {
+    assert(expr);
     if (expr->kind >= EXPR_PRIMARY && expr->kind < EXPR_PRIMARY_END) {
         switch (expr->kind) {                                                    
             case EXPR_INTEGER: return genConstant(expr->primary.decimal);

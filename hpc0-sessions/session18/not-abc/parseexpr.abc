@@ -75,8 +75,7 @@ fn parseBinary(prec: int): ->Expr
 
 fn parseFactor(): ->Expr
 {
-    //if (token.kind == DECIMAL_LITERAL || token.kind == CHARACTER_LITERAL) {
-    if (token.kind == DECIMAL_LITERAL) {
+    if (token.kind == DECIMAL_LITERAL || token.kind == CHARACTER_LITERAL) {
 	local expr: ->Expr = createIntegerExpr(token.val);
 	getToken();
 	return expr;

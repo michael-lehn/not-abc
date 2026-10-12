@@ -23,6 +23,7 @@ fn createIntegerExpr(val: ->UStr): ->Expr
 
 fn releaseExpr(expr: ->Expr)
 {
+    assert(expr);
     if (expr->kind >= EXPR_ADD && expr->kind <= EXPR_MUL) {
 	releaseExpr(expr->binary.left);
 	releaseExpr(expr->binary.right);
@@ -32,6 +33,7 @@ fn releaseExpr(expr: ->Expr)
 
 fn printExprTree(expr: ->Expr)
 {
+    assert(expr);
     if (expr->kind == EXPR_INTEGER) {
         printf("[%s]", expr->primary.decimal);
     } else if (expr->kind >= EXPR_ADD && expr->kind <= EXPR_MUL) {

@@ -23,6 +23,7 @@ fn createIntegerExpr(val: ->UStr): ->Expr
 
 fn releaseExpr(expr: ->Expr)
 {
+    assert(expr);
     if (expr->kind >= EXPR_BINARY && expr->kind < EXPR_BINARY_END) {               
 	releaseExpr(expr->binary.left);
 	releaseExpr(expr->binary.right);
@@ -32,6 +33,7 @@ fn releaseExpr(expr: ->Expr)
 
 fn printExprTree(expr: ->Expr)
 {
+    assert(expr);
     if (expr->kind >= EXPR_PRIMARY && expr->kind < EXPR_PRIMARY_END) {               
         switch (expr->kind) {                                                    
             case EXPR_INTEGER:

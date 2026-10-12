@@ -31,7 +31,7 @@ be found here:
   - [Session 05 - Top-Down: Control Structures, Arrays and Local Variables](hpc0-sessions/session05/)
   - [Session 06 – Bottom-Up: Building a simple ALU (Part 2 of 2)](hpc0-sessions/session06/)
   - [Session 07 – Top-Down: Pointers, Structs, Lists, ...](hpc0-sessions/session07)
-  - Session 08 – Bottom-Up: ULM (Ulm Lecture Machine) on Paper
+  - [Session 08 – Bottom-Up: ULM (Ulm Lecture Machine) on Paper](hpc0-sessions/session08)
   - [Session 09 – Top-Down: Building a Symbol Table](hpc0-sessions/session09)
   - [Session 10 – Bottom-Up: Assembly & Code Generation](hpc0-sessions/session10)
   - [Session 11 - Not A Bloody Compiler Project: Let There Be a Lexer](hpc0-sessions/session11)

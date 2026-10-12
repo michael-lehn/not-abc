@@ -44,10 +44,10 @@ be found here:
   - [Session 18 - Not A Bloody Compiler Project: From Expressions to Programs](hpc0-sessions/session18)
   - Session 19 - Bottom-Up: Calling Conventions (Part II) 
   - Session 20 - Not A Bloody Compiler Project: Variables and Assignments
-  - Session 21 - Bottom-Up: Code Generation for Conditional Jumps, Function Calls and Stack Frames
+  - Session 21 - Bottom-Up: Code Generation for Unconditional and Conditional Jumps, Labels
   - Session 22 - Not A Bloody Compiler Project: Control Structures
-  - Session 23 - Not A Bloody Compiler Project: Function Calls
-  - Session 24 - Not A Bloody Compiler Project: Support for Pointers
+  - Session 23 - Not A Bloody Compiler Project: Support for Pointers
+  - Session 24 - Not A Bloody Compiler Project: Nested Function Calls
   - Session 25 - Not A Bloody Compiler Project: Adding an LLVM Backend and Moving toward Self-Hosting
 
 

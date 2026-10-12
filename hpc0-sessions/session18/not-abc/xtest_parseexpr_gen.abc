@@ -1,0 +1,20 @@
+@ <stdio.hdr>
+@ "lexer.hdr"
+@ "parseexpr.hdr"
+
+fn main()
+{
+    genInit();
+    getToken();
+    genFuncDefBegin("main");
+    local expr: ->Expr = parseExpr();
+    if (expr && token.kind == EOI) {
+	printf("\t# load expression: ");
+	printExprTree(expr);
+	printf("\n");
+	loadExpr(expr);
+	releaseExpr(expr);
+    }
+    printf("\n");
+    genFuncDefEnd();
+}

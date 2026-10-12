@@ -18,7 +18,7 @@
   - [Session 15 – Not A Bloody Compiler Project: Build System & Pimpin' the Grammar](session15)
   - [Session 16 - Top-Down: Unions, Memory Layout, and Type Design](session16)
   - [Session 17 - Not A Bloody Compiler Project: From Parsing to Code Generation](session17)
-  - Session 18 – Bottom-Up: Function Calls and Stack Frames
+  - [Session 18 - Not A Bloody Compiler Project: From Expressions to Programs](session18)
   - Session 19 - Not A Bloody Compiler Project: Variables and Assignments
   - Session 20 - Top-Down: From Algebraic Data Types to Dynamic Polymorphism
   - Session 21 - Not A Bloody Compiler Project: Code Generation for Conditional Jumps, Function Calls and Stack Frames

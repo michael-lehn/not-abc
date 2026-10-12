@@ -1,0 +1,16 @@
+@ <stdio.hdr>
+@ "expr.hdr"
+
+fn main()
+{
+    local e: Expr;
+    printf("sizeof(Expr) = %zu\n", sizeof(e));
+    printf("offset kind = %td\n", (->char)&e.kind - (->char)&e);
+    printf("sizeof(kind) = %zu\n", sizeof(e.kind));
+    printf("offset left = %td\n", (->char)&e.binary.left - (->char)&e);
+    printf("sizeof(left) = %zu\n", sizeof(e.binary.left));
+    printf("offset right = %td\n", (->char)&e.binary.right - (->char)&e);
+    printf("sizeof(right) = %zu\n", sizeof(e.binary.right));
+    printf("offset decimal = %td\n", (->char)&e.primary.decimal - (->char)&e);
+    printf("sizeof(decimal) = %zu\n", sizeof(e.primary.decimal));
+}

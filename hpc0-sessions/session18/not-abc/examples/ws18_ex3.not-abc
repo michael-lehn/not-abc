@@ -1,0 +1,21 @@
+fn bar()
+{
+    putchar('b');
+    putchar('a');
+    putchar('r');
+    putchar('\n');
+}
+
+fn foo()
+{
+    putchar('f');
+    putchar('o');
+    putchar('o');
+    bar();
+    putchar('\n');
+}
+
+fn main()
+{
+    foo();
+}

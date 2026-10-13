@@ -42,7 +42,7 @@ be found here:
   - [Session 16 - Top-Down: Unions, Memory Layout, and Type Design](hpc0-sessions/session16)
   - [Session 17 - Not A Bloody Compiler Project: From Parsing to Code Generation](hpc0-sessions/session17)
   - [Session 18 - Not A Bloody Compiler Project: From Expressions to Programs](hpc0-sessions/session18)
-  - Session 19 - Bottom-Up: Calling Conventions (Part II) 
+  - [Session 19 - Bottom-Up: Calling Conventions (Part II)](hpc0-sessions/session19) 
   - Session 20 - Not A Bloody Compiler Project: Variables and Assignments
   - Session 21 - Bottom-Up: Code Generation for Unconditional and Conditional Jumps, Labels
   - Session 22 - Not A Bloody Compiler Project: Control Structures

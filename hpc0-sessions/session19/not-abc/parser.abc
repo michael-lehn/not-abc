@@ -1,0 +1,67 @@
+@ <stdio.hdr>
+@ <stdlib.hdr>
+@ "lexer.hdr"
+@ "parser.hdr"
+@ "parseexpr.hdr"
+
+fn parseFn(): bool;
+fn parseCompoundStmt(): bool;
+fn parseExprStmt(): bool;
+
+fn parseTopLevel(): bool
+{
+    getToken();
+    while (parseFn()) {
+    }
+    return token.kind == EOI;
+}
+
+fn parseFn(): bool
+{
+    if (token.kind != FN) {
+	return false;
+    }
+    getToken();
+    expected(IDENTIFIER);
+    genFuncDefBegin(token.val);
+    getToken();
+    expected(LPAREN);
+    getToken();
+    expected(RPAREN);
+    getToken();
+    if (!parseCompoundStmt()) {
+	fprintf(stderr, "expected compound statement\n");
+	exit(1);
+    }
+    genFuncDefEnd();
+    return true;
+}
+
+fn parseCompoundStmt(): bool
+{
+    if (token.kind != LBRACE) {
+	return false;
+    }
+    getToken();
+    while (parseExprStmt())
+    {
+    }
+    expected(RBRACE);
+    getToken();
+    return true;
+}
+
+fn parseExprStmt(): bool
+{
+    local expr: -> Expr = parseExpr();
+    if (!expr) {
+	return false;
+    }
+    expected(SEMICOLON);
+    getToken();
+    local retVal: GenReg = loadExpr(expr);
+    genReleaseReg(retVal);
+    releaseExpr(expr);
+    return true;
+}
+

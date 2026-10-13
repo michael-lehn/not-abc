@@ -1,0 +1,19 @@
+@ "gen.hdr"
+@ "symtab.hdr"
+
+fn main()
+{
+    // fn sum(a, b) {
+    genFuncDefBegin("sum");
+    genFuncDefParam("a");
+    genFuncDefParam("b");
+
+    // local r: u64;
+    genAddLocal("r");
+
+    // print offsets (relative to frame pointer)
+    symtabPrintLocals();
+
+    // }
+    genFuncDefEnd();
+}

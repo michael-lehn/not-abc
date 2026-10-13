@@ -89,7 +89,7 @@ while-stmt    = "while" "(" expr ")" compound-stmt
 if-stmt       = "if" "(" expr ")" compound-stmt
                 [ "else" compound-stmt ]
 
-expr          = logical-or { "=" expr }
+expr          = logical-or [ "=" expr ]
 
 logical-or    = logical-and { "||" logical-and }
 logical-and   = equality { "&&" equality }

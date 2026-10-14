@@ -79,7 +79,6 @@ fn parseFactor(): ->Expr
 	local expr: ->Expr = createIntegerExpr(token.val);
 	getToken();
 	return expr;
-	// as before
     } else if (token.kind == IDENTIFIER) {
 	local ident: ->UStr = token.val;
         getToken();

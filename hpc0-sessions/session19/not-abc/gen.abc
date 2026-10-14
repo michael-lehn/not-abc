@@ -158,6 +158,7 @@ fn genFuncDefParam(ident: ->readonly char): bool
 
 fn genAddLocal(ident: ->readonly char): bool
 {
+    assert(inFnDef);
     local added: bool = symtabAddLocal(ident, localVarOffset);
     localVarOffset -= 8;
     return added;

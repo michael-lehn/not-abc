@@ -77,6 +77,7 @@ fn tokenKindStr(token: TokenKind): ->readonly char
     	case ELSE: return "ELSE";
     	case WHILE: return "WHILE";
     	case DO: return "DO";
+    	case RETURN: return "RETURN";
     }
 }
 
@@ -222,7 +223,8 @@ fn getToken_(): TokenKind
     }
 }
 
-global kw_fn, kw_if, kw_global, kw_local, kw_else, kw_while, kw_do: ->UStr;
+global kw_fn, kw_if, kw_global, kw_local,
+       kw_else, kw_while, kw_do, kw_return: ->UStr;
 
 fn getToken(): TokenKind
 {
@@ -236,6 +238,7 @@ fn getToken(): TokenKind
 	kw_else = UStrCreate("else");
 	kw_while = UStrCreate("while");
 	kw_do = UStrCreate("do");
+	kw_return = UStrCreate("return");
     }
     getToken_();
     token.val = UStrCreate(internalVal);
@@ -254,6 +257,8 @@ fn getToken(): TokenKind
 	    token.kind = WHILE;
 	} else if (token.val == kw_do) {
 	    token.kind = DO;
+	} else if (token.val == kw_return) {
+	    token.kind = RETURN;
 	}
     }
     return token.kind;

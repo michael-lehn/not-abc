@@ -42,6 +42,7 @@ enum TokenKind
     ELSE,
     WHILE,
     DO,
+    RETURN,
 };
 
 // type TokenVal: array[13] of char;

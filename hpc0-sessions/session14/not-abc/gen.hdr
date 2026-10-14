@@ -1,5 +1,4 @@
 extern fn genInit();
-extern fn genExit();
 
 type GenReg: unsigned;
 extern fn genReleaseReg(reg: GenReg);
@@ -13,7 +12,6 @@ enum GenInstr
 
 extern fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg;
 
-// added in session 14
 extern fn genFuncDefBegin(name: ->readonly char);
 extern fn genFuncDefEnd();
 

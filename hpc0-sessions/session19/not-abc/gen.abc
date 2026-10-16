@@ -169,6 +169,7 @@ fn genFuncDefEnd()
     assert(inFnDef);
     setSegment(TEXT);
     printf("\t// end of function body\n");
+    printf(".leave%d\n", fnDefCount);
     printf("\tmovq \t%%2, \t%%1\n");
     printf("\tmovq \t8(%%1), \t%%2\n");
     printf("\tmovq \t(%%1), \t%%3\n");
@@ -178,6 +179,12 @@ fn genFuncDefEnd()
     symtabFreeLocals();
     paramOffset = 24;
     localVarOffset = -8;
+}
+
+fn genReturn(ret: GenReg)
+{
+    printf("\t movq    %%%d,     16(%2)", ret);
+    printf("\t jmp .leave%d\n", fnDefCount);
 }
 
 struct CallInfo
@@ -215,3 +222,4 @@ fn genCallEnd(): GenReg
     callInfo.fnName = nullptr;
     return retVal;
 }
+

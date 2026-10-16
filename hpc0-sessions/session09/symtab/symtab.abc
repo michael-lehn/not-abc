@@ -5,17 +5,17 @@
 @ "symtab.hdr"
 
 struct Node {
-    ident: ->UStr;
+    ident: String;
     offset: int;
     next: -> Node;
 };
 
 global globalVar, localVar: -> Node;
 
-fn isInList(list: ->readonly Node, ident: ->UStr): ->readonly Node
+fn isInList(list: ->readonly Node, ident: String): ->readonly Node
 {
     while (list) {
-	if (list->ident == ident) {
+	if (!strcmp(list->ident, ident)) {
 	    return list;
 	}
 	list = list->next;
@@ -23,7 +23,7 @@ fn isInList(list: ->readonly Node, ident: ->UStr): ->readonly Node
     return nullptr;
 }
 
-fn symtabGetInfo(ident: ->UStr, info: -> SymtabInfo): bool
+fn symtabGetInfo(ident: String, info: ->SymtabInfo): bool
 {
     assert(info);
     local found: ->readonly Node;
@@ -39,12 +39,12 @@ fn symtabGetInfo(ident: ->UStr, info: -> SymtabInfo): bool
     }
 }
 
-fn symtabIsDefined(ident: ->UStr): bool
+fn symtabIsDefined(ident: String): bool
 {
     return isInList(localVar, ident) || isInList(globalVar, ident);
 }
 
-fn symtabAddGlobal(ident: ->UStr): bool
+fn symtabAddGlobal(ident: String): bool
 {
     if (!isInList(globalVar, ident)) {
 	local n: ->Node = malloc(sizeof(*n));
@@ -58,7 +58,7 @@ fn symtabAddGlobal(ident: ->UStr): bool
     }
 }
 
-fn symtabAddLocal(ident: ->UStr, offset: int): bool
+fn symtabAddLocal(ident: String, offset: int): bool
 {
     if (!isInList(localVar, ident)) {
 	local n: ->Node = malloc(sizeof(*n));
@@ -95,6 +95,6 @@ fn symtabPrintGlobals()
 fn symtabPrintLocals()
 {
     for (local n: ->readonly Node = localVar; n; n = n->next) {
-	printf("%s with offset %d\n", n->ident, n->offset);
+	printf("\t# %s with offset %d\n", n->ident, n->offset);
     }
 }

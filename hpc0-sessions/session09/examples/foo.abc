@@ -1,0 +1,11 @@
+@ <stdio.hdr>
+
+fn main()
+{
+    local n: int;
+    scanf("%d", &n);
+                                                                                 
+    local a: readonly int = n > 10 then 42 else 13;
+                                                                                 
+    printf("a = %d\n", a);                                                       
+}                                                                                

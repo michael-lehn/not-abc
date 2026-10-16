@@ -34,13 +34,13 @@ all: $(target) $(common_obj) $(target_obj) $(ulm.tools)
 	abc -o $@ $^
 
 .PHONY: tree.tex
-tree.tex: xtest_parser
+tree.tex: xtest_parseexpr
 	@echo '\\documentclass[preview, margin=0.2cm]{standalone}' > tree.tex
 	@echo '\\usepackage{forest}' >> tree.tex
 	@echo '\\begin{document}' >> tree.tex
 	@echo '\\begin{forest}' >> tree.tex
 	@echo 'Type an expression (use Control-D for EOI):'
-	./xtest_parser >> tree.tex
+	./xtest_parseexpr >> tree.tex
 	@echo '\\end{forest}' >> tree.tex
 	@echo '\\end{document}' >> tree.tex
 	@echo "Generated 'tree.tex'"

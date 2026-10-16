@@ -1,0 +1,83 @@
+@ <stdio.hdr>
+@ <stdlib.hdr>
+
+struct Node
+{
+    val: int;
+    next: ->Node;
+};
+
+fn prependToList(list: ->->Node, val: int)
+{
+    local n: ->Node = malloc(sizeof(*n));
+    assert(n);
+    n->val = val;
+    n->next = *list;
+    *list = n;
+}
+
+fn appendToList(list: ->->Node, val: int)
+{
+    local n: ->Node = malloc(sizeof(*n));
+    assert(n);
+    n->val = val;
+    n->next = *list;
+
+    if (*list == nullptr) {
+	*list = n;
+    } else {
+	for (; *list; *list = (*list)->next) {
+	}
+	*list = n;
+    }
+}
+
+
+fn printList(list: ->readonly Node)
+{
+    for (; list; list = list->next) {
+        printf("val = %d\n", list->val);
+    }
+}                                                                             
+
+fn printListReverse(list: ->readonly Node)
+{
+    if (list) {
+	printListReverse(list->next);
+        printf("val = %d\n", list->val);
+    }
+}                                                                             
+
+fn printListRecursive(list: ->readonly Node)
+{                                                                               
+    if (list) {                                                                 
+        printf("val = %d\n", list->val);
+        printListRecursive(list->next);
+    }
+}
+
+fn freeList(list: ->Node)
+{
+    if (list) {                                                                 
+        freeList(list->next);
+	free(list);
+    }
+}
+
+fn main()
+{
+    local list: ->Node = nullptr;
+
+    for (local i: int = 1; i <= 10; ++i) {
+        prependToList(&list, i);
+	appendToList(&list, i + 10);
+    }
+
+    printf("list:\n");
+    printList(list);
+
+    printf("list reverse:\n");
+    printListReverse(list);
+
+    freeList(list);
+}

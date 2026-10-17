@@ -1,4 +1,6 @@
 @ <stdio.hdr>
+@ <stdlib.hdr>
+
 @ "lexer.hdr"
 
 // -- internal: only available within this translation unit
@@ -7,13 +9,20 @@ global ch: int;
 global currentPos: Pos = {1, 0};
 global updateVal: bool;
 global lengthVal: size_t;
+global internalVal: ->char;
+global internalValCapacity: u64;
 
 fn nextCh()
 {
     if (updateVal) {
-	assert(lengthVal + 1 < sizeof(token.val) / sizeof(token.val[0]));
-        token.val[lengthVal++] = ch;
-        token.val[lengthVal] = 0;
+        if (lengthVal + 1 > internalValCapacity) {
+            internalValCapacity = 2 * internalValCapacity + 1;
+            internalVal = realloc(internalVal, internalValCapacity);
+        }
+        internalVal[lengthVal++] = ch;
+        internalVal[lengthVal] = 0;
+    } else {
+        lengthVal = 0;
     }
     ch = getchar();
     if (ch == '\n') {
@@ -76,7 +85,7 @@ fn isLetter(ch: int): bool
     return ch >= 'a' && ch <= 'z' || ch >= 'A' && ch <= 'Z';
 }
 
-fn getToken(): TokenKind
+fn getToken_(): TokenKind
 {
     updateVal = false;
     lengthVal = 0;
@@ -207,3 +216,10 @@ fn getToken(): TokenKind
         return token.kind = BAD_TOKEN;
     }
 }
+
+fn getToken(): TokenKind                   
+{                              
+    getToken_();                                       
+    token.val = UStrCreate(internalVal);     
+    return token.kind;
+}                                  

@@ -1,6 +1,5 @@
 @ <stdlib.hdr>
 @ <stdio.hdr>
-@ <string.hdr>
 
 @ "symtab.hdr"
 
@@ -23,7 +22,7 @@ fn isInList(list: ->readonly Node, ident: ->UStr): ->readonly Node
     return nullptr;
 }
 
-fn symtabGetInfo(ident: ->UStr, info: -> SymtabInfo): bool
+fn symtabGetInfo(ident: ->UStr, info: ->SymtabInfo): bool
 {
     assert(info);
     local found: ->readonly Node;
@@ -95,6 +94,6 @@ fn symtabPrintGlobals()
 fn symtabPrintLocals()
 {
     for (local n: ->readonly Node = localVar; n; n = n->next) {
-	printf("%s with offset %d\n", n->ident, n->offset);
+	printf("\t# %s with offset %d\n", n->ident, n->offset);
     }
 }

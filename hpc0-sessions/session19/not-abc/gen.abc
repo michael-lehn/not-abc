@@ -1,7 +1,5 @@
 @ <stdio.hdr>
-@ <stdlib.hdr>
 @ "gen.hdr"
-@ "symtab.hdr"
 
 //------------------------------------------------------------------------------
 
@@ -89,11 +87,6 @@ fn genInit()
     printf("\tret \t%%3\n\n");
 }
 
-fn genExit()
-{
-    printf("\thalt \t0\n");
-}
-
 fn genConstant(val: ->readonly char): GenReg
 {
     local reg: GenReg = getReg();
@@ -115,76 +108,26 @@ fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg
 	case GEN_SUB:
 	    printf("\tsubq \t%%%d, \t%%%d, \t%%%d\n", right, left, dest);
 	    return dest;
-	case GEN_MUL:
-	    printf("\timulq \t%%%d, \t%%%d, \t%%%d\n", right, left, dest);
-	    return dest;
-	case GEN_DIV:
-	    printf("\tiquotq \t%%%d, \t%%%d, \t%%%d\n", right, left, dest);
-	    return dest;
-	case GEN_MOD:
-	    printf("\tiremq \t%%%d, \t%%%d, \t%%%d\n", right, left, dest);
-	    return dest;
 	default: assert(0 && "not all cases handled");
     }
     assert(0 && "ups: internal error (forgotten return in a case??)");
     return 0; // never reached
 }
 
-global fnDefCount: int;
-global paramOffset: int = 24;
-global localVarOffset: int = -8;
-global inFnDef: bool;
-
 fn genFuncDefBegin(name: ->readonly char)
 {
-    assert(!inFnDef);
-    inFnDef = true;
     setSegment(TEXT);
     printf("%s:\n", name);
+    printf("\tsubq \t8, \t%%1, \t%%1\n");
     printf("\tmovq \t%%3, \t(%%1)\n");
-    printf("\tmovq \t%%2, \t8(%%1)\n");
-    printf("\tmovq \t%%1, \t%%2\n");
-    printf("\tsubq \t.loc%d, \t%%1, \t%%1\n", fnDefCount);
-    printf("\t// begin of function body\n");
-}
-
-fn genFuncDefParam(ident: ->readonly char): bool
-{
-    assert(inFnDef);
-    local added: bool = symtabAddLocal(ident, paramOffset);
-    paramOffset += 8;
-    return added;
-}
-
-fn genAddLocal(ident: ->readonly char): bool
-{
-    assert(inFnDef);
-    local added: bool = symtabAddLocal(ident, localVarOffset);
-    localVarOffset -= 8;
-    return added;
 }
 
 fn genFuncDefEnd()
 {
-    assert(inFnDef);
     setSegment(TEXT);
-    printf("\t// end of function body\n");
-    printf(".leave%d\n", fnDefCount);
-    printf("\tmovq \t%%2, \t%%1\n");
-    printf("\tmovq \t8(%%1), \t%%2\n");
     printf("\tmovq \t(%%1), \t%%3\n");
+    printf("\taddq \t8, \t%%1, \t%%1\n");
     printf("\tret \t%%3\n");
-    printf("\t.equ \t.loc%d, \t%d\n", fnDefCount++, -localVarOffset - 8);
-    inFnDef = false;
-    symtabFreeLocals();
-    paramOffset = 24;
-    localVarOffset = -8;
-}
-
-fn genReturn(ret: GenReg)
-{
-    printf("\t movq    %%%d,     16(%2)", ret);
-    printf("\t jmp .leave%d\n", fnDefCount);
 }
 
 struct CallInfo
@@ -208,8 +151,7 @@ fn genCallBegin(fnName: ->readonly char, numArgs: unsigned)
 fn genCallAddArg(argReg: GenReg, argPos: unsigned)
 {
     setSegment(TEXT);
-    printf("\tmovq \t%%%d, \t%u(%%1)\n", argReg,
-           8 * (callInfo.numArgs - argPos));
+    printf("\tmovq \t%%%d, \t%u(%%1)\n", argReg, 8 * (1 + argPos));
 }
 
 fn genCallEnd(): GenReg
@@ -222,4 +164,3 @@ fn genCallEnd(): GenReg
     callInfo.fnName = nullptr;
     return retVal;
 }
-

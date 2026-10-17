@@ -151,7 +151,7 @@ fn genCallBegin(fnName: ->readonly char, numArgs: unsigned)
 fn genCallAddArg(argReg: GenReg, argPos: unsigned)
 {
     setSegment(TEXT);
-    printf("\tmovq \t%%%d, \t%u(%%1)\n", argReg, 8 * (callInfo.numArgs - argPos));
+    printf("\tmovq \t%%%d, \t%u(%%1)\n", argReg, 8 * (1 + argPos));
 }
 
 fn genCallEnd(): GenReg

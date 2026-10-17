@@ -1,3 +1,5 @@
+@ "ustr.hdr"
+
 enum TokenKind
 {
     BAD_TOKEN,
@@ -34,15 +36,13 @@ enum TokenKind
     CHARACTER_LITERAL,
 };
 
-type TokenVal: array[13] of char;
-
 struct Token
 {
     kind:   TokenKind;
     pos:    struct Pos {
                 row, col: unsigned;
             };
-    val:    TokenVal;
+    val:    ->UStr;
 };
 
 extern token: Token;

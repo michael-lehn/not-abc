@@ -1,0 +1,20 @@
+@ "gen.hdr"
+@ "symtab.hdr"
+
+fn main()
+{
+    // fn diff(a, b) {
+    genFuncDefBegin("diff");
+    genFuncDefParam("a");
+    genFuncDefParam("b");
+
+    // local r: u64;
+    genAddLocal("r");
+
+    // print offsets (relative to frame pointer)
+    symtabPrintLocals();
+    genReturn(genConstant("42"));
+
+    // }
+    genFuncDefEnd();
+}

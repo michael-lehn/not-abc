@@ -8,7 +8,7 @@ fn main()
     genFuncDefParam("a");
     genFuncDefParam("b");
 
-    // local r: u64;
+    // local r: i64;
     genAddLocal("r");
 
     // print offsets (relative to frame pointer)

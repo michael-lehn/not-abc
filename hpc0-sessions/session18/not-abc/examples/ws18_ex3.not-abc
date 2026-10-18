@@ -19,5 +19,3 @@ fn main()
 {
     foo();
 }
-
-assert(expr);

@@ -8,13 +8,20 @@ enum GenInstr
 {
     GEN_ADD,
     GEN_SUB,
+    GEN_MUL,
+    GEN_DIV,
+    GEN_MOD,
 };
 
 extern fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg;
 
 extern fn genFuncDefBegin(name: ->readonly char);
+extern fn genFuncDefParam(ident: ->readonly char): bool;
+extern fn genAddLocal(ident: ->readonly char): bool;
+extern fn genReturn(val: GenReg);
 extern fn genFuncDefEnd();
 
 extern fn genCallBegin(fnName: ->readonly char, numArgs: unsigned);
 extern fn genCallAddArg(argReg: GenReg, argPos: unsigned);
 extern fn genCallEnd(): GenReg;
+

@@ -8,6 +8,9 @@ enum GenInstr
 {
     GEN_ADD,
     GEN_SUB,
+    GEN_MUL,
+    GEN_DIV,
+    GEN_MOD,
 };
 
 extern fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg;

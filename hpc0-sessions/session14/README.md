@@ -36,10 +36,13 @@ than efficiency or compatibility with a production ABI.
   return-value slot. Emphasize the reversal of responsibility: for arguments
   the caller writes and the callee reads; for return values the callee writes
   and the caller reads.
-- **Step 3 — Putting It All Together:** Implement `sum(12, 30)` in assembly and
-  verify the exit status **42**. This establishes the unified stack layout that
-  the code generator will use. In particular, argument offsets differ before
-  and after the callee's prologue. The worksheet deliberately postpones
+- **Step 3 — Putting It All Together:** Implement `diff(72, 30)` in assembly
+  and verify the exit status **42**. Unlike `sum`, `diff` is not commutative:
+  Swapping the arguments would produce a different result. This makes it a
+  useful test for checking whether arguments are placed on the stack and
+  retrieved in the correct order. The example also establishes the stack layout
+  that the code generator will use. In particular, argument offsets differ
+  before and after the callee's prologue. The worksheet deliberately postpones
   improving this pattern.
 
 Allow students to reason through the diagrams before explaining the offsets. It
@@ -68,9 +71,9 @@ Points worth emphasizing:
   `genCallBegin()`.
 - `CallInfo` stores the function name and argument count between these
   operations.
-- For `numArgs` arguments, argument position `argPos` is placed at offset `8 *
-  (numArgs - argPos)` relative to the caller's stack pointer. For two
-  arguments, positions 0 and 1 are at `16(%1)` and `8(%1)`.
+- For `numArgs` arguments, argument position `argPos` is placed at offset
+  `8 * (argPos + 1)` relative to the caller's stack pointer. For two
+  arguments, positions 0 and 1 are at `8(%1)` and `16(%1)`.
 - The test is not finished merely because the generator runs: redirect its
   output to assembly, assemble it with `ulmas`, and execute it with `ulm`.
 

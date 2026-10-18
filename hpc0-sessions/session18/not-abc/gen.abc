@@ -108,6 +108,15 @@ fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg
 	case GEN_SUB:
 	    printf("\tsubq \t%%%d, \t%%%d, \t%%%d\n", right, left, dest);
 	    return dest;
+	case GEN_MUL:
+	    printf("\timulq \t%%%d, \t%%%d, \t%%%d\n", right, left, dest);
+	    return dest;
+	case GEN_DIV:
+	    printf("\tidivq \t%%%d, \t%%%d, \t%%%d\n", right, left, dest);
+	    return dest;
+	case GEN_MOD:
+	    printf("\tiremq \t%%%d, \t%%%d, \t%%%d\n", right, left, dest);
+	    return dest;
 	default: assert(0 && "not all cases handled");
     }
     assert(0 && "ups: internal error (forgotten return in a case??)");
@@ -125,11 +134,11 @@ fn genFuncDefBegin(name: ->readonly char)
 fn genFuncDefEnd()
 {
     setSegment(TEXT);
+    printf("\tmovq \t%%4, \t8(%%1)\n");
     printf("\tmovq \t(%%1), \t%%3\n");
     printf("\taddq \t8, \t%%1, \t%%1\n");
     printf("\tret \t%%3\n");
 }
-
 struct CallInfo
 {
     fnName:  ->readonly char;

@@ -1,0 +1,14 @@
+@ <stdio.hdr>
+@ "expr.hdr"
+
+fn main()
+{
+    local expr: -> Expr;
+
+    expr = createUnaryExpr(EXPR_UNARY_MINUS,
+			   createIntegerExpr(UStrCreate("42")));
+    printExprTree(expr);
+    printf("\n");
+
+    releaseExpr(expr);
+}

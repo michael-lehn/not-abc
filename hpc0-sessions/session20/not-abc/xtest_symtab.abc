@@ -1,0 +1,34 @@
+ @ <stdio.hdr>
+ 
+ @ "symtab.hdr"
+ 
+ fn main()
+ {
+     // add some global and local variables
+     assert(symtabAddGlobal(UStrCreate("foo")));                    
+     symtabAddLocal(UStrCreate("bar"), -8);                     
+     printf("GLOBAL VARIABLES:\n");
+     symtabPrintGlobals();        
+     printf("LOCAL VARIABLES:\n");
+     symtabPrintLocals();
+
+     assert(symtabIsDefined(UStrCreate("foo")));
+     assert(!symtabAddGlobal(UStrCreate("foo")));
+
+     local info: SymtabInfo;
+     symtabGetInfo(UStrCreate("foo"), &info);
+     assert(info.isGlobal);
+
+     symtabAddLocal(UStrCreate("bar"), -8);                     
+     symtabGetInfo(UStrCreate("bar"), &info);
+     assert(!info.isGlobal);
+     assert(info.offset == -8);
+
+
+     printf("GLOBAL VARIABLES:\n");
+     symtabPrintGlobals();        
+     printf("LOCAL VARIABLES:\n");
+     symtabPrintLocals();
+     symtabFreeLocals();
+}                                                          
+

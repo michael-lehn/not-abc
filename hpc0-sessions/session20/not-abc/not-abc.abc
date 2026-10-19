@@ -1,0 +1,13 @@
+@ <stdlib.hdr>
+@ <stdio.hdr>
+@ "gen.hdr"
+@ "parser.hdr"
+
+fn main()
+{
+    genInit();
+    if (!parseTopLevel()) {
+	fprintf(stderr, "expected end of input\n");
+	exit(1);
+    }
+}

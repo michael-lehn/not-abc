@@ -1,0 +1,31 @@
+@ <stdio.hdr>
+@ "ustr.hdr"
+
+fn main()
+{
+    local a1: array[] of char = "hallo";
+    local a2: array[] of char = "hello";
+    local a3: array[] of char = "hallo";
+
+    printf("a1 = %p '%s'\n", a1, a1);
+    printf("a2 = %p '%s'\n", a2, a2);
+    printf("a3 = %p '%s'\n", a3, a3);
+
+    local s: array[] of ->UStr = {
+        UStrCreate(a1),
+        UStrCreate(a2),
+        UStrCreate(a3),
+    };
+
+    printf("check addresses of unique strings:\n");
+    for (local i := 0; i < sizeof(s) / sizeof(s[0]); ++i) {
+        printf("s[%d] = %p '%s'\n", i, s[i], s[i]);
+    }
+
+    printf("check fast compare of strings:\n");
+    for (local i := 0; i < sizeof(s) / sizeof(s[0]); ++i) {
+        for (local j := 0; j < sizeof(s) / sizeof(s[0]); ++j) {
+            printf("s[%d] == s[%d] gives: %d\n", i, j, s[i] == s[j]);
+        }
+    }
+}

@@ -1,0 +1,124 @@
+@ <stdio.hdr>
+@ <stdlib.hdr>
+@ "lexer.hdr"
+@ "parseexpr.hdr"
+
+fn expected(kind: TokenKind)
+{
+    if (token.kind != kind) {
+	fprintf(stderr, "%u.%u: '%s' expected\n", token.pos.row, token.pos.col,
+	       tokenKindStr(kind));
+	exit(1);
+    }
+}
+
+fn error(msg: ->readonly char): bool
+{
+    fprintf(stderr, "%u.%u: error: %s\n", token.pos.row, token.pos.col, msg);
+    exit(1);
+    return false;
+}
+
+fn exprKindFromToken(token: Token): ExprKind
+{
+    switch (token.kind) {
+        case PLUS: return EXPR_ADD;
+        case MINUS: return EXPR_SUB;
+        case ASTERISK: return EXPR_MUL;
+        case SLASH: return EXPR_DIV;
+        case PERCENT: return EXPR_MOD;
+        default:
+	    printf("token: %d (%s)\n", token.kind, tokenKindStr(token.kind));
+            assert(0 && "internal error: exprKindFromToken");
+            return 0;
+    }
+}
+
+fn tokenKindPrec(kind: TokenKind): int
+{
+    switch (kind) {
+	default: return 0;
+	case ASTERISK: return 13;
+	case SLASH: return 13;
+	case PERCENT: return 13;
+	case PLUS: return 12;
+	case MINUS: return 12;
+    }
+}
+
+fn parseBinary(prec: int): ->Expr;
+fn parseFactor(): ->Expr;
+
+fn parseExpr(): ->Expr
+{
+    return parseBinary(1);
+}
+
+fn parseBinary(prec: int): ->Expr
+{
+    local left: ->Expr = parseFactor();
+    if (!left) {
+	return nullptr;
+    }
+    for (local p: int = tokenKindPrec(token.kind); p >= prec; --p) {
+	while (tokenKindPrec(token.kind) == p) {
+	    local tok: Token = token;
+	    getToken();
+	    local right: ->Expr = parseBinary(p + 1);
+	    if (!right) {
+		error("expression expected\n");
+	    }
+	    left = createBinaryExpr(exprKindFromToken(tok), left, right);
+	}
+    }
+    return left;
+}
+
+fn parseFactor(): ->Expr
+{
+    if (token.kind == DECIMAL_LITERAL || token.kind == CHARACTER_LITERAL) {
+	local expr: ->Expr = createIntegerExpr(token.val);
+	getToken();
+	return expr;
+    } else if (token.kind == IDENTIFIER) {
+	local ident: ->UStr = token.val;
+        getToken();
+	if (token.kind == LPAREN) {
+	    getToken();
+	    local callExpr: ->Expr = createCallExpr(ident);
+	    local argExpr: ->Expr = parseExpr();
+	    if (argExpr) {
+		addArgExpr(callExpr, argExpr);
+		while (token.kind == COMMA) {
+		    getToken();
+		    argExpr = parseExpr();
+		    if (!argExpr) {
+			fprintf(stderr, "expression expectedn");
+			assert(0);
+		    }
+		    addArgExpr(callExpr, argExpr);
+		}
+	    }
+	    expected(RPAREN);
+	    getToken();
+	    return callExpr;
+	} else {
+	    return createIdentifierExpr(ident);
+	}
+    } else if (token.kind == LPAREN) {
+	// as before
+	getToken();
+	local expr: ->Expr = parseExpr();
+	if (!expr) {
+	    error("expression expected");
+	}
+	if (token.kind != RPAREN) {
+	    error("')' expected");
+	}
+	getToken();
+	return expr;
+    } else {
+	return nullptr;
+    }
+}
+

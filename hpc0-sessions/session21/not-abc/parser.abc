@@ -1,0 +1,141 @@
+@ <stdio.hdr>
+@ <stdlib.hdr>
+@ "lexer.hdr"
+@ "parser.hdr"
+@ "parseexpr.hdr"
+@ "parseexpr.hdr"
+
+fn parseGlobal(): bool;
+fn parseLocal(): bool;
+fn parseFn(): bool;
+fn parseCompoundStmt(): bool;
+fn parseExprStmt(): bool;
+fn parseReturnStmt(): bool;
+
+fn parseTopLevel(): bool
+{
+    getToken();
+    while (parseGlobal() || parseFn()) {
+    }
+    return token.kind == EOI;
+}
+
+fn parseGlobal(): bool
+{
+    if (token.kind != GLOBAL) {
+        return false;
+    }
+    getToken();
+    expected(IDENTIFIER);
+    while (token.kind == IDENTIFIER) {
+        genAddGlobal(token.val) || error("already defined");
+        getToken();
+        if (token.kind != COMMA) {
+            break;
+        }
+        getToken();
+	expected(IDENTIFIER);
+    }
+    expected(SEMICOLON);
+    getToken();
+    return true;
+}
+
+fn parseLocal(): bool
+{
+    if (token.kind != LOCAL) {
+        return false;
+    }
+    getToken();
+    expected(IDENTIFIER);
+    while (token.kind == IDENTIFIER) {
+        genAddLocal(token.val) || error("already defined");
+        getToken();
+        if (token.kind != COMMA) {
+            break;
+        }
+        getToken();
+	expected(IDENTIFIER);
+    }
+    expected(SEMICOLON);
+    getToken();
+    return true;
+}
+
+fn parseFn(): bool
+{
+    if (token.kind != FN) {
+	return false;
+    }
+    getToken();
+    expected(IDENTIFIER);
+    genFuncDefBegin(token.val);
+    getToken();
+    expected(LPAREN);
+    getToken();
+    while (token.kind == IDENTIFIER) {
+        genFuncDefParam(token.val) || error("duplicate parameter name");;
+        getToken();
+        if (token.kind != COMMA) {
+            break;
+        }
+        getToken();
+	expected(IDENTIFIER);
+    }
+    expected(RPAREN);
+    getToken();
+    if (!parseCompoundStmt()) {
+	error("expected compound statement\n");
+	return false;
+    }
+    genFuncDefEnd();
+    return true;
+}
+
+fn parseCompoundStmt(): bool
+{
+    if (token.kind != LBRACE) {
+	return false;
+    }
+    getToken();
+    while (parseLocal() || parseExprStmt() || parseReturnStmt())
+    {
+    }
+    expected(RBRACE);
+    getToken();
+    return true;
+}
+
+fn parseExprStmt(): bool
+{
+    local expr: -> Expr = parseExpr();
+    if (!expr) {
+	return false;
+    }
+    expected(SEMICOLON);
+    getToken();
+    local retVal: GenReg = loadExpr(expr);
+    genReleaseReg(retVal);
+    releaseExpr(expr);
+    return true;
+}
+
+fn parseReturnStmt(): bool
+{
+    if (token.kind != RETURN) {
+	return false;
+    }
+    getToken();
+    local expr: -> Expr = parseExpr();
+    if (!expr) {
+	error("expected expression\n");
+	return false;
+    }
+    local retVal: GenReg = loadExpr(expr);
+    genReturn(retVal);
+    genReleaseReg(retVal);
+    releaseExpr(expr);
+    expected(SEMICOLON);
+    getToken();
+    return true;
+}

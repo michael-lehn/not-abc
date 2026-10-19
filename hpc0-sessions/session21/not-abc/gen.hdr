@@ -1,0 +1,39 @@
+extern fn genInit();
+
+type GenReg: unsigned;
+extern fn genReleaseReg(reg: GenReg);
+extern fn genConstant(val: ->readonly char): GenReg;
+
+enum GenInstr
+{
+    GEN_ADD,
+    GEN_SUB,
+    GEN_MUL,
+    GEN_DIV,
+    GEN_MOD,
+    GEN_EQ,
+    GEN_NE,
+    GEN_LE,
+    GEN_LT,
+    GEN_GE,
+    GEN_GT,
+};
+
+extern fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg;
+
+extern fn genFuncDefBegin(name: ->readonly char);
+extern fn genFuncDefParam(ident: ->readonly char): bool;
+extern fn genAddLocal(ident: ->readonly char): bool;
+extern fn genReturn(val: GenReg);
+extern fn genFuncDefEnd();
+
+extern fn genCallBegin(fnName: ->readonly char, numArgs: unsigned);
+extern fn genCallAddArg(argReg: GenReg, argPos: unsigned);
+extern fn genCallEnd(): GenReg;
+
+extern fn genAddGlobal(ident: ->readonly char): bool;
+
+extern fn genLoadAddr(ident: ->readonly char): GenReg;
+extern fn genLoadVar(ident: ->readonly char): GenReg;
+extern fn genFetch(addr: GenReg): GenReg;
+extern fn genStore(val: GenReg, addr: GenReg);

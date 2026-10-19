@@ -1,0 +1,16 @@
+@ <stdio.hdr>
+@ "expr.hdr"
+@ "gen.hdr"
+
+fn main()
+{
+    local expr: -> Expr;
+
+    expr = createIdentifierExpr(UStrCreate("x"));
+    genAddGlobal(expr->primary.identifier);
+    printf("\t# load expression: ");
+    printExprTree(expr);
+    printf("\n");
+    genReleaseReg(loadExpr(expr));
+    releaseExpr(expr);
+}

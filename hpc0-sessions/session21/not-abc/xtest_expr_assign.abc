@@ -1,0 +1,21 @@
+@ <stdio.hdr>
+@ "gen.hdr"
+@ "expr.hdr"
+
+fn main()
+{
+    local expr: -> Expr;
+
+    assert(genAddGlobal(UStrCreate("x")));
+
+    expr = createBinaryExpr(EXPR_ASSIGN,
+			    createIdentifierExpr(UStrCreate("x")),
+			    createIntegerExpr(UStrCreate("42")));
+    printf("\t# load expression: ");
+    printExprTree(expr);
+    printf("\n");
+
+    loadExpr(expr);
+
+    releaseExpr(expr);
+}

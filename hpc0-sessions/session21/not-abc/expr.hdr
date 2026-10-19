@@ -1,0 +1,69 @@
+@ "gen.hdr"
+@ "ustr.hdr"
+
+enum ExprKind
+{
+    EXPR_UNARY,                         // new: begin
+    EXPR_UNARY_MINUS = EXPR_UNARY,
+    EXPR_UNARY_END,
+
+    EXPR_BINARY = EXPR_UNARY_END,       // new: end
+    EXPR_ADD = EXPR_BINARY,
+    EXPR_ASSIGN,
+    EXPR_SUB,
+    EXPR_MUL,
+    EXPR_DIV,
+    EXPR_MOD,
+    EXPR_BINARY_END,
+
+    EXPR_PRIMARY = EXPR_BINARY_END,
+    EXPR_INTEGER,
+    EXPR_IDENTIFIER,
+    EXPR_CALL,
+    EXPR_PRIMARY_END,
+
+    EXPR_ARGNODE,
+};
+
+struct Expr
+{
+    kind: ExprKind;
+    union {
+	unary: struct Unary {
+	    child: ->Expr;
+	};
+	binary:	struct Binary {
+	    left, right: ->Expr;
+	};
+	primary: struct Primary {
+	    decimal: ->UStr;
+	    identifier: ->UStr;
+	    call: struct Call {
+		fnName: ->UStr;
+		argListLen: unsigned;
+		argList: ->Expr;
+	    };
+	};
+	arg: struct ArgList {
+	    next: ->Expr;
+	    expr: ->Expr;
+	    pos: unsigned;
+	};
+    };
+};
+
+// constructors (caller becomes owner)
+extern fn createUnaryExpr(kind: ExprKind, child: ->Expr): ->Expr;
+extern fn createBinaryExpr(kind: ExprKind, left: ->Expr, right: ->Expr): ->Expr;
+extern fn createIntegerExpr(val: ->UStr): ->Expr;
+extern fn createIdentifierExpr(val: ->UStr): ->Expr;
+extern fn createCallExpr(fnName: ->UStr): ->Expr;
+extern fn addArgExpr(callExpr: ->Expr, argExpr: ->Expr);
+
+// destructor
+extern fn releaseExpr(expr: ->Expr);
+
+// meothods
+extern fn printExprTree(expr: ->Expr);
+extern fn isLValueExpr(expr: ->Expr): bool;
+extern fn loadExpr(expr: ->Expr): GenReg;

@@ -1,0 +1,18 @@
+global x, y;
+
+fn foo(a, b)
+{
+    x = a;
+    y = b;
+
+    local A, B;
+    A = y;
+    B = x;
+
+    return A - B;
+}
+
+fn main()
+{
+    return foo(42, 237);
+}

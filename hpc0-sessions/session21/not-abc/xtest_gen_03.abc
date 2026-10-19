@@ -1,0 +1,54 @@
+@ "gen.hdr"
+@ "symtab.hdr"
+
+fn main()
+{
+    genInit();
+
+    // global x: i64;
+    genAddGlobal("x");
+
+    // fn diff(a, b) {
+    genFuncDefBegin("diff");
+    genFuncDefParam("a");
+    genFuncDefParam("b");
+
+    // x = a;
+    local a: GenReg = genLoadVar("a");
+    local xAddr: GenReg = genLoadAddr("x");
+    genStore(a, xAddr);
+    genReleaseReg(a);
+    genReleaseReg(xAddr);
+
+    // local r: i64;
+    genAddLocal("r");
+
+    // r = b;
+    local bAddr: GenReg = genLoadAddr("b");
+    local b: GenReg = genFetch(bAddr);
+    genReleaseReg(bAddr);
+    local rAddr: GenReg = genLoadAddr("r");
+    genStore(b, rAddr);
+    genReleaseReg(b);
+    genReleaseReg(rAddr);
+
+    // return x - r;
+    local result: GenReg = genInstr(GEN_SUB,
+                                  genLoadVar("x"),
+                                  genLoadVar("r"));
+    genReturn(result);
+    genReleaseReg(result);
+
+    // }
+    genFuncDefEnd();
+
+    // fn main() { return diff(72, 30); }
+    genFuncDefBegin("main");
+    genCallBegin("diff", 2);
+    genCallAddArg(genConstant("72"), 0);
+    genCallAddArg(genConstant("30"), 1);
+    local retVal: GenReg = genCallEnd();
+    genReturn(retVal);
+    genReleaseReg(retVal);
+    genFuncDefEnd();
+}

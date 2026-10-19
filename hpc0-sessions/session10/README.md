@@ -104,3 +104,5 @@ this interface rather than emitting assembly directly.
 At the end of the course, students will also receive another implementation of
 the same general interface that generates LLVM IR. This provides a concrete
 example of how a code-generator interface can hide target-specific details.
+
+*HPC0 — Not A Bloody Compiler Project*

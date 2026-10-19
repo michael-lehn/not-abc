@@ -434,3 +434,5 @@ Boolean logic
 This completes the bottom-up construction begun in the earlier
 worksheets. The students have moved from individual gates to a machine
 capable of executing their small instruction set.
+
+*HPC0 — Not A Bloody Compiler Project*

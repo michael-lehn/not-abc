@@ -214,3 +214,5 @@ the worksheet, and single-line comments.
 More importantly, this is no longer an isolated lexer exercise: it is
 the lexer that will be used in the remaining sessions of **A Bloody
 Compiler Project**.
+
+*HPC0 — Not A Bloody Compiler Project*

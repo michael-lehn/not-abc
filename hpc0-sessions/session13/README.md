@@ -190,3 +190,5 @@ In particular, useful discussion points are:
 - and how `parseBinary` turns that structure into a more general mechanism.
 
 The final question — asking students to describe the grammar implemented by the generalized parser — is deliberately open-ended. It is a good check of whether they have understood the transformation rather than merely reproduced the code.
+
+*HPC0 — Not A Bloody Compiler Project*

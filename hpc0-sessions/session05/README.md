@@ -452,3 +452,5 @@ model in which
 This prepares the ground for later worksheets in which these ideas are
 no longer simulated only at the programming-language level but are
 connected to the processor and its instruction set.
+
+*HPC0 — Not A Bloody Compiler Project*

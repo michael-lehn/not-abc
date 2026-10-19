@@ -195,3 +195,5 @@ happen before running a command, and then compare that prediction with
 what actually happens. Especially in Steps 3--5, the discussion around
 unexpected behavior is more important than getting through the worksheet
 quickly.
+
+*HPC0 — Not A Bloody Compiler Project*

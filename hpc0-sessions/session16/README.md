@@ -151,3 +151,5 @@ students become comfortable switching between two levels of abstraction:
 
 Students should know the first level well enough that they can
 deliberately omit it when the second level is what matters.
+
+*HPC0 — Not A Bloody Compiler Project*

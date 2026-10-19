@@ -315,3 +315,5 @@ behavior, and high-level programming as separate subjects.
 A particularly useful habit to reinforce throughout the session is:
 **when pointer code becomes confusing, draw the memory and change the
 drawing one statement at a time.**
+
+*HPC0 — Not A Bloody Compiler Project*

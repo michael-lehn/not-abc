@@ -329,3 +329,5 @@ xtest_lexer.abc
 
 The compiler-project files should be kept in the `not-abc` directory (or
 repository, for students already using Git).
+
+*HPC0 — Not A Bloody Compiler Project*

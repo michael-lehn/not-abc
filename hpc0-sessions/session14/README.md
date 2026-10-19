@@ -104,3 +104,5 @@ unsupported constructs instead of silently miscompiling them.
 The worksheet intentionally leaves open both a better approach to stack-frame
 addressing and support for nested function calls. These are natural starting
 points for subsequent sessions.
+
+*HPC0 — Not A Bloody Compiler Project*

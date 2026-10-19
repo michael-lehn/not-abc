@@ -61,3 +61,5 @@ registers and implemented instructions such as `load`, `add`, and `mul`—do man
 of them realize that they had already written a small compiler during the very
 first worksheet. That delayed realization is intentional and often leads to a
 memorable "aha!" moment.
+
+*HPC0 — Not A Bloody Compiler Project*

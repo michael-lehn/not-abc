@@ -92,3 +92,5 @@ I should probably also mention that they are volunteers. They are not paid for
 their work. In fact, convincing them to come is usually not the difficult part.
 More often, they have to convince their parents to let them spend an afternoon
 at the university explaining digital logic to undergraduate students.
+
+*HPC0 — Not A Bloody Compiler Project*

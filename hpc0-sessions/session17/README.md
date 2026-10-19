@@ -61,3 +61,5 @@ exit code.
 
 **Big challenge, big reward:** many small pieces from previous sessions finally
 become one working system.
+
+*HPC0 — Not A Bloody Compiler Project*

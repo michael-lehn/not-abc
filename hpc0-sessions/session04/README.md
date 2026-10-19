@@ -245,3 +245,5 @@ session. The intended takeaway is much smaller but, in my view, more
 important: once they understand the circuit being described, an HDL should
 no longer look mysterious. It is simply another representation of hardware
 they already understand.
+
+*HPC0 — Not A Bloody Compiler Project*

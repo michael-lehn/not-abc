@@ -73,3 +73,5 @@ worksheet.
 I also hand out a printed Vim cheat sheet during this session. Students are
 free to continue using Nano throughout the course, but those who are curious
 about Neovim already have a compact reference available from day one.
+
+*HPC0 — Not A Bloody Compiler Project*

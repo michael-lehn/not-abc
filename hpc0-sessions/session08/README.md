@@ -117,3 +117,5 @@ abstractions to something they have literally done with their own hands.
 
 A video can demonstrate the result. **The paper, transparencies, and stickers
 are what make the experience memorable.**
+
+*HPC0 — Not A Bloody Compiler Project*

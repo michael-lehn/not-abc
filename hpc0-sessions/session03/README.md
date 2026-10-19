@@ -131,3 +131,4 @@ One could almost say that the worksheet is preparing their neural network.
 
 The explanations come later.
 
+*HPC0 — Not A Bloody Compiler Project*

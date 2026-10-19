@@ -208,3 +208,5 @@ to see how these pieces fit together into a small software component with a
 clear interface and a concrete purpose inside a compiler.
 
 That integration is the main learning objective of the session.
+
+*HPC0 — Not A Bloody Compiler Project*

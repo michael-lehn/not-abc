@@ -1,4 +1,4 @@
-# HPC0 — Session 20: Variables and Assignments
+# HPC0 — Session 20: Variables and Return Statements
 
 ## Lecturer Notes
 

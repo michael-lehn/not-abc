@@ -89,11 +89,42 @@ fn genConstant(val: ->readonly char): GenReg
 
 //------------------------------------------------------------------------------
 
+fn condInstr(instr: GenInstr): ->readonly char
+{
+    switch (instr) {
+	default: assert(0 && "not handled");
+	case GEN_NE: return "jnz";
+	case GEN_EQ: return "jz";
+	case GEN_LE: return "jle";
+	case GEN_LT: return "jlt";
+	case GEN_GE: return "jge";
+	case GEN_GT: return "jgt";
+    }
+}
+
 fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg
 {
     local dest: GenReg = getReg();
     setSegment(TEXT);
     switch (instr) {
+	case GEN_NE:
+	case GEN_EQ:
+	case GEN_LT:
+	case GEN_LE:
+	case GEN_GT:
+	case GEN_GE:
+	{
+	    local doneLabel: GenLabel = genGetLabel();
+	    local trueLabel: GenLabel = genGetLabel();
+	    printf("\tsub \t%%%d, \t%%%d, \t%%%d\n", left, right, dest);
+	    printf("\t%s .L%d\n", condInstr(instr), trueLabel);
+	    printf("\tload \t0, \t%%%d\n", dest);
+	    genJump(doneLabel);
+	    genDefLabel(trueLabel);
+	    printf("\tload \t1, \t%%%d\n", dest);
+	    genDefLabel(doneLabel);
+	    return dest;
+	}
 	case GEN_ADD:
 	    printf("\taddq \t%%%d, \t%%%d, \t%%%d\n", right, left, dest);
 	    return dest;

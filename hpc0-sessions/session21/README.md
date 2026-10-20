@@ -200,10 +200,4 @@ but need not become additional worksheet tasks.
 - Why is the set of live registers at call entry different from the set of
   allocated registers when `genCallEnd()` restores them?
 
-## Scope of this session
-
-Comparison operators (`==`, `!=`, `<`, `<=`, `>`, `>=`) are **not** introduced
-here. This worksheet focuses on assignments, associativity, lvalues, and
-global/local variable declarations, and preserving registers across function calls.
-
 *HPC0 — Not A Bloody Compiler Project*

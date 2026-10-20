@@ -2,6 +2,7 @@
 @ <stdlib.hdr>
 @ "lexer.hdr"
 @ "parseexpr.hdr"
+@ "symtab.hdr"
 
 fn expected(kind: TokenKind)
 {
@@ -124,6 +125,7 @@ fn parseFactor(): ->Expr
 	    getToken();
 	    return callExpr;
 	} else {
+	    symtabIsDefined(ident) || error("undefined identifier");
 	    return createIdentifierExpr(ident);
 	}
     } else if (token.kind == LPAREN) {

@@ -2,7 +2,11 @@
 
 **Not A Bloody Compiler Project · HPC0**
 
-This session extends our compiler with assignment expressions and declarations of global and local variables. It builds directly on the code generator from Sessions 19 and 20 and the expression parser introduced in Session 13.
+This session extends our compiler with assignment expressions and declarations
+of global and local variables. It also uncovers a register-preservation bug
+across function calls and introduces caller-side register saving and restoring.
+The session builds on the code generator from Sessions 19 and 20 and the
+expression parser introduced in Session 13.
 
 **Worksheet:** [Session 21 — Assignments](hpc0-session21-en.pdf)
 
@@ -17,7 +21,9 @@ Students should be able to:
   expression;
 - generate code for assignments while managing temporary registers correctly;
 - parse global and local variable declarations and reject malformed
-  declarations.
+  declarations;
+- explain why live registers must be preserved across function calls and
+  implement caller-side saving and restoring on the stack.
 
 ## Preparation
 
@@ -28,7 +34,9 @@ be familiar with the calling convention and code-generator interface
 `tokenKindPrec()` approach from Session 13.
 
 No new lecture video is required for this worksheet; the relevant foundations
-have already been introduced.
+have already been introduced. For Steps 6 and 7, students should recall the
+ULM stack pointer, function-call stack layout, and register allocation from
+earlier sessions. Have the ULM debugger available.
 
 ## Lecturer notes
 
@@ -88,7 +96,8 @@ with an assertion failure during code generation.
 Test valid and invalid cases, including `a = b = 42`, `42 = a`, and `(a + b) =
 42` (with identifiers appropriately declared in the test context).
 
-The first complete source-level test in `examples/ws21_assign.not-abc` assigns a function parameter and returns it. Its expected exit code is **42**.
+The first complete source-level test in `examples/ws21_assign.not-abc` assigns
+a function parameter and returns it. Its expected exit code is **42**.
 
 ### Step 4 — Global and local variable declarations
 
@@ -107,15 +116,74 @@ introducing that complexity prematurely; it can be revisited when `if` and
 
 ### Step 5 — A small hole in our parser
 
-End with a negative test: `global;` is incorrectly accepted by the initial
+Introduce a negative test: `global;` is incorrectly accepted by the initial
 implementation, despite the grammar requiring at least one identifier. Students
 insert `expected(IDENTIFIER);` at the appropriate places in both declaration
 parsers. They should also reject `global x,;` and `local a,;` — checking only
 immediately after `global` or `local` is insufficient; the check is also needed
 after a comma.
 
-This makes a useful closing discussion: testing a parser means checking that it
+This makes a useful discussion: testing a parser means checking that it
 **rejects invalid programs**, not merely that it accepts valid ones.
+
+### Step 6 — What’s wrong?
+
+The new `examples/ws21_registers.not-abc` test assigns the result of `getchar()`
+to a local variable `ch`, echoes it with `putchar(ch)`, and returns `ch`.
+Students should compile and execute the program **before** receiving the fix.
+Encourage them to use the ULM debugger to follow the generated assembly.
+
+The important observation is that code generation loads the address of `ch`
+into a register (typically `%4`) *before* generating the call to `getchar()`.
+The callee may overwrite that register. When the caller resumes, the address
+needed for the assignment has been lost, so the store may target the wrong
+location. This is a calling-convention bug, not a parsing bug.
+
+Let students describe what they see in the debugger. Avoid immediately
+explaining `saveRegs()` or `restoreRegs()`; that diagnosis belongs to Step 7.
+
+### Step 7 — Function Calls: Saving and Restoring Registers
+
+Introduce the simplified calling convention: registers from `%4` onward are
+callee-clobbered, so the caller must preserve any live values across a call.
+The worksheet supplies `savedReg`, `numSavedReg`, `saveRegs()`, and
+`restoreRegs()`; students wire the helpers into `genCallBegin()` and
+`genCallEnd()` at the specified points.
+
+The intended order is important:
+
+1. Before preparing the call frame, emit instructions to save currently used
+   registers onto the stack.
+2. Prepare arguments and call the function; retrieve its return value into a
+   newly allocated register before restoring the caller's registers.
+3. Remove the call frame, restore the saved registers, and return the register
+   containing the call result.
+
+In the supplied implementation, `savedReg` records the register-usage snapshot
+from the time of `saveRegs()`, while `numSavedReg` determines the space used on
+the stack. The emitted assembly saves and restores register contents; the
+arrays themselves belong to the *compiler*, not to the generated program.
+
+**Test:** Rebuild and rerun `examples/ws21_registers.not-abc`. With input `A`,
+the program should echo `A`; its return value is the character code (65 for
+ASCII `A`). This checks both the assignment and the subsequent use of `ch`.
+
+**Stack drawing:** Ask students to sketch the stack with `%4` live immediately
+before the call and after returning. Have them identify the saved `%4`, the
+call frame and return-value slot, and the changes to `%1`. The drawing should
+show how `%4` is restored while the return value remains in a separate
+register.
+
+**Neighbor discussion:** Why can't `restoreRegs()` consult `usedReg` directly?
+`genCallEnd()` allocates a register for the return value in the meantime, so
+`usedReg` no longer represents the set of registers saved before the call.
+`savedReg` is the snapshot of that earlier set.
+
+**Implementation boundaries:** This teaching implementation assumes the
+save/restore bookkeeping is not itself nested; one global snapshot cannot
+represent multiple outstanding save operations. It also assumes a free
+register is available for the call result. These limitations are worth knowing
+but need not become additional worksheet tasks.
 
 ## Suggested classroom discussion
 
@@ -127,11 +195,15 @@ This makes a useful closing discussion: testing a parser means checking that it
 - What is the difference between syntax checking, semantic checks, and
   assertions for internal compiler invariants?
 - Why should tests include malformed declarations and expressions?
+- Why can a program compile successfully but still fail because of a calling
+  convention violation?
+- Why is the set of live registers at call entry different from the set of
+  allocated registers when `genCallEnd()` restores them?
 
 ## Scope of this session
 
 Comparison operators (`==`, `!=`, `<`, `<=`, `>`, `>=`) are **not** introduced
 here. This worksheet focuses on assignments, associativity, lvalues, and
-global/local variable declarations.
+global/local variable declarations, and preserving registers across function calls.
 
 *HPC0 — Not A Bloody Compiler Project*

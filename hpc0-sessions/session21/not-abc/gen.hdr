@@ -11,12 +11,6 @@ enum GenInstr
     GEN_MUL,
     GEN_DIV,
     GEN_MOD,
-    GEN_EQ,
-    GEN_NE,
-    GEN_LE,
-    GEN_LT,
-    GEN_GE,
-    GEN_GT,
 };
 
 extern fn genInstr(instr: GenInstr, left: GenReg, right: GenReg): GenReg;

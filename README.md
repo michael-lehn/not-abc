@@ -12,7 +12,26 @@ surprisingly small language is sufficient to implement a complete compiler.
 misaligned on GitHub, append `?ts=8` to the URL or configure your GitHub tab
 width accordingly.
 
-## Work in Progress: Teaching Material
+## A note on the name
+
+Why *not-abc*? Because it is not [ABC](https://github.com/michael-lehn/abc-llvm).
+Well, not quite.
+
+ABC (*A Better C*) is my educational programming language, implemented in C++
+with an LLVM backend. *not-abc*, on the other hand, is a deliberately minimal
+language and a self-hosting compiler developed for my undergraduate HPC course.
+The original compiler was written in ABC, so the two projects are closely
+related after all.
+
+The naming follows a long tradition of confusion: Bell Labs had B, CWI developed
+an unrelated language originally called B (later ABC), and I developed yet
+another unrelated ABC.
+
+Now there is *not-abc*, which is related to my ABC but insists on not being it.
+
+Any remaining confusion is entirely intentional.
+
+## Teaching Material
 
 I am currently translating the teaching material for my undergraduate course
 **Introduction to High Performance Computing (HPC0)** into English. This is an

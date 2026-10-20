@@ -1,0 +1,19 @@
+@ <stdio.hdr>
+@ "expr.hdr"
+
+fn main()
+{
+    local expr: -> Expr;
+
+    expr = createBinaryExpr(EXPR_LESS,
+			    createIntegerExpr(UStrCreate("20")),
+			    createIntegerExpr(UStrCreate("22")));
+
+    printf("\t# load expression: ");
+    printExprTree(expr);
+    printf("\n");
+
+    genReleaseReg(loadExpr(expr));
+
+    releaseExpr(expr);
+}

@@ -1,0 +1,216 @@
+@ <stdio.hdr>
+@ <stdlib.hdr>
+@ "expr.hdr"
+
+fn createUnaryExpr(kind: ExprKind, child: ->Expr): ->Expr
+{
+    local n: -> Expr = malloc(sizeof(*n));
+    assert(n);
+    n->kind = kind;
+    n->unary.child = child;
+    return n;
+}
+
+fn createBinaryExpr(kind: ExprKind, left: ->Expr, right: ->Expr): ->Expr
+{
+    local n: -> Expr = malloc(sizeof(*n));
+    assert(n);
+    n->kind = kind;
+    n->binary.left = left;
+    n->binary.right = right;
+    return n;
+}
+
+fn createIntegerExpr(val: ->UStr): ->Expr
+{
+    local n: -> Expr = malloc(sizeof(*n));
+    assert(n);
+    n->kind = EXPR_INTEGER;
+    n->primary.decimal = val;
+    return n;
+}
+
+fn createIdentifierExpr(val: ->UStr): ->Expr
+{
+    local n: -> Expr = malloc(sizeof(*n));
+    assert(n);
+    n->kind = EXPR_IDENTIFIER;
+    n->primary.identifier = val;
+    return n;
+}
+
+fn createCallExpr(fnName: ->UStr): ->Expr
+{
+    local n: -> Expr = malloc(sizeof(*n));
+    n->kind = EXPR_CALL;
+    n->primary.call.fnName = fnName;
+    n->primary.call.argListLen = 0;
+    n->primary.call.argList = nullptr;
+    return n;
+}
+
+fn releaseExpr(expr: ->Expr)
+{
+    if (expr->kind >= EXPR_UNARY && expr->kind < EXPR_UNARY_END) {
+	releaseExpr(expr->unary.child);
+    } else if (expr->kind >= EXPR_BINARY && expr->kind < EXPR_BINARY_END) {
+	releaseExpr(expr->binary.left);
+	releaseExpr(expr->binary.right);
+    } else if (expr->kind == EXPR_CALL) {
+	if (expr->primary.call.argList) {
+	    releaseExpr(expr->primary.call.argList);
+	}
+    } else if (expr->kind == EXPR_ARGNODE) {
+	releaseExpr(expr->arg.expr);
+	if (expr->arg.next) {
+	    releaseExpr(expr->arg.next);
+	}
+    }
+    free(expr);
+}
+
+fn addArgExpr(callExpr: ->Expr, argExpr: ->Expr)
+{
+    local n: -> Expr = malloc(sizeof(*n));
+    n->kind = EXPR_ARGNODE;
+    n->arg.expr = argExpr;
+    n->arg.pos = callExpr->primary.call.argListLen;
+    n->arg.next = callExpr->primary.call.argList;
+    ++callExpr->primary.call.argListLen;
+    callExpr->primary.call.argList = n;
+}
+
+fn printExprTree(expr: ->Expr)
+{
+    assert(expr);
+    if (expr->kind >= EXPR_UNARY && expr->kind < EXPR_UNARY_END) {               
+        printf("[ ");
+        switch (expr->kind) {
+            case EXPR_UNARY_MINUS: printf("- "); break;
+            default: assert(0 && "node kind not handled");
+        }
+        printExprTree(expr->unary.child);
+        printf("] ");
+    } else if (expr->kind >= EXPR_PRIMARY && expr->kind < EXPR_PRIMARY_END) {               
+        switch (expr->kind) {                                                    
+            case EXPR_INTEGER:
+		printf("[%s]", expr->primary.decimal);
+		break;
+	    case EXPR_IDENTIFIER:
+		printf("[%s]", expr->primary.identifier);
+		break;
+	    case EXPR_CALL:
+		printf("[call %s ", expr->primary.call.fnName);
+		if (expr->primary.call.argList) {
+		    printExprTree(expr->primary.call.argList);
+		}
+		printf("]");
+		break;
+            default: assert(0 && "node kind not handled");
+	}
+    } else if (expr->kind >= EXPR_BINARY && expr->kind < EXPR_BINARY_END) {               
+        printf("[ ");
+        switch (expr->kind) {
+            case EXPR_ADD: printf("+ "); break;
+            case EXPR_ASSIGN: printf("{=} "); break;
+            case EXPR_SUB: printf("- "); break;
+            case EXPR_MUL: printf("* "); break;
+            case EXPR_DIV: printf("/ "); break;
+            case EXPR_MOD: printf("mod "); break;
+	    case EXPR_EQUAL: printf("{==}"); break;
+	    case EXPR_NOT_EQUAL: printf("{!=}"); break;
+	    case EXPR_LESS: printf("{<}"); break;
+	    case EXPR_LESS_EQUAL: printf("{<=}"); break;
+	    case EXPR_GREATER: printf("{>}"); break;
+	    case EXPR_GREATER_EQUAL: printf("{>=}"); break;
+            default: assert(0 && "node kind not handled");
+        }
+        printExprTree(expr->binary.left);
+        printf(" ");
+        printExprTree(expr->binary.right);
+        printf("] ");
+    } else if (expr->kind == EXPR_ARGNODE) { 
+	if (expr->arg.next) {
+	    printExprTree(expr->arg.next);
+	}
+	printExprTree(expr->arg.expr);
+    } else {
+        assert(0 && "node kind not handled");
+    }
+}
+
+fn isLValueExpr(expr: ->Expr): bool
+{
+    if (expr->kind == EXPR_IDENTIFIER) {
+	return true;
+    } else {
+	return false;
+    }
+}
+
+fn loadExprAddr(expr: ->Expr): GenReg
+{
+    if (expr->kind == EXPR_IDENTIFIER) {
+	return genLoadAddr(expr->primary.identifier);
+    } else {
+	assert(0 && "not an lvalue");
+	return 0;
+    }
+}
+
+fn loadExpr(expr: ->Expr): GenReg
+{
+    assert(expr);
+    if (expr->kind >= EXPR_PRIMARY && expr->kind < EXPR_PRIMARY_END) {
+        switch (expr->kind) {                                                    
+            case EXPR_INTEGER: return genConstant(expr->primary.decimal);
+	    case EXPR_IDENTIFIER: return genLoadVar(expr->primary.identifier);
+	    case EXPR_CALL:
+		genCallBegin(expr->primary.call.fnName,
+			     expr->primary.call.argListLen);
+		for (local n: ->Expr = expr->primary.call.argList;
+		     n;
+		     n = n->arg.next)
+		{
+		    local argReg: GenReg = loadExpr(n->arg.expr);
+		    genReleaseReg(argReg);
+		    genCallAddArg(argReg, n->arg.pos);
+		}
+		return genCallEnd();
+            default: assert(0 && "primary node kind not handled");
+	}
+    } else if (expr->kind >= EXPR_BINARY && expr->kind < EXPR_BINARY_END) {               
+	if (expr->kind == EXPR_ASSIGN) {
+	    assert(isLValueExpr(expr->binary.left));
+	    local leftAddr: GenReg = loadExprAddr(expr->binary.left);
+	    local rightVal: GenReg = loadExpr(expr->binary.right);
+	    genStore(rightVal, leftAddr);
+	    genReleaseReg(leftAddr);
+
+	    return rightVal;
+	} else {
+	    local left: GenReg = loadExpr(expr->binary.left);
+	    local right: GenReg = loadExpr(expr->binary.right);
+	    genReleaseReg(left);
+	    genReleaseReg(right);
+
+	    switch (expr->kind) {
+		case EXPR_ADD: return genInstr(GEN_ADD, left, right);
+		case EXPR_SUB: return genInstr(GEN_SUB, left, right);
+		case EXPR_MUL: return genInstr(GEN_MUL, left, right);
+		case EXPR_DIV: return genInstr(GEN_DIV, left, right);
+		case EXPR_MOD: return genInstr(GEN_MOD, left, right);
+		case EXPR_EQUAL: return genInstr(GEN_EQ, left, right);
+		case EXPR_NOT_EQUAL: return genInstr(GEN_NE, left, right);
+		case EXPR_LESS: return genInstr(GEN_LT, left, right);
+		case EXPR_LESS_EQUAL: return genInstr(GEN_LE, left, right);
+		case EXPR_GREATER: return genInstr(GEN_GT, left, right);
+		case EXPR_GREATER_EQUAL: return genInstr(GEN_GE, left, right);
+		default: assert(0 && "binary node kind not handled");                                                  
+	    }
+	}
+    } else {
+	assert(0 && "case not handled");
+    }
+    return 0; // never reached
+}

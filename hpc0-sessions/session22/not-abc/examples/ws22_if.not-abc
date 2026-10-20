@@ -1,0 +1,13 @@
+global x;
+
+fn main()
+{
+    x = 42;
+    if (x) {
+	x = 0;
+    } else {
+	x = 1;
+    }
+    return x;
+}
+

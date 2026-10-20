@@ -1,0 +1,21 @@
+fn printInt(n)
+{
+    if (n) {
+	if (n / 10) {
+	    printInt(n / 10);
+	}
+	putchar(n % 10 + '0');
+    } else {
+	putchar('0');
+    }
+}
+
+fn main()
+{
+    printInt(1234);
+    putchar('\n');
+    printInt(1);
+    putchar('\n');
+    printInt(0);
+    putchar('\n');
+}

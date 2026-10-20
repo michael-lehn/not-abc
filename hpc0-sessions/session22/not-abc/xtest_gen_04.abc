@@ -1,0 +1,26 @@
+@ "gen.hdr"
+@ "symtab.hdr"
+
+fn main()
+{
+    genInit();
+
+    // global x: i64;
+    genAddGlobal("x");
+
+    // fn main() {
+    genFuncDefBegin("main");
+
+    // x = 42;
+    local rVal: GenReg = genConstant("42");
+    local lValAddr: GenReg = genLoadAddr("x");
+    genStore(rVal, lValAddr);
+    genReleaseReg(rVal);
+    genReleaseReg(lValAddr);
+
+    // return x;
+    local xVal: GenReg = genLoadVar("x");
+    genReturn(xVal);
+    genReleaseReg(xVal);
+    genFuncDefEnd();
+}

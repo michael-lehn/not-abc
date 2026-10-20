@@ -45,7 +45,7 @@ be found here:
   - [Session 19 - Bottom-Up: Calling Conventions (Part II)](hpc0-sessions/session19) 
   - [Session 20 - Not A Bloody Compiler Project: Variables and Return Statements](hpc0-sessions/session20)
   - [Session 21 - Not A Bloody Compiler Project: Assignments](hpc0-sessions/session21)
-  - Session 22 - Not A Bloody Compiler Project: Control Structures
+  - [Session 22 - Not A Bloody Compiler Project: Control Structures](hpc0-sessions/session22)
   - Session 23 - Not A Bloody Compiler Project: Support for Pointers
   - Session 24 - Not A Bloody Compiler Project: Nested Function Calls
   - Session 25 - Not A Bloody Compiler Project: Adding an LLVM Backend and Moving toward Self-Hosting

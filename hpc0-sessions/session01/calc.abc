@@ -90,7 +90,7 @@ fn parseProd(): int
             return -1;
         }
         printf("\tmul %%%d, %%%d, %%%d\n", factor, prod, ++reg);
-	prod = reg;
+        prod = reg;
     }
     return reg;
 }
@@ -109,7 +109,7 @@ fn parseSum(): int
             return -1;
         }
         printf("\tadd %%%d, %%%d, %%%d\n", summand, sum, ++reg);
-	sum = reg;
+        sum = reg;
     }
     return reg;
 }

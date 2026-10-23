@@ -138,7 +138,7 @@ The four operations are
 - `Op = 00`: load a 4-bit immediate value into `%Z`,
 - `Op = 01`: add a 4-bit value shifted by four positions to `%Z`,
 - `Op = 10`: add `%X` and `%Y` and store the result in `%Z`,
-- `Op = 11`: subtract `%X` from `%Y` and store the result in `%Z`.
+- `Op = 11`: subtract `%Y` from `%X` and store the result in `%Z`.
 
 The first two operations together make it possible to construct an arbitrary
 8-bit value in a register.

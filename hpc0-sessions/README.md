@@ -94,11 +94,11 @@ summer semester we met every Tuesday and Friday for two hours. Between these
 meetings, students prepared by watching the videos.
 
 
-All lecture videos are already available in English. The session worksheets
-currently exist only in German. I plan to translate them into English gradually
-as time permits and make them available here.
+All lecture videos are already available in English. English versions of the
+session worksheets are available in the session directories listed above; the
+remaining sessions will follow as time permits.
 
-Each session directory will also contain a small `README.md` with **lecturer
+Each session directory also contains a small `README.md` with **lecturer
 notes**. These are not part of the student material. Instead, they describe the
 motivation behind individual sessions, explain how particular topics fit into
 the overall course design, and record observations that may be useful for

@@ -162,7 +162,7 @@ circuitry themselves.
 For example,
 
     00001101
-    00001001
+    00001010
     10011011
 
 loads `3` into `%1`, loads `2` into `%2`, and computes `%1 + %2 -> %3`.
